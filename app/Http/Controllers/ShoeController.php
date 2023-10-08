@@ -93,4 +93,14 @@ class ShoeController extends Controller
         }
     }
 
+    public function getImageVariants($id) {
+        $shoe = Shoe::findOrFail($id);
+        $images = $shoe->images;  // Assuming you have an 'images' relationship
+        return response()->json($images);
+    }
+
+    public function getImages(Shoe $shoe) {
+    return response()->json($shoe->images);
+}
+
 }

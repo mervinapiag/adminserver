@@ -28,3 +28,9 @@ Route::apiResource('variants', ProductVariantController::class);
 Route::apiResource('images', ProductImageController::class);
 
 Route::get('shoes/{shoe}/variants', [ShoeController::class, 'getVariants']);
+
+// Fetch images for a specific shoe
+Route::get('shoes/{shoe}/images', [ShoeController::class, 'getImages']);
+
+// Fetch images for a specific accessory
+Route::get('accessories/{accessory}/images', [AccessoryController::class, 'getImages']);

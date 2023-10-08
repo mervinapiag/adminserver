@@ -84,4 +84,8 @@ class AccessoryController extends Controller
             return response()->json(['error' => 'Failed to delete accessory', 'message' => $e->getMessage()], 500);
         }
     }
+    public function getImages(Accessory $accessory) {
+    return response()->json($accessory->images);
+}
+
 }

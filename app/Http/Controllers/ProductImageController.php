@@ -75,4 +75,5 @@ class ProductImageController extends Controller
             return response()->json(['error' => 'Failed to delete product image', 'message' => $e->getMessage()], 500);
         }
     }
+
 }
