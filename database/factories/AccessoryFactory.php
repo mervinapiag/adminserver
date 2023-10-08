@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Accessory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AccessoryFactory extends Factory
 {
@@ -11,16 +11,15 @@ class AccessoryFactory extends Factory
 
     public function definition()
     {
-        $categories = ['socks', 'aglets', 'laces', 'soles'];
-
+        $categories = ['shoelace', 'aglets', 'socks'];
         return [
             'name' => $this->faker->word,
             'description' => $this->faker->sentence,
             'price' => $this->faker->randomFloat(2, 5, 50),
             'category' => $this->faker->randomElement($categories),
             'brand_name' => $this->faker->company,
-            'image' => $this->faker->imageUrl(400, 300, 'fashion'),
+            'stock' => $this->faker->numberBetween(0, 100),
+            'image' => $this->faker->imageUrl(640, 480, 'accessory')
         ];
     }
 }
-

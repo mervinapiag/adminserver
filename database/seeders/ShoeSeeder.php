@@ -13,7 +13,6 @@ class ShoeSeeder extends Seeder
      */
     public function run()
     {
-        // Create 10 sample shoes
-        Shoe::factory(10)->create();
+        Shoe::factory(20)->create();
     }
 }

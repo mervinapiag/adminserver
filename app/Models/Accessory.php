@@ -13,11 +13,6 @@ class Accessory extends Model
         'name', 'description', 'price', 'category', 'brand_name', 'stock', 'image'
     ];
 
-    public function variants()
-    {
-        return $this->morphMany(ProductVariant::class, 'product');
-    }
-
     public function images()
     {
         return $this->morphMany(ProductImage::class, 'imageable');

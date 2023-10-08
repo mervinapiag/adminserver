@@ -5,13 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Accessory;
 use App\Http\Requests\AccessoryRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 class AccessoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Accessory::all(), 200);
+        $sortField = $request->get('sortField', 'name');  // Default sort field is 'name'
+        $sortOrder = $request->get('sortOrder', 'asc');  // Default sort order is 'asc'
+        
+        // Apply sorting
+        $accessories = Accessory::orderBy($sortField, $sortOrder)->get();
+    
+        return response()->json($accessories, 200);
     }
+    
+    
 
     public function store(AccessoryRequest $request)
     {

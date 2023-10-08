@@ -12,6 +12,7 @@ class ProductImageController extends Controller
     {
         return response()->json(ProductImage::all(), 200);
     }
+    
 
     public function store(ProductImageRequest $request)
     {

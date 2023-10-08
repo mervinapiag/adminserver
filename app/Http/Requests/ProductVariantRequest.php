@@ -14,8 +14,7 @@ class ProductVariantRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_id' => 'required|integer',
-            'product_type' => 'required|string|in:shoe,accessory',
+            'shoe_id' => 'required|integer|exists:shoes,id',
             'color' => 'required|string|max:255',
             'size' => 'required|string|max:255',
             'stock' => 'required|integer|min:0',

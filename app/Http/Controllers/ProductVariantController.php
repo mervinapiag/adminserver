@@ -10,7 +10,7 @@ class ProductVariantController extends Controller
     public function index()
     {
         return response()->json(ProductVariant::all(), 200);
-    }
+    }    
 
     public function store(ProductVariantRequest $request)
     {

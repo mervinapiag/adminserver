@@ -10,7 +10,6 @@ class ProductImageSeeder extends Seeder
 {
     public function run()
     {
-        // Create 20 sample product images
-        ProductImage::factory(20)->create();
+        ProductImage::factory(30)->create();
     }
 }

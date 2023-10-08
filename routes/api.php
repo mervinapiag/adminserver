@@ -26,3 +26,5 @@ Route::apiResource('shoes', ShoeController::class);
 Route::apiResource('accessories', AccessoryController::class);
 Route::apiResource('variants', ProductVariantController::class);
 Route::apiResource('images', ProductImageController::class);
+
+Route::get('shoes/{shoe}/variants', [ShoeController::class, 'getVariants']);

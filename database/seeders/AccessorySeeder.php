@@ -11,6 +11,6 @@ class AccessorySeeder extends Seeder
     public function run()
     {
         // Create 10 sample accessories
-        Accessory::factory(10)->create();
+        Accessory::factory(20)->create();
     }
 }

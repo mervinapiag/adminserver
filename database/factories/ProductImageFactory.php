@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\ProductImage;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProductImageFactory extends Factory
 {
@@ -11,14 +11,18 @@ class ProductImageFactory extends Factory
 
     public function definition()
     {
-        $imageableTypes = ['shoe', 'accessory'];
-
         return [
-            'imageable_id' => $this->faker->randomNumber(), // Same concern as with ProductVariant. Link to actual Shoe or Accessory IDs.
             'imageable_type' => function (array $attributes) {
-                return $attributes['imageable_type'] === 'shoe' ? 'App\Models\Shoe' : 'App\Models\Accessory';
+                return $attributes['imageable_type'] === 'shoe' ? 'App\\Models\\Shoe' : 'App\\Models\\Accessory';
             },
-            'image_path' => $this->faker->imageUrl(400, 300, 'fashion'),
+            'imageable_id' => function (array $attributes) {
+                if ($attributes['imageable_type'] === 'shoe') {
+                    return \App\Models\Shoe::all()->random()->id;
+                } else {
+                    return \App\Models\Accessory::all()->random()->id;
+                }
+            },
+            'image_path' => $this->faker->imageUrl(640, 480, 'product')
         ];
     }
 }

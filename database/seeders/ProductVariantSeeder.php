@@ -10,7 +10,6 @@ class ProductVariantSeeder extends Seeder
 {
     public function run()
     {
-        // Create 20 sample product variants
         ProductVariant::factory(20)->create();
     }
 }

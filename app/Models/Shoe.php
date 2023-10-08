@@ -15,8 +15,8 @@ class Shoe extends Model
 
     public function variants()
     {
-        return $this->morphMany(ProductVariant::class, 'product');
-    }
+        return $this->hasMany('App\Models\ProductVariant', 'shoe_id');
+    }    
 
     public function images()
     {

@@ -10,11 +10,11 @@ class ProductVariant extends Model
     use HasFactory;
 
     protected $fillable = [
-        'product_id', 'product_type', 'color', 'size', 'stock'
+        'shoe_id', 'color', 'size', 'stock'
     ];
 
-    public function product()
+    public function shoe()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Shoe::class);
     }
 }

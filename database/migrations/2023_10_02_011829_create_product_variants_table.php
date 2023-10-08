@@ -10,16 +10,16 @@ class CreateProductVariantsTable extends Migration
     {
         Schema::create('product_variants', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product_id');
-            $table->string('product_type');
-            $table->string('color')->default('N/A');
-            $table->string('size')->default('N/A');
+            $table->unsignedBigInteger('shoe_id');
+            $table->string('color');
+            $table->string('size');
             $table->integer('stock')->default(0);
             $table->timestamps();
-
-            $table->index(['product_id', 'product_type']);
+    
+            $table->index('shoe_id');
         });
     }
+    
 
     public function down()
     {

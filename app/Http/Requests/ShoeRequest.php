@@ -20,7 +20,7 @@ class ShoeRequest extends FormRequest
             'type' => 'required|string|max:255',
             'status' => 'required|string|max:255',
             'brand_name' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'image' => $this->isMethod('patch') ? 'sometimes|image|mimes:jpeg,png,jpg|max:2048' : 'required|image|mimes:jpeg,png,jpg|max:2048',
         ];
     }
 }

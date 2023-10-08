@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\ProductVariant;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProductVariantFactory extends Factory
 {
@@ -11,23 +11,15 @@ class ProductVariantFactory extends Factory
 
     public function definition()
     {
-        $productTypes = ['shoe', 'accessory'];
-        $colors = ['red', 'blue', 'green', 'yellow', 'black'];
-        $sizes = ['small', 'medium', 'large', '42 EU', '44 EU'];
-
+        $colors = ['Red', 'Blue', 'Green', 'Yellow', 'Black'];
+        $sizes = ['40 EU', '41 EU', '42 EU', '43 EU', '44 EU'];
         return [
-            'product_id' => function (array $attributes) {
-                if ($attributes['product_type'] === 'shoe') {
-                    return \App\Models\Shoe::all()->random()->id;
-                } else {
-                    return \App\Models\Accessory::all()->random()->id;
-                }
+            'shoe_id' => function () {
+                return \App\Models\Shoe::all()->random()->id;
             },
-            'product_type' => $this->faker->randomElement($productTypes),
             'color' => $this->faker->randomElement($colors),
             'size' => $this->faker->randomElement($sizes),
-            'stock' => $this->faker->numberBetween(0, 100),
+            'stock' => $this->faker->numberBetween(0, 50)
         ];
     }
 }
-

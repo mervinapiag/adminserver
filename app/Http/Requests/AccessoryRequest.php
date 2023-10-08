@@ -18,10 +18,9 @@ class AccessoryRequest extends FormRequest
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
             'category' => 'required|string|max:255',
-            'gender' => 'required|in:unisex',
             'brand_name' => 'required|string|max:255',
             'stock' => 'required|integer|min:0',
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-        ];
+            'image' => $this->isMethod('patch') ? 'sometimes|image|mimes:jpeg,png,jpg|max:2048' : 'required|image|mimes:jpeg,png,jpg|max:2048',   
+                ];
     }
 }

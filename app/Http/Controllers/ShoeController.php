@@ -5,13 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Shoe;
 use App\Http\Requests\ShoeRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
+
 
 class ShoeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Shoe::all(), 200);
+        $sortField = $request->get('sortField', 'name');  // Default sort field is 'name'
+        $sortOrder = $request->get('sortOrder', 'asc');  // Default sort order is 'asc'
+        
+        // Eager load variants and sort
+        $shoes = Shoe::with('variants')->orderBy($sortField, $sortOrder)->get();
+        
+        return response()->json($shoes);
     }
+    
 
     public function store(ShoeRequest $request)
     {
@@ -73,4 +82,15 @@ class ShoeController extends Controller
             return response()->json(['error' => 'Failed to delete shoe', 'message' => $e->getMessage()], 500);
         }
     }
+
+        public function getVariants($id)
+    {
+        $shoe = Shoe::find($id);
+        if ($shoe) {
+            return response()->json($shoe->variants);
+        } else {
+            return response()->json(['message' => 'Shoe not found'], 404);
+        }
+    }
+
 }
