@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController; 
+use App\Http\Controllers\Auth\AuthController; 
 use App\Http\Controllers\ShoeController;
 use App\Http\Controllers\AccessoryController;
 use App\Http\Controllers\ProductVariantController;
@@ -21,13 +21,12 @@ use App\Http\Controllers\ProductImageController;
 
 // For login - No authentication required
 Route::post('login', [AuthController::class, 'login']);
+Route::post('register', [AuthController::class, 'register']);
 
 // Protected routes - Requires authentication
 Route::middleware(['auth:sanctum'])->group(function () {
     // For logout
     Route::post('logout', [AuthController::class, 'logout']);
-
-
 });
 
         // Your existing protected routes
