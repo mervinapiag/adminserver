@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Resources\UserResource;
@@ -49,12 +50,10 @@ class AuthController extends Controller
                 'token' => $user->createToken(config("app.key"))->plainTextToken,
                 'user_info' => $user
             ];
-            return response($response, 200);
+            return Helpers::returnJsonResponse("Registered successfully", Response::HTTP_ACCEPTED, $response);
         } catch (\Throwable $th) {
             DB::rollBack();
-            return response()->json([
-                'message' => "Failed to register user. Please try again" . $th,
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return Helpers::returnJsonResponse("Failed to register user. Please try again", Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -74,7 +73,7 @@ class AuthController extends Controller
                 'message' => "Credentials doesn't match our records.",
             ];
         }
-        return response($response, 200);
+        return Helpers::returnJsonResponse("Login successfully", Response::HTTP_OK, $response);
     }
 
     public function logout(Request $request)
@@ -83,6 +82,6 @@ class AuthController extends Controller
         $response = [
             "message" => "Logout Successful!"
         ];
-        return response($response,200);
+        return Helpers::returnJsonResponse("Logout successfully", Response::HTTP_OK, $response);
     }
 }

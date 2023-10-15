@@ -7,6 +7,8 @@ use App\Http\Controllers\ShoeController;
 use App\Http\Controllers\AccessoryController;
 use App\Http\Controllers\ProductVariantController;
 use App\Http\Controllers\ProductImageController;
+use App\Http\Controllers\SiteSettings\SiteSettingsController;
+use App\Http\Controllers\User\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,14 +29,24 @@ Route::post('register', [AuthController::class, 'register']);
 Route::middleware(['auth:sanctum'])->group(function () {
     // For logout
     Route::post('logout', [AuthController::class, 'logout']);
+
+    // For profile stuff
+    Route::get('user/me', [UserController::class, 'me']);
+    Route::post('user/update', [UserController::class, 'updateInfo']);
+
+    Route::apiResources([
+        'sites-settings' => SiteSettingsController::class
+    ]);
 });
 
-        // Your existing protected routes
-        Route::apiResource('shoes', ShoeController::class);
-        Route::apiResource('accessories', AccessoryController::class);
-        Route::apiResource('variants', ProductVariantController::class);
-        Route::apiResource('images', ProductImageController::class);
-    
-        Route::get('shoes/{shoe}/variants', [ShoeController::class, 'getVariants']);
-        Route::get('shoes/{shoe}/images', [ShoeController::class, 'getImages']);
-        Route::get('accessories/{accessory}/images', [AccessoryController::class, 'getImages']);
+// Your existing protected routes
+Route::apiResources([
+    'shoes' => ShoeController::class,
+    'accessories' => AccessoryController::class,
+    'variants'=> ProductVariantController::class,
+    'images'=> ProductImageController::class
+]);
+
+Route::get('shoes/{shoe}/variants', [ShoeController::class, 'getVariants']);
+Route::get('shoes/{shoe}/images', [ShoeController::class, 'getImages']);
+Route::get('accessories/{accessory}/images', [AccessoryController::class, 'getImages']);
