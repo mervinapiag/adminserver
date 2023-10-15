@@ -17,3 +17,6 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# ignore this, I used docker on local machine for faster spin up
+docker-compose.yml
