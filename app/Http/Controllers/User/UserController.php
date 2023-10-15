@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Helpers;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -13,11 +13,9 @@ class UserController extends Controller
 {
     public function me(Request $request)
     {
-        return response()
-            ->json([
-                'message' => "User Information",
-                'data' => new UserResource($request->user())
-            ], 200);
+        $data = new UserResource($request->user());
+
+        return Helpers::returnJsonResponse("User Information", Response::HTTP_OK, $data);
     }
 
     public function updateInfo(Request $request)
@@ -31,15 +29,9 @@ class UserController extends Controller
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
-            return response()->json([
-                'message' => "Failed to update user information" .$th,
-            ], Response::HTTP_BAD_REQUEST);
+            return Helpers::returnJsonResponse("Failed to update user information", Response::HTTP_BAD_REQUEST);
         }
+        return Helpers::returnJsonResponse("User Information updated", Response::HTTP_OK, $user);
 
-        return response()
-            ->json([
-                'message' => 'User Information successully updated.',
-                'data' => $user
-            ], 200);
     }
 }
