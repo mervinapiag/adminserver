@@ -15,8 +15,8 @@ return new class extends Migration
             $table->string('username', 15)->unique()->nullable()->after('id');
             $table->string('lastname', 15)->after('username');
             $table->string('firstname', 15)->after('lastname');
-            $table->string('phonenumber', 15)->after('firstname');
-            $table->string('address', 15)->after('phonenumber');
+            $table->string('phonenumber')->nullable()->after('firstname');
+            $table->string('address')->nullable()->after('phonenumber');
             $table->string('contact')->nullable()->after('email');
             $table->date('birthday')->nullable()->after('contact');
         });
