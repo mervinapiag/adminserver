@@ -15,8 +15,9 @@ class ProductImageRequest extends FormRequest
     {
         return [
             'imageable_id' => 'required|integer',
-            'imageable_type' => 'required|string|in:shoe,accessory',
-            'image_path' => $this->isMethod('patch') ? 'sometimes|image|mimes:jpeg,png,jpg|max:2048' : 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'imageable_type' => 'required|string|in:App\Models\Shoe,App\Models\Accessory',
+            'image_paths' => $this->isMethod('patch') ? 'sometimes|array' : 'required|array',
+            'image_paths.*' => 'image|mimes:jpeg,png,jpg|max:5120',  // 5MB
         ];
-    }
+    }     
 }

@@ -29,13 +29,14 @@ class AccessoryController extends Controller
     
             // Check if an image is uploaded
             if ($request->hasFile('image')) {
-                $imageName = time() . '.' . $request->image->extension();
+                // Store new image with a more unique name
+                $imageName = time() . '_' . $request->image->getClientOriginalName();
                 $request->image->storeAs('public', $imageName);
                 $data['image'] = $imageName;
             }
     
             $accessory = Accessory::create($data);
-            return response()->json($accessory, 201);
+            return response()->json(['data' => $accessory], 201);
     
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to create accessory', 'message' => $e->getMessage()], 500);
@@ -60,19 +61,20 @@ class AccessoryController extends Controller
                     Storage::delete('public/' . $accessory->image);
                 }
     
-                // Store new image
-                $imageName = time() . '.' . $request->image->extension();
+                // Store new image with a more unique name
+                $imageName = time() . '_' . $request->image->getClientOriginalName();
                 $request->image->storeAs('public', $imageName);
                 $data['image'] = $imageName;
             }
     
             $accessory->update($data);
-            return response()->json($accessory, 200);
+            return response()->json(['data' => $accessory], 200);
     
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to update accessory', 'message' => $e->getMessage()], 500);
         }
     }
+    
     
 
     public function destroy(Accessory $accessory)

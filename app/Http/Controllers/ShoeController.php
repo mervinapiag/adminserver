@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 
+
+
 class ShoeController extends Controller
 {
     public function index(Request $request)
@@ -15,11 +17,12 @@ class ShoeController extends Controller
         $sortField = $request->get('sortField', 'name');  // Default sort field is 'name'
         $sortOrder = $request->get('sortOrder', 'asc');  // Default sort order is 'asc'
         
-        // Eager load variants and sort
-        $shoes = Shoe::with('variants')->orderBy($sortField, $sortOrder)->get();
+        // Eager load variants and images, then sort
+        $shoes = Shoe::with(['variants', 'images'])->orderBy($sortField, $sortOrder)->get();
         
         return response()->json($shoes);
     }
+    
     
 
     public function store(ShoeRequest $request)
@@ -29,7 +32,7 @@ class ShoeController extends Controller
     
             // Check if an image is uploaded
             if ($request->hasFile('image')) {
-                $imageName = time() . '.' . $request->image->extension();
+                $imageName = time() . '_' . $request->image->getClientOriginalName();
                 $request->image->storeAs('public', $imageName);
                 $data['image'] = $imageName;
             }
@@ -44,8 +47,10 @@ class ShoeController extends Controller
 
     public function show(Shoe $shoe)
     {
-        return response()->json($shoe, 200);
-    }
+        return response()->json($shoe->load(['variants', 'images']), 200);
+    }    
+    
+    
 
     public function update(ShoeRequest $request, Shoe $shoe)
     {
@@ -59,8 +64,8 @@ class ShoeController extends Controller
                     Storage::delete('public/' . $shoe->image);
                 }
     
-                // Store new image
-                $imageName = time() . '.' . $request->image->extension();
+                // Store new image with a more unique name
+                $imageName = time() . '_' . $request->image->getClientOriginalName();
                 $request->image->storeAs('public', $imageName);
                 $data['image'] = $imageName;
             }

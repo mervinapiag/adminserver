@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController; 
 use App\Http\Controllers\ShoeController;
 use App\Http\Controllers\AccessoryController;
 use App\Http\Controllers\ProductVariantController;
@@ -18,19 +19,23 @@ use App\Http\Controllers\ProductImageController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// For login - No authentication required
+Route::post('login', [AuthController::class, 'login']);
+
+// Protected routes - Requires authentication
+Route::middleware(['auth:sanctum'])->group(function () {
+    // For logout
+    Route::post('logout', [AuthController::class, 'logout']);
+
+
 });
 
-Route::apiResource('shoes', ShoeController::class);
-Route::apiResource('accessories', AccessoryController::class);
-Route::apiResource('variants', ProductVariantController::class);
-Route::apiResource('images', ProductImageController::class);
-
-Route::get('shoes/{shoe}/variants', [ShoeController::class, 'getVariants']);
-
-// Fetch images for a specific shoe
-Route::get('shoes/{shoe}/images', [ShoeController::class, 'getImages']);
-
-// Fetch images for a specific accessory
-Route::get('accessories/{accessory}/images', [AccessoryController::class, 'getImages']);
+        // Your existing protected routes
+        Route::apiResource('shoes', ShoeController::class);
+        Route::apiResource('accessories', AccessoryController::class);
+        Route::apiResource('variants', ProductVariantController::class);
+        Route::apiResource('images', ProductImageController::class);
+    
+        Route::get('shoes/{shoe}/variants', [ShoeController::class, 'getVariants']);
+        Route::get('shoes/{shoe}/images', [ShoeController::class, 'getImages']);
+        Route::get('accessories/{accessory}/images', [AccessoryController::class, 'getImages']);

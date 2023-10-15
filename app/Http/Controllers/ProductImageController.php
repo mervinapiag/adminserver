@@ -19,18 +19,27 @@ class ProductImageController extends Controller
         try {
             $data = $request->validated();
     
-            // Check if an image is uploaded
-            if ($request->hasFile('image_path')) {
-                $imageName = time() . '.' . $request->image_path->extension();
-                $request->image_path->storeAs('public', $imageName);
-                $data['image_path'] = $imageName;
+            // Initialize an array to hold multiple images
+            $images = [];
+    
+            // Check if multiple images are uploaded
+            if ($request->hasFile('image_paths')) {
+                foreach ($request->file('image_paths') as $file) {
+                    $imageName = time() . '_' . $file->getClientOriginalName();
+                    $file->storeAs('public', $imageName);
+    
+                    $imageData = $data;
+                    $imageData['image_path'] = $imageName;
+    
+                    $productImage = ProductImage::create($imageData);
+                    $images[] = $productImage;
+                }
             }
     
-            $productImage = ProductImage::create($data);
-            return response()->json($productImage, 201);
+            return response()->json(['images' => $images], 201);
     
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to create product image', 'message' => $e->getMessage()], 500);
+            return response()->json(['error' => 'Failed to create product images', 'message' => $e->getMessage()], 500);
         }
     }
 
@@ -52,7 +61,7 @@ class ProductImageController extends Controller
                 }
     
                 // Store new image
-                $imageName = time() . '.' . $request->image_path->extension();
+                $imageName = time() . '_' . $request->image_path->getClientOriginalName();
                 $request->image_path->storeAs('public', $imageName);
                 $data['image_path'] = $imageName;
             }
@@ -69,11 +78,19 @@ class ProductImageController extends Controller
     public function destroy(ProductImage $image)
     {
         try {
+            // Delete the actual image file from storage
+            if ($image->image_path) {
+                Storage::delete('public/' . $image->image_path);
+            }
+    
+            // Delete the database record
             $image->delete();
+    
             return response()->json(null, 204);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to delete product image', 'message' => $e->getMessage()], 500);
         }
     }
 
+    
 }

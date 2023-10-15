@@ -17,6 +17,8 @@ class CreateProductVariantsTable extends Migration
             $table->timestamps();
     
             $table->index('shoe_id');
+
+            $table->foreign('shoe_id')->references('id')->on('shoes')->onDelete('cascade');
         });
     }
     

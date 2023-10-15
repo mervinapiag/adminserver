@@ -20,7 +20,7 @@ class AccessoryRequest extends FormRequest
             'category' => 'required|string|max:255',
             'brand_name' => 'required|string|max:255',
             'stock' => 'required|integer|min:0',
-            'image' => $this->isMethod('patch') ? 'sometimes|image|mimes:jpeg,png,jpg|max:2048' : 'required|image|mimes:jpeg,png,jpg|max:2048',   
+            'image' => $this->isMethod('patch') ? 'sometimes|image|mimes:jpeg,png,jpg|max:5120' : 'required|image|mimes:jpeg,png,jpg|max:5120',
                 ];
     }
 }
