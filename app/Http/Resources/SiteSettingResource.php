@@ -20,7 +20,7 @@ class SiteSettingResource extends JsonResource
             "vision"=> $this->vision,
             "policy"=> $this->policy,
             "logo"=> $this->logo,
-            "help" => HelpCentreResource::collection($this->help)
+            "help" => HelpCenterResource::collection($this->help)
         ];
     }
 }

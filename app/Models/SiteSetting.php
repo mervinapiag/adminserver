@@ -18,6 +18,6 @@ class SiteSetting extends Model
 
     public function help()
     {
-        return $this->hasMany(HelpCentre::class);
+        return $this->hasMany(HelpCenter::class);
     }
 }
