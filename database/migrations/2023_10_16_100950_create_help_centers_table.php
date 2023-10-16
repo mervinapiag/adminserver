@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('help_centres', function (Blueprint $table) {
+        Schema::create('help_centers', function (Blueprint $table) {
             $table->id();
             $table->longText('question');
             $table->longText('solution');
