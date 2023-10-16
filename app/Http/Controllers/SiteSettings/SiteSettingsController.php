@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SiteSettings;
 use App\Helpers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SiteSettingsRequest;
+use App\Http\Resources\SiteSettingResource;
 use App\Models\SiteSetting;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -62,8 +63,9 @@ class SiteSettingsController extends Controller
      */
     public function show(string $id)
     {
-        $siteSettings = SiteSetting::first();
-        return Helpers::returnJsonResponse("Site Settings", Response::HTTP_OK, $siteSettings);
+        $siteSettings = SiteSetting::with('help')->first();
+        
+        return Helpers::returnJsonResponse("Site Settings", Response::HTTP_OK, new SiteSettingResource($siteSettings));
     }
 
     /**
