@@ -2,10 +2,13 @@
 
 namespace App;
 
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+
 class Helpers
 {
     /**
-     * Created a reusable function for us to use (REMEMBER DRY - Don't Repeat Yoursel)
+     * Created a reusable function for us to use
      */
     public static function returnJsonResponse($message, $httpStatus, $data = null)
     {
