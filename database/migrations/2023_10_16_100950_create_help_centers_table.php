@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\HelpCenter;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('site_settings', function (Blueprint $table) {
+        Schema::create('help_centers', function (Blueprint $table) {
             $table->id();
-            $table->longText('mission');
-            $table->longText('vision');
-            $table->longText('policy');
-            $table->string('logo');
+            $table->longText('question');
+            $table->longText('solution');
+            $table->unsignedBigInteger('site_setting_id');
+            $table->foreign('site_setting_id')->references('id')->on('site_settings')->onDelete('cascade');
             $table->timestamps();
+            
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('site_settings');
+        Schema::dropIfExists('help_centres');
     }
 };

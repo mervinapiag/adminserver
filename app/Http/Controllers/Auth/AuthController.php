@@ -46,7 +46,6 @@ class AuthController extends Controller
             $message = "Successfully registered.";
     
             $response = [
-                'message' => $message,
                 'token' => $user->createToken(config("app.key"))->plainTextToken,
                 'user_info' => $user
             ];
@@ -69,9 +68,8 @@ class AuthController extends Controller
                 'user_info' => new UserResource($user)
             ];
         } else {
-            $response = [
-                'message' => "Credentials doesn't match our records.",
-            ];
+            return Helpers::returnJsonResponse("Credentials doesn't match our records.", Response::HTTP_OK);
+
         }
         return Helpers::returnJsonResponse("Login successfully", Response::HTTP_OK, $response);
     }
