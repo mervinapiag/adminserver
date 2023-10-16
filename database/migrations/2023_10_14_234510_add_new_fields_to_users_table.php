@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('phonenumber')->nullable()->after('firstname');
             $table->string('address')->nullable()->after('phonenumber');
             $table->string('contact')->nullable()->after('email');
+            $table->enum('user_type', ['customer', 'admin'])->after('contact');
+            $table->string('role')->nullable()->after('user_type');
             $table->date('birthday')->nullable()->after('contact');
         });
     }
