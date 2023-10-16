@@ -1,12 +1,13 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController; 
 use App\Http\Controllers\ShoeController;
 use App\Http\Controllers\AccessoryController;
+use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\ProductVariantController;
 use App\Http\Controllers\ProductImageController;
+use App\Http\Controllers\SiteSettings\HelpCenterController;
 use App\Http\Controllers\SiteSettings\SiteSettingsController;
 use App\Http\Controllers\User\UserController;
 
@@ -35,7 +36,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('user/update', [UserController::class, 'updateInfo']);
 
     Route::apiResources([
-        'sites-settings' => SiteSettingsController::class
+        'sites-settings' => SiteSettingsController::class,
+        'help-centers' => HelpCenterController::class,
+        'announcements' => AnnouncementController::class
     ]);
 });
 
