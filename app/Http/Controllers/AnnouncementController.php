@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers;
 use App\Http\Requests\AnnouncementRequest;
+use App\Http\Resources\AnnouncementCollection;
 use App\Http\Resources\AnnouncementResource;
 use App\Models\Announcement;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class AnnouncementController extends Controller
      */
     public function index()
     {
-        return Helpers::returnJsonResponse('Announcements', Response::HTTP_CREATED, AnnouncementResource::collection(Announcement::all()));
+        return new AnnouncementCollection(Announcement::paginate());
     }
 
     /**
@@ -26,12 +27,20 @@ class AnnouncementController extends Controller
     public function store(AnnouncementRequest $request)
     {
         $data = $request->all();
+
+        if ($request->hasFile('media')) {
+            // Store new image with a more unique name
+            $imageName = time() . '_' . $request->media->getClientOriginalName();
+            $request->media->storeAs('public', $imageName);
+            $data['media'] = $imageName;
+        }
+
         try {
             DB::beginTransaction();
             $data = Announcement::create($data);
             DB::commit();
 
-            return Helpers::returnJsonResponse('Record has been created', Response::HTTP_CREATED, $data);
+            return Helpers::returnJsonResponse('Record has been created', Response::HTTP_CREATED, new AnnouncementResource($data));
         } catch (\Throwable $th) {
             DB::rollBack();
             return Helpers::returnJsonResponse('Failed to create your record', Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -43,16 +52,23 @@ class AnnouncementController extends Controller
      */
     public function show(Announcement $announcement)
     {
-        return Helpers::returnJsonResponse('Help Information', Response::HTTP_OK, new AnnouncementResource($announcement));
+        return Helpers::returnJsonResponse('Record Information', Response::HTTP_OK, new AnnouncementResource($announcement));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(AnnouncementRequest $request, string $id)
     {
         $data = $request->all();
         $announcement = Announcement::find($id);
+
+        if ($request->hasFile('media')) {
+            // Store new image with a more unique name
+            $imageName = time() . '_' . $request->media->getClientOriginalName();
+            $request->media->storeAs('public', $imageName);
+            $data['media'] = $imageName;
+        }
 
         try {
             DB::beginTransaction();
@@ -82,5 +98,13 @@ class AnnouncementController extends Controller
             DB::rollBack();
             return Helpers::returnJsonResponse('Failed to delete your record', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    /**
+     * Querying archived / soft deleted data
+     */
+    public function getArchived()
+    {
+        return new AnnouncementCollection(Announcement::onlyTrashed()->paginate());
     }
 }
