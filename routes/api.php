@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ShoeController;
 use App\Http\Controllers\AccessoryController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\Discount\DiscountController;
 use App\Http\Controllers\ProductVariantController;
 use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\SiteSettings\HelpCenterController;
@@ -35,11 +36,19 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('user/me', [UserController::class, 'me']);
     Route::post('user/update', [UserController::class, 'updateInfo']);
 
+    // For custom controller functions
+    // Getting archived Announcements
+    Route::get('announcements/archived', [AnnouncementController::class, 'getArchived']);
+    Route::get('discounts/archived', [DiscountController::class, 'getArchived']);
+
+    // For api resources
     Route::apiResources([
         'sites-settings' => SiteSettingsController::class,
         'help-centers' => HelpCenterController::class,
         'announcements' => AnnouncementController::class
     ]);
+
+    
 });
 
 // Your existing protected routes
@@ -47,7 +56,8 @@ Route::apiResources([
     'shoes' => ShoeController::class,
     'accessories' => AccessoryController::class,
     'variants'=> ProductVariantController::class,
-    'images'=> ProductImageController::class
+    'images'=> ProductImageController::class,
+    'discounts' => DiscountController::class
 ]);
 
 Route::get('shoes/{shoe}/variants', [ShoeController::class, 'getVariants']);
