@@ -1,42 +1,39 @@
 <?php
 
-namespace App\Http\Controllers\SiteSettings;
+namespace App\Http\Controllers\Discount;
 
 use App\Helpers;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\HelpCenterRequest;
-use App\Http\Resources\HelpCenterResource;
-use App\Models\HelpCenter;
-use App\Models\SiteSetting;
+use App\Http\Requests\DiscountRequest;
+use App\Http\Resources\DiscountCollection;
+use App\Http\Resources\DiscountResource;
+use App\Models\Discount;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
-class HelpCenterController extends Controller
+class DiscountController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Helpers::returnJsonResponse('Help Information', Response::HTTP_CREATED, HelpCenterResource::collection(HelpCenter::all()));
+        return new DiscountCollection(Discount::paginate());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(HelpCenterRequest $request)
+    public function store(DiscountRequest $request)
     {
         $data = $request->all();
-        $siteSettings = SiteSetting::first();
-        $data['site_setting_id'] = $siteSettings->id;
-
         try {
             DB::beginTransaction();
-            $data = HelpCenter::create($data);
+            $data = Discount::create($data);
             DB::commit();
 
-            return Helpers::returnJsonResponse('Record has been created', Response::HTTP_CREATED, new HelpCenterResource($data));
+            return Helpers::returnJsonResponse('Record has been created', Response::HTTP_CREATED, new DiscountResource($data));
         } catch (\Throwable $th) {
             DB::rollBack();
             return Helpers::returnJsonResponse('Failed to create your record', Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -46,25 +43,25 @@ class HelpCenterController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(HelpCenter $help_center)
+    public function show(Discount $discount)
     {
-        return Helpers::returnJsonResponse('Record Information', Response::HTTP_OK, new HelpCenterResource($help_center));
+        return Helpers::returnJsonResponse('Record Information', Response::HTTP_OK, new DiscountResource($discount));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(HelpCenterRequest $request, string $id)
+    public function update(DiscountRequest $request, string $id)
     {
         $data = $request->all();
-        $help_center = HelpCenter::find($id);
+        $discount = Discount::find($id);
 
         try {
             DB::beginTransaction();
-            $help_center->update($data);
+            $discount->update($data);
             DB::commit();
 
-            return Helpers::returnJsonResponse('Record has been updated', Response::HTTP_ACCEPTED, new HelpCenterResource($help_center));
+            return Helpers::returnJsonResponse('Record has been updated', Response::HTTP_ACCEPTED, new DiscountResource($discount));
         } catch (\Throwable $th) {
             DB::rollBack();
             return Helpers::returnJsonResponse('Failed to update your record', Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -76,10 +73,10 @@ class HelpCenterController extends Controller
      */
     public function destroy(string $id)
     {
-        $help_center = HelpCenter::find($id);
+        $discount = Discount::find($id);
         try {
             DB::beginTransaction();
-            $help_center->delete();
+            $discount->delete();
             DB::commit();
 
             return Helpers::returnJsonResponse('Record has been deleted', Response::HTTP_OK);
@@ -87,5 +84,13 @@ class HelpCenterController extends Controller
             DB::rollBack();
             return Helpers::returnJsonResponse('Failed to delete your record', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    /**
+     * Querying archived / soft deleted data
+     */
+    public function getArchived()
+    {
+        return new DiscountCollection(Discount::onlyTrashed()->paginate());
     }
 }
