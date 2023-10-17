@@ -19,7 +19,7 @@ class HelpCenterController extends Controller
      */
     public function index()
     {
-        return Helpers::returnJsonResponse('Help Center Information', Response::HTTP_CREATED, HelpCenterResource::collection(HelpCenter::all()));
+        return Helpers::returnJsonResponse('Help Information', Response::HTTP_CREATED, HelpCenterResource::collection(HelpCenter::all()));
     }
 
     /**
@@ -48,7 +48,7 @@ class HelpCenterController extends Controller
      */
     public function show(HelpCenter $help_center)
     {
-        return Helpers::returnJsonResponse('Help Information', Response::HTTP_OK, new HelpCenterResource($help_center));
+        return Helpers::returnJsonResponse('Record Information', Response::HTTP_OK, new HelpCenterResource($help_center));
     }
 
     /**
