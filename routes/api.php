@@ -11,6 +11,7 @@ use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\SiteSettings\HelpCenterController;
 use App\Http\Controllers\SiteSettings\SiteSettingsController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Middleware\Admin;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,17 +37,22 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('user/me', [UserController::class, 'me']);
     Route::post('user/update', [UserController::class, 'updateInfo']);
 
-    // For custom controller functions
-    // Getting archived Announcements
-    Route::get('announcements/archived', [AnnouncementController::class, 'getArchived']);
-    Route::get('discounts/archived', [DiscountController::class, 'getArchived']);
+    // For admin only
+    Route::middleware(['admin'])->group(function () {
+        // For custom controller functions
+        // Getting archived Announcements
+        Route::get('announcements/archived', [AnnouncementController::class, 'getArchived']);
+        Route::get('discounts/archived', [DiscountController::class, 'getArchived']);
 
-    // For api resources
-    Route::apiResources([
-        'sites-settings' => SiteSettingsController::class,
-        'help-centers' => HelpCenterController::class,
-        'announcements' => AnnouncementController::class
-    ]);
+        // For api resources
+        Route::apiResources([
+            'sites-settings' => SiteSettingsController::class,
+            'help-centers' => HelpCenterController::class,
+            'announcements' => AnnouncementController::class,
+            'discounts' => DiscountController::class
+        ]);
+    });
+    
 
     
 });
@@ -56,8 +62,12 @@ Route::apiResources([
     'shoes' => ShoeController::class,
     'accessories' => AccessoryController::class,
     'variants'=> ProductVariantController::class,
-    'images'=> ProductImageController::class,
-    'discounts' => DiscountController::class
+    'images'=> ProductImageController::class
+]);
+
+// Read-only Discount routes for 'customer'
+Route::resource('discounts', DiscountController::class)->only([
+    'index', 'show'
 ]);
 
 Route::get('shoes/{shoe}/variants', [ShoeController::class, 'getVariants']);
