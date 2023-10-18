@@ -15,6 +15,17 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // Get current logged in user
+        $user = $request->user();
+        
+        if ($user->user_type != "admin") {
+            $request->user()->tokens()->delete();
+            $response = [
+                "message" => "Forbidden Access"
+            ];
+            return response($response,403);
+        }
+
         return $next($request);
     }
 }
