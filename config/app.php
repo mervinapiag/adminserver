@@ -187,4 +187,9 @@ return [
         'Helpers' => \App\Helpers\Helper::class
     ])->toArray(),
 
+    'admin_name' => env("ADMIN_NAME"),
+    'admin_email' => env("ADMIN_EMAIL"),
+    'admin_password' => env("ADMIN_PASSWORD"),
+    'admin_lastname' => env("ADMIN_LASTNAME"),
+    'admin_firstname' => env("ADMIN_FIRSTNAME")
 ];
