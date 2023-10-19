@@ -63,7 +63,6 @@ class AuthController extends Controller
 
         if ($user) {
             $response = [
-                'message' => "Login successful.",
                 'token' => $user->createToken(config("app.key"))->plainTextToken,
                 'user_info' => new UserResource($user)
             ];
@@ -77,9 +76,6 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
-        $response = [
-            "message" => "Logout Successful!"
-        ];
-        return Helpers::returnJsonResponse("Logout successfully", Response::HTTP_OK, $response);
+        return Helpers::returnJsonResponse("Logout successfully", Response::HTTP_OK);
     }
 }
