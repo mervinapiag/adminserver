@@ -16,10 +16,15 @@ class Shoe extends Model
     public function variants()
     {
         return $this->hasMany('App\Models\ProductVariant', 'shoe_id');
-    }    
+    }
 
     public function images()
     {
         return $this->morphMany(ProductImage::class, 'imageable');
+    }
+
+    public function recommended_accessories()
+    {
+        return $this->hasMany(Accessory::class);
     }
 }
