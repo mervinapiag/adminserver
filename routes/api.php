@@ -51,14 +51,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
             'help-centers' => HelpCenterController::class,
             'announcements' => AnnouncementController::class,
             'discounts' => DiscountController::class,
-            'promotions' => PromotionController::class
+            'promotions' => PromotionController::class,
+            'shoes' => ShoeController::class
         ]);
     });
 });
 
 // Your existing protected routes
 Route::apiResources([
-    'shoes' => ShoeController::class,
     'accessories' => AccessoryController::class,
     'variants' => ProductVariantController::class,
     'images' => ProductImageController::class,
@@ -72,6 +72,10 @@ Route::resource('discounts', DiscountController::class)->only([
 // Read-only Promotion routes for 'customer'
 Route::resource('discounts', PromotionController::class)->only([
     'index', 'show',
+]);
+
+Route::resource('shoes', ShoeController::class)->only([
+    'index', 'show'
 ]);
 
 Route::get('shoes/{shoe}/variants', [ShoeController::class, 'getVariants']);
