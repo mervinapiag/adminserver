@@ -7,6 +7,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class DiscountCollection extends ResourceCollection
 {
+    public $collects = DiscountResource::class;
     /**
      * Transform the resource collection into an array.
      *
