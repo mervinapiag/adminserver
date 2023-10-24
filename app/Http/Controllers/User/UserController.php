@@ -29,9 +29,8 @@ class UserController extends Controller
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
-            return Helpers::returnJsonResponse("Failed to update user information", Response::HTTP_BAD_REQUEST);
+            return Helpers::returnJsonResponse(config('constants.RECORD_ERROR'), Response::HTTP_BAD_REQUEST);
         }
-        return Helpers::returnJsonResponse("User Information updated", Response::HTTP_OK, $user);
-
+        return Helpers::returnJsonResponse(config('constants.RECORD_UPDATED'), Response::HTTP_OK, $user);
     }
 }
