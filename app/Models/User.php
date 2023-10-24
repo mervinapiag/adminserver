@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -58,5 +59,10 @@ class User extends Authenticatable
         return Attribute::make(
             get: fn ($value) => (Carbon::parse($value)->format('F j, Y'))
         );
+    }
+
+    public function scopeCustomers(Builder $query): void
+    {
+        $query->where('user_type', 'customer');
     }
 }
