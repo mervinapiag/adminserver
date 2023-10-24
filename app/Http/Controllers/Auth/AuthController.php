@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Helpers;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -52,14 +53,20 @@ class AuthController extends Controller
             return Helpers::returnJsonResponse("Registered successfully", Response::HTTP_ACCEPTED, $response);
         } catch (\Throwable $th) {
             DB::rollBack();
-            return Helpers::returnJsonResponse("Failed to register user. Please try again", Response::HTTP_INTERNAL_SERVER_ERROR);
+            return Helpers::returnJsonResponse(config('constants.RECORD_ERROR'), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
         Auth::attempt(['email' => $request->email, 'password' => $request->password]);
         $user = auth()->user();
+
+        if ($user->suspended) {
+            $user->tokens()->delete();
+
+            return Helpers::returnJsonResponse(config('constants.ACCOUNT_SUSPENDED'), Response::HTTP_FORBIDDEN);
+        }
 
         if ($user) {
             $response = [

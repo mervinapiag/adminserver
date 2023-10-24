@@ -32,10 +32,10 @@ class PromotionController extends Controller
             $data = Promotion::create($data);
             DB::commit();
 
-            return Helpers::returnJsonResponse('Record has been created', Response::HTTP_CREATED, new PromotionResource($data));
+            return Helpers::returnJsonResponse(config('constants.RECORD_CREATED'), Response::HTTP_CREATED, new PromotionResource($data));
         } catch (\Throwable $th) {
             DB::rollBack();
-            return Helpers::returnJsonResponse('Failed to create your record' . $th, Response::HTTP_INTERNAL_SERVER_ERROR);
+            return Helpers::returnJsonResponse(config('constants.RECORD_ERROR'), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -44,7 +44,7 @@ class PromotionController extends Controller
      */
     public function show(Promotion $promotion)
     {
-        return Helpers::returnJsonResponse('Record Information', Response::HTTP_OK, new PromotionResource($promotion));
+        return Helpers::returnJsonResponse(config('constants.RECORD_INFO'), Response::HTTP_OK, new PromotionResource($promotion));
     }
 
     /**
@@ -60,10 +60,10 @@ class PromotionController extends Controller
             $discount->update($data);
             DB::commit();
 
-            return Helpers::returnJsonResponse('Record has been updated', Response::HTTP_ACCEPTED, new PromotionResource($discount));
+            return Helpers::returnJsonResponse(config('constants.RECORD_UPDATED'), Response::HTTP_ACCEPTED, new PromotionResource($discount));
         } catch (\Throwable $th) {
             DB::rollBack();
-            return Helpers::returnJsonResponse('Failed to update your record', Response::HTTP_INTERNAL_SERVER_ERROR);
+            return Helpers::returnJsonResponse(config('constants.RECORD_ERROR'), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -78,10 +78,10 @@ class PromotionController extends Controller
             $discount->delete();
             DB::commit();
 
-            return Helpers::returnJsonResponse('Record has been deleted', Response::HTTP_OK);
+            return Helpers::returnJsonResponse(config('constants.RECORD_DELETED'), Response::HTTP_OK);
         } catch (\Throwable $th) {
             DB::rollBack();
-            return Helpers::returnJsonResponse('Failed to delete your record', Response::HTTP_INTERNAL_SERVER_ERROR);
+            return Helpers::returnJsonResponse(config('constants.RECORD_ERROR'), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

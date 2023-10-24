@@ -12,6 +12,7 @@ use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\SiteSettings\HelpCenterController;
 use App\Http\Controllers\SiteSettings\SiteSettingsController;
+use App\Http\Controllers\User\CustomerController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Middleware\Admin;
 
@@ -54,8 +55,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
             'discounts' => DiscountController::class,
             'promotions' => PromotionController::class,
             'shoes' => ShoeController::class,
-            'couriers' => CourierController::class
+            'couriers' => CourierController::class,
+            'customers' => CustomerController::class
         ]);
+
+        Route::post('customers/{id}/suspend', [CustomerController::class, 'suspend']);
     });
 });
 

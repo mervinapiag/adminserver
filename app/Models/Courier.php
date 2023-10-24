@@ -16,7 +16,7 @@ class Courier extends Model
         'active'
     ];
 
-    public function active(): Attribute
+    protected function active(): Attribute
     {
         return Attribute::make(
             get: fn ($value) => $value == 1 ? 'true' : 'false',
