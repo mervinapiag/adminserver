@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ShoeController;
 use App\Http\Controllers\AccessoryController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\CourierController;
 use App\Http\Controllers\Discount\DiscountController;
 use App\Http\Controllers\ProductVariantController;
 use App\Http\Controllers\ProductImageController;
@@ -52,7 +53,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
             'announcements' => AnnouncementController::class,
             'discounts' => DiscountController::class,
             'promotions' => PromotionController::class,
-            'shoes' => ShoeController::class
+            'shoes' => ShoeController::class,
+            'couriers' => CourierController::class
         ]);
     });
 });
@@ -65,16 +67,20 @@ Route::apiResources([
 ]);
 
 // Read-only Discount routes for 'customer'
-Route::resource('discounts', DiscountController::class)->only([
+Route::apiResource('discounts', DiscountController::class)->only([
     'index', 'show',
 ]);
 
 // Read-only Promotion routes for 'customer'
-Route::resource('discounts', PromotionController::class)->only([
+Route::apiResource('discounts', PromotionController::class)->only([
     'index', 'show',
 ]);
 
-Route::resource('shoes', ShoeController::class)->only([
+Route::apiResource('shoes', ShoeController::class)->only([
+    'index', 'show'
+]);
+
+Route::apiResource('couriers', CourierController::class)->only([
     'index', 'show'
 ]);
 

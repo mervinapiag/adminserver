@@ -38,13 +38,13 @@ class AuthController extends Controller
                 "email" => $request->email,
                 "password" => $request->password
             ]);
-            DB::commit();        
-    
+            DB::commit();
+
             Auth::attempt(['email' => $user->email, 'password' => $request->password]);
             $user = auth()->user();
-    
+
             $message = "Successfully registered.";
-    
+
             $response = [
                 'token' => $user->createToken(config("app.key"))->plainTextToken,
                 'user_info' => $user
@@ -68,7 +68,6 @@ class AuthController extends Controller
             ];
         } else {
             return Helpers::returnJsonResponse("Credentials doesn't match our records.", Response::HTTP_OK);
-
         }
         return Helpers::returnJsonResponse("Login successfully", Response::HTTP_OK, $response);
     }

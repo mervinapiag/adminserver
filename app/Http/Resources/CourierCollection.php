@@ -5,9 +5,9 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class PromotionCollection extends ResourceCollection
+class CourierCollection extends ResourceCollection
 {
-    public $collects = PromotionResource::class;
+    public $collects = CourierResource::class;
     /**
      * Transform the resource collection into an array.
      *
