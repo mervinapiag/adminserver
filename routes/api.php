@@ -14,7 +14,6 @@ use App\Http\Controllers\SiteSettings\HelpCenterController;
 use App\Http\Controllers\SiteSettings\SiteSettingsController;
 use App\Http\Controllers\User\CustomerController;
 use App\Http\Controllers\User\UserController;
-use App\Http\Middleware\Admin;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,7 +55,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
             'promotions' => PromotionController::class,
             'shoes' => ShoeController::class,
             'couriers' => CourierController::class,
-            'customers' => CustomerController::class
+            'customers' => CustomerController::class,
+            'special-offers' => SpecialOfferController::class
         ]);
 
         Route::post('customers/{id}/suspend', [CustomerController::class, 'suspend']);
@@ -85,6 +85,10 @@ Route::apiResource('shoes', ShoeController::class)->only([
 ]);
 
 Route::apiResource('couriers', CourierController::class)->only([
+    'index', 'show'
+]);
+
+Route::apiResource('special-offers', SpecialOfferController::class)->only([
     'index', 'show'
 ]);
 
