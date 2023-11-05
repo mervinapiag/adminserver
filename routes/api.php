@@ -8,6 +8,7 @@ use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\CourierController;
 use App\Http\Controllers\Discount\DiscountController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentOptionController;
 use App\Http\Controllers\SpecialOfferController;
 use App\Http\Controllers\ProductVariantController;
 use App\Http\Controllers\ProductImageController;
@@ -58,7 +59,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
             'shoes' => ShoeController::class,
             'couriers' => CourierController::class,
             'customers' => CustomerController::class,
-            'special-offers' => SpecialOfferController::class
+            'special-offers' => SpecialOfferController::class,
+            'orders' => OrderController::class,
+            'payment-options' => PaymentOptionController::class
         ]);
 
         Route::post('customers/{id}/suspend', [CustomerController::class, 'suspend']);
@@ -94,9 +97,9 @@ Route::apiResource('special-offers', SpecialOfferController::class)->only([
     'index', 'show'
 ]);
 
-Route::apiResource('orders', OrderController::class)->only([
-    'index', 'show'
-]);
+// Route::apiResource('orders', OrderController::class)->only([
+//     'index', 'show'
+// ]);
 
 Route::get('shoes/{shoe}/variants', [ShoeController::class, 'getVariants']);
 Route::get('shoes/{shoe}/images', [ShoeController::class, 'getImages']);

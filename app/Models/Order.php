@@ -13,6 +13,12 @@ class Order extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $fillable = [
+        'payment_image',
+        'payment_type',
+        'payment_amount',
+    ];
+
     public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class);
