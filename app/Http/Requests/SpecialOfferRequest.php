@@ -11,7 +11,7 @@ class SpecialOfferRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class SpecialOfferRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'image' => 'required',
+            'description' => 'required',
+            'code' => 'sometimes',
+            'shipping_off_value' => 'sometimes',
+            'price_off_value' => 'sometimes',
         ];
     }
 }

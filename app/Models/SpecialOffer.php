@@ -13,8 +13,9 @@ class SpecialOffer extends Model
         'image',
         'description',
         'code',
-        'offer',
-        'special_offer'
+        'shipping_off_value',
+        'price_off_value',
+        'type'
     ];
 
     protected $perPage = 5;

@@ -7,6 +7,8 @@ use App\Http\Controllers\AccessoryController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\CourierController;
 use App\Http\Controllers\Discount\DiscountController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SpecialOfferController;
 use App\Http\Controllers\ProductVariantController;
 use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\PromotionController;
@@ -89,6 +91,10 @@ Route::apiResource('couriers', CourierController::class)->only([
 ]);
 
 Route::apiResource('special-offers', SpecialOfferController::class)->only([
+    'index', 'show'
+]);
+
+Route::apiResource('orders', OrderController::class)->only([
     'index', 'show'
 ]);
 

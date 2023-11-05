@@ -14,6 +14,14 @@ class SpecialOfferResoure extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            "id" => $this->id,
+            "image" => $this->image,
+            "description" => $this->description,
+            "code" => $this->code,
+            "type" => $this->type,
+            "shipping_off_value" => $this->shipping_off_value,
+            "price_off_value" => $this->price_off_value
+        ];
     }
 }
