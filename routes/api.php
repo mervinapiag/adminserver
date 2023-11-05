@@ -7,6 +7,9 @@ use App\Http\Controllers\AccessoryController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\CourierController;
 use App\Http\Controllers\Discount\DiscountController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentOptionController;
+use App\Http\Controllers\SpecialOfferController;
 use App\Http\Controllers\ProductVariantController;
 use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\PromotionController;
@@ -14,7 +17,6 @@ use App\Http\Controllers\SiteSettings\HelpCenterController;
 use App\Http\Controllers\SiteSettings\SiteSettingsController;
 use App\Http\Controllers\User\CustomerController;
 use App\Http\Controllers\User\UserController;
-use App\Http\Middleware\Admin;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,7 +58,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
             'promotions' => PromotionController::class,
             'shoes' => ShoeController::class,
             'couriers' => CourierController::class,
-            'customers' => CustomerController::class
+            'customers' => CustomerController::class,
+            'special-offers' => SpecialOfferController::class,
+            'orders' => OrderController::class,
+            'payment-options' => PaymentOptionController::class
         ]);
 
         Route::post('customers/{id}/suspend', [CustomerController::class, 'suspend']);
@@ -87,6 +92,14 @@ Route::apiResource('shoes', ShoeController::class)->only([
 Route::apiResource('couriers', CourierController::class)->only([
     'index', 'show'
 ]);
+
+Route::apiResource('special-offers', SpecialOfferController::class)->only([
+    'index', 'show'
+]);
+
+// Route::apiResource('orders', OrderController::class)->only([
+//     'index', 'show'
+// ]);
 
 Route::get('shoes/{shoe}/variants', [ShoeController::class, 'getVariants']);
 Route::get('shoes/{shoe}/images', [ShoeController::class, 'getImages']);
