@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Helpers;
 
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +20,6 @@ class Helpers
                     'message' => $message,
                     'data' => $data
                 ], $httpStatus);
-        }        
+        }
     }
 }
