@@ -30,16 +30,16 @@ class Product extends Model
 
     public function types()
     {
-        return $this->hasMany('App\Models\productHasType', 'product_id');
+        return $this->hasMany('App\Models\ProductHasType', 'product_id');
     }
 
     public function sizes()
     {
-        return $this->hasMany('App\Models\productHasSize', 'product_id');
+        return $this->hasMany('App\Models\ProductHasSize', 'product_id');
     }
 
     public function colors()
     {
-        return $this->hasMany('App\Models\productHasColor', 'product_id');
+        return $this->hasMany('App\Models\ProductHasColor', 'product_id');
     }
 }
