@@ -9,24 +9,25 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    // public function up()
-    // {
-    //     Schema::create('products', function (Blueprint $table) {
-    //         $table->id();
-    //         $table->string('name');
-    //         $table->text('description');
-    //         $table->decimal('price', 8, 2);
-    //         $table->string('type');
-    //         $table->string('status');
-    //         $table->enum('gender', ['male', 'female', 'unisex']);
-    //         $table->string('brand_name');
-    //         $table->string('image');
-    //         $table->timestamps();
-    //     });
-    // }
+    public function up()
+    {
+        Schema::create('products', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->text('description');
+            $table->decimal('price', 8, 2);
+            $table->string('status');
+            $table->enum('gender', ['male', 'female', 'unisex']);
+            $table->enum('socks', ['low', 'mid', 'high']);
+            $table->integer('brand_id');
+            $table->string('image');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+    }
 
-    // public function down()
-    // {
-    //     Schema::dropIfExists('products');
-    // }
+    public function down()
+    {
+        Schema::dropIfExists('products');
+    }
 };
