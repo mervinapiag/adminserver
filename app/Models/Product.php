@@ -21,15 +21,25 @@ class Product extends Model
         'image',
     ];
 
-    protected $with = ['brand'];
+    protected $with = ['brand', 'types', 'sizes', 'colors'];
 
     public function brand()
     {
         return $this->belongsTo('App\Models\ProductBrand', 'brand_id');
     }
 
-    // public function types()
-    // {
-    //     return $this->hasMany('App\Models\ProductType', 'product_id');
-    // }
+    public function types()
+    {
+        return $this->hasMany('App\Models\productHasType', 'product_id');
+    }
+
+    public function sizes()
+    {
+        return $this->hasMany('App\Models\productHasSize', 'product_id');
+    }
+
+    public function colors()
+    {
+        return $this->hasMany('App\Models\productHasColor', 'product_id');
+    }
 }

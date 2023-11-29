@@ -14,4 +14,11 @@ class productHasColor extends Model
         'product_id',
         'product_color_id',
     ];
+
+    protected $with = ['color'];
+
+    public function color()
+    {
+        return $this->belongsTo('App\Models\ProductColor', 'product_color_id');
+    }
 }

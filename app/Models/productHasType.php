@@ -14,4 +14,11 @@ class productHasType extends Model
         'product_id',
         'product_type_id',
     ];
+
+    protected $with = ['type'];
+
+    public function type()
+    {
+        return $this->belongsTo('App\Models\ProductType', 'product_type_id');
+    }
 }

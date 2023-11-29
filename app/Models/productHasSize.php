@@ -14,4 +14,11 @@ class productHasSize extends Model
         'product_id',
         'product_size_id',
     ];
+
+    protected $with = ['size'];
+
+    public function size()
+    {
+        return $this->belongsTo('App\Models\ProductSize', 'product_size_id');
+    }
 }
