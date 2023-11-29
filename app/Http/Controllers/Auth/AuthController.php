@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -30,6 +31,8 @@ class AuthController extends Controller
      */
     public function register(RegisterRequest $request)
     {
+        $otp = $this->generateOTP(6); // 6 digit otp
+
         try {
             DB::beginTransaction();
             $user = User::create([
@@ -37,20 +40,26 @@ class AuthController extends Controller
                 "lastname" => $request->lastname,
                 "name" => $request->firstname . " " . $request->lastname,
                 "email" => $request->email,
-                "password" => $request->password
+                "password" => $request->password,
+                'otp' => $otp
             ]);
             DB::commit();
 
-            Auth::attempt(['email' => $user->email, 'password' => $request->password]);
-            $user = auth()->user();
+            // commented out, will not attempt to login.
+            // Auth::attempt(['email' => $user->email, 'password' => $request->password]);
+            // $user = auth()->user();
 
             $message = "Successfully registered.";
 
             $response = [
                 'token' => $user->createToken(config("app.key"))->plainTextToken,
-                'user_info' => $user
+                //'user_info' => $user
+                'user_info' => null // set to null, verify with OTP first.
             ];
-            return Helpers::returnJsonResponse("Registered successfully", Response::HTTP_ACCEPTED, $response);
+
+            $this->sendRegistrationEmail($user->email, 'Calcium & Joyjoy - Registration', $otp, $user);
+            
+            return Helpers::returnJsonResponse("Registered successfully, kindly verify your email first.", Response::HTTP_ACCEPTED, $response);
         } catch (\Throwable $th) {
             DB::rollBack();
             return Helpers::returnJsonResponse(config('constants.RECORD_ERROR'), Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -83,5 +92,36 @@ class AuthController extends Controller
     {
         $request->user()->tokens()->delete();
         return Helpers::returnJsonResponse("Logout successfully", Response::HTTP_OK);
+    }
+
+    private function generateOTP($otpLength) 
+    {
+        $characters = '0123456789';
+
+        $charactersLength = strlen($characters);
+        $otp = '';
+        for ($i = 0; $i < $otpLength; $i++) {
+            $otp .= $characters[rand(0, $charactersLength - 1)];
+        }
+    
+        return $otp;
+    }
+
+    private function sendRegistrationEmail($to, $subject, $otp, $user) 
+    {
+        try {
+            $data = ['subject' => $subject, 'user' => $user, 'otp' => $otp];
+    
+            Mail::send('email.otp', $data, function ($message) use ($to, $subject, $data) {
+                $message->to($to)
+                    ->from('calciumandjoyjoy@gmail.com', 'Calcium and Joyjoy')
+                    ->subject($subject);
+            });
+    
+            return true;
+        } catch (\Exception $e) {
+            \Log::error("Error sending email to $to: " . $e->getMessage());
+            return false;
+        }
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Shoe;
+use App\Models\Product;
 use App\Http\Requests\ShoeRequest;
 use App\Models\Accessory;
 use Illuminate\Support\Facades\Storage;
@@ -17,7 +18,11 @@ class ShoeController extends Controller
         $sortOrder = $request->get('sortOrder', 'asc');  // Default sort order is 'asc'
 
         // Eager load variants and images, then sort
-        $shoes = Shoe::with(['variants', 'images'])->orderBy($sortField, $sortOrder)->get();
+        //$shoes = Shoe::with(['variants', 'images'])->orderBy($sortField, $sortOrder)->get();
+
+
+        //$shoes = Product::paginate(10);
+        $shoes = Product::all();
 
         return response()->json($shoes);
     }
@@ -56,9 +61,10 @@ class ShoeController extends Controller
         }
     }
 
-    public function show(Shoe $shoe)
+    public function show(Product $shoe)
     {
-        return response()->json($shoe->load(['variants', 'images', 'recommended_accessories']), 200);
+        //return response()->json($shoe->load(['variants', 'images', 'recommended_accessories']), 200);
+        return response()->json($shoe, 200);
     }
 
 
