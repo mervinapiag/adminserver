@@ -15,6 +15,12 @@ class productHasColor extends Model
         'product_color_id',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
+
     protected $with = ['color'];
 
     public function color()

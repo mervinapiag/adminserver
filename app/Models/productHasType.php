@@ -15,6 +15,12 @@ class productHasType extends Model
         'product_type_id',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
+
     protected $with = ['type'];
 
     public function type()

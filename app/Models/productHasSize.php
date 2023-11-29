@@ -15,6 +15,12 @@ class productHasSize extends Model
         'product_size_id',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
+
     protected $with = ['size'];
 
     public function size()

@@ -21,7 +21,7 @@ class ShoeController extends Controller
         //$shoes = Shoe::with(['variants', 'images'])->orderBy($sortField, $sortOrder)->get();
 
 
-        $shoes = Product::paginate(10);
+        //$shoes = Product::paginate(10);
         $shoes = Product::all();
 
         return response()->json($shoes);
@@ -61,9 +61,10 @@ class ShoeController extends Controller
         }
     }
 
-    public function show(Shoe $shoe)
+    public function show(Product $shoe)
     {
-        return response()->json($shoe->load(['variants', 'images', 'recommended_accessories']), 200);
+        //return response()->json($shoe->load(['variants', 'images', 'recommended_accessories']), 200);
+        return response()->json($shoe, 200);
     }
 
 
