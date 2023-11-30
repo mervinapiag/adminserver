@@ -89,6 +89,8 @@ Route::apiResource('shoes', ShoeController::class)->only([
     'index', 'show'
 ]);
 
+Route::get('mix-and-match', [ShoeController::class, 'mixAndMatch']);
+
 Route::apiResource('couriers', CourierController::class)->only([
     'index', 'show'
 ]);

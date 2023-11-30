@@ -13,6 +13,17 @@ class ShoesDatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // initialize data
+
+        // Seed product categories
+        $categories = ['Shoes', 'Socks', 'Accessories'];
+
+        foreach ($categories as $category) {
+            DB::table('product_categories')->insert([
+                'name' => $category,
+            ]);
+        }
+
         // Seed product brands
         $brands = ['Nike', 'Adidas', 'Jordan', 'Converse'];
 
@@ -49,7 +60,15 @@ class ShoesDatabaseSeeder extends Seeder
             ]);
         }
 
-        // Seed products
+        // run seeders
+        $this->seedShoes();
+        $this->seedSocks();
+        $this->seedAccessories();
+    }
+
+    private function seedShoes()
+    {
+        // Seed products for shoes
         $shoesData = [
             [
                 'name' => 'Air Max 270',
@@ -57,6 +76,7 @@ class ShoesDatabaseSeeder extends Seeder
                 'price' => 7499.99,
                 'gender' => 'male',
                 'socks' => 'mid',
+                'product_category_id' => 1,
                 'brand_id' => 1, // Nike
                 'status' => 'new',
                 'image' => ''
@@ -67,6 +87,7 @@ class ShoesDatabaseSeeder extends Seeder
                 'price' => 8999.99,
                 'gender' => 'female',
                 'socks' => 'low',
+                'product_category_id' => 1,
                 'brand_id' => 2, // Adidas
                 'status' => 'new',
                 'image' => ''
@@ -77,6 +98,7 @@ class ShoesDatabaseSeeder extends Seeder
                 'price' => 6499.99,
                 'gender' => 'male',
                 'socks' => 'high',
+                'product_category_id' => 1,
                 'brand_id' => 3, // Puma
                 'status' => 'new',
                 'image' => ''
@@ -87,6 +109,7 @@ class ShoesDatabaseSeeder extends Seeder
                 'price' => 4499.99,
                 'gender' => 'female',
                 'socks' => 'mid',
+                'product_category_id' => 1,
                 'brand_id' => 4, // Reebok
                 'status' => 'new',
                 'image' => ''
@@ -97,6 +120,7 @@ class ShoesDatabaseSeeder extends Seeder
                 'price' => 8999.99,
                 'gender' => 'unisex',
                 'socks' => 'low',
+                'product_category_id' => 1,
                 'brand_id' => 1, // Nike
                 'status' => 'new',
                 'image' => ''
@@ -107,6 +131,7 @@ class ShoesDatabaseSeeder extends Seeder
                 'price' => 5999.99,
                 'gender' => 'male',
                 'socks' => 'low',
+                'product_category_id' => 1,
                 'brand_id' => 2, // Adidas
                 'status' => 'new',
                 'image' => ''
@@ -117,6 +142,7 @@ class ShoesDatabaseSeeder extends Seeder
                 'price' => 6999.99,
                 'gender' => 'female',
                 'socks' => 'mid',
+                'product_category_id' => 1,
                 'brand_id' => 3, // Puma
                 'status' => 'new',
                 'image' => ''
@@ -127,6 +153,7 @@ class ShoesDatabaseSeeder extends Seeder
                 'price' => 3999.99,
                 'gender' => 'unisex',
                 'socks' => 'high',
+                'product_category_id' => 1,
                 'brand_id' => 4, // Reebok
                 'status' => 'new',
                 'image' => ''
@@ -137,6 +164,7 @@ class ShoesDatabaseSeeder extends Seeder
                 'price' => 9999.99,
                 'gender' => 'unisex',
                 'socks' => 'mid',
+                'product_category_id' => 1,
                 'brand_id' => 1, // Nike
                 'status' => 'new',
                 'image' => ''
@@ -147,6 +175,7 @@ class ShoesDatabaseSeeder extends Seeder
                 'price' => 7499.99,
                 'gender' => 'unisex',
                 'socks' => 'low',
+                'product_category_id' => 1,
                 'brand_id' => 2, // Adidas
                 'status' => 'new',
                 'image' => ''
@@ -156,7 +185,142 @@ class ShoesDatabaseSeeder extends Seeder
         foreach ($shoesData as $shoe) {
             $productId = DB::table('products')->insertGetId($shoe);
 
-            // Attach product types, sizes, and colors to the product
+            $this->attachProductRelations($productId);
+        }
+    }
+
+    private function seedSocks()
+    {
+        // Seed products for socks
+        $socksData = [
+            [
+                'name' => 'Comfort Crew Socks',
+                'description' => 'Soft and comfortable crew socks for everyday wear.',
+                'price' => 999.99,
+                'gender' => 'unisex',
+                'socks' => 'mid',
+                'product_category_id' => 2,
+                'brand_id' => $this->getRandomBrandId(),
+                'status' => 'new',
+                'image' => ''
+            ],
+            [
+                'name' => 'Active Ankle Socks',
+                'description' => 'Breathable ankle socks designed for active lifestyles.',
+                'price' => 799.99,
+                'gender' => 'unisex',
+                'socks' => 'low',
+                'product_category_id' => 2,
+                'brand_id' => $this->getRandomBrandId(),
+                'status' => 'new',
+                'image' => ''
+            ],
+            [
+                'name' => 'Cozy Wool Socks',
+                'description' => 'Warm and cozy wool socks for chilly days.',
+                'price' => 1299.99,
+                'gender' => 'unisex',
+                'socks' => 'high',
+                'product_category_id' => 2,
+                'brand_id' => $this->getRandomBrandId(),
+                'status' => 'new',
+                'image' => ''
+            ],
+            [
+                'name' => 'Running Compression Socks',
+                'description' => 'Compression socks designed to enhance performance during runs.',
+                'price' => 1099.99,
+                'gender' => 'unisex',
+                'socks' => 'mid',
+                'product_category_id' => 2,
+                'brand_id' => $this->getRandomBrandId(),
+                'status' => 'new',
+                'image' => ''
+            ],
+            [
+                'name' => 'Patterned Knee-High Socks',
+                'description' => 'Stylish knee-high socks with unique patterns.',
+                'price' => 899.99,
+                'gender' => 'female',
+                'socks' => 'high',
+                'product_category_id' => 2,
+                'brand_id' => $this->getRandomBrandId(),
+                'status' => 'new',
+                'image' => ''
+            ],
+        ];
+
+        foreach ($socksData as $sock) {
+            $productId = DB::table('products')->insertGetId($sock);
+
+            $this->attachProductRelations($productId);
+        }
+    }
+
+    private function seedAccessories()
+    {
+        // Seed products for accessories
+        $accessoriesData = [
+            [
+                'name' => 'Sporty Backpack',
+                'description' => 'A versatile backpack for carrying your essentials with style.',
+                'price' => 1499.99,
+                'gender' => 'unisex',
+                'socks' => 'low',
+                'product_category_id' => 3, 
+                'brand_id' => $this->getRandomBrandId(),
+                'status' => 'new',
+                'image' => ''
+            ],
+            [
+                'name' => 'Leather Belt',
+                'description' => 'Classic leather belt for a timeless look.',
+                'price' => 599.99,
+                'gender' => 'unisex',
+                'socks' => 'low',
+                'product_category_id' => 3, 
+                'brand_id' => $this->getRandomBrandId(),
+                'status' => 'new',
+                'image' => ''
+            ],
+            [
+                'name' => 'Reflective Running Armband',
+                'description' => 'Stay visible during night runs with this reflective armband.',
+                'price' => 299.99,
+                'gender' => 'unisex',
+                'socks' => 'low',
+                'product_category_id' => 3, 
+                'brand_id' => $this->getRandomBrandId(),
+                'status' => 'new',
+                'image' => ''
+            ],
+            [
+                'name' => 'Knit Beanie',
+                'description' => 'Keep warm in style with this cozy knit beanie.',
+                'price' => 799.99,
+                'gender' => 'unisex',
+                'socks' => 'mid',
+                'product_category_id' => 3, 
+                'brand_id' => $this->getRandomBrandId(),
+                'status' => 'new',
+                'image' => ''
+            ],
+            [
+                'name' => 'Smartphone Holder Arm Band',
+                'description' => 'Convenient arm band for securely holding your smartphone during workouts.',
+                'price' => 499.99,
+                'gender' => 'unisex',
+                'socks' => 'mid',
+                'product_category_id' => 3, 
+                'brand_id' => $this->getRandomBrandId(),
+                'status' => 'new',
+                'image' => ''
+            ],
+        ];
+
+        foreach ($accessoriesData as $accessory) {
+            $productId = DB::table('products')->insertGetId($accessory);
+
             $this->attachProductRelations($productId);
         }
     }
@@ -198,5 +362,18 @@ class ShoesDatabaseSeeder extends Seeder
                 'product_color_id' => $colorId,
             ]);
         }
+    }
+
+    private function getRandomBrandId()
+    {
+        $brands = DB::table('product_brands')->pluck('id')->toArray();
+
+        if (empty($brands)) {
+            return null;
+        }
+
+        shuffle($brands);
+
+        return array_shift($brands);
     }
 }
