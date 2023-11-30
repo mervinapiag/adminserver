@@ -70,6 +70,77 @@ class ShoeController extends Controller
         return response()->json($shoes);
     }
 
+    public function mixAndMatch(Request $request)
+    {
+        $type = $request->Type ?? null;
+        $brand = $request->Brand ?? null;
+        $gender = $request->Gender ?? null;
+        $socks = $request->Socks ?? null;
+        $sizes = $request->sizes ?? null;
+    
+        $shoes = Product::whereNull('products.deleted_at');
+    
+        if ($type !== null) {
+            $typeArray = explode('-', $type);
+            if (count($typeArray) > 0) {
+                $shoes->join('product_has_types', 'products.id', '=', 'product_has_types.product_id')
+                    ->join('product_types', 'product_has_types.product_type_id', '=', 'product_types.id')
+                    ->whereNull('product_has_types.deleted_at')
+                    ->whereIn('product_types.name', $typeArray);
+            }
+        }
+    
+        if ($brand !== null) {
+            $brandArray = explode('-', $brand);
+            if (count($brandArray) > 0) {
+                $shoes->join('product_brands', 'products.brand_id', '=', 'product_brands.id')
+                    ->whereNull('product_brands.deleted_at')
+                    ->whereIn('product_brands.name', $brandArray);
+            }
+        }
+    
+        if ($gender !== null) {
+            $genderArray = explode('-', $gender);
+            if (count($genderArray) > 0) {
+                $shoes->whereIn('products.gender', $genderArray);
+            }
+        }
+    
+        if ($socks !== null) {
+            $socksArray = explode('-', $socks);
+            if (count($socksArray) > 0) {
+                $shoes->whereIn('products.socks', $socksArray);
+            }
+        }
+    
+        if ($sizes !== null) {
+            $sizesArray = explode('-', $sizes);
+            if (count($sizesArray) > 0) {
+                $shoes->join('product_has_sizes', 'products.id', '=', 'product_has_sizes.product_id')
+                    ->join('product_sizes', 'product_has_sizes.product_size_id', '=', 'product_sizes.id')
+                    ->whereNull('product_has_sizes.deleted_at')
+                    ->whereIn('product_sizes.name', $sizesArray);
+            }
+        }
+
+        $shoes = $shoes->get();
+
+        $output = [
+            'shoes' => $shoes->filter(function ($product) {
+                return $product->product_category_id == 1;
+            })->values(), // shoes
+
+            'socks' => $shoes->filter(function ($product) {
+                return $product->product_category_id == 2;
+            })->values(), // socks
+
+            'accessories' => $shoes->filter(function ($product) {
+                return $product->product_category_id == 3;
+            })->values(), // accessories
+        ];
+    
+        return response()->json($output);
+    }
 
     public function store(ShoeRequest $request)
     {
