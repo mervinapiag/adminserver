@@ -14,7 +14,7 @@ class ShoesDatabaseSeeder extends Seeder
     public function run()
     {
         // Seed product brands
-        $brands = ['Nike', 'Adidas', 'Puma', 'Reebok'];
+        $brands = ['Nike', 'Adidas', 'Jordan', 'Converse'];
 
         foreach ($brands as $brand) {
             DB::table('product_brands')->insert([
@@ -23,7 +23,7 @@ class ShoesDatabaseSeeder extends Seeder
         }
 
         // Seed product types
-        $productTypes = ['Running Shoes', 'Sneakers', 'Formal Shoes', 'Casual Shoes'];
+        $productTypes = ['Lifestyle', 'Running', 'Basketball', 'Training'];
 
         foreach ($productTypes as $type) {
             DB::table('product_types')->insert([
