@@ -17,11 +17,22 @@ class Product extends Model
         'status',
         'gender',
         'socks',
+        'product_category_id',
         'brand_id',
         'image',
     ];
 
-    protected $with = ['brand', 'types', 'sizes', 'colors'];
+    protected $with = ['category', 'brand', 'types', 'sizes', 'colors'];
+
+    public function getTypesAttribute()
+    {
+        return $this->types()->pluck('type.name')->toArray();
+    }
+    
+    public function category()
+    {
+        return $this->belongsTo('App\Models\ProductCategory', 'product_category_id');
+    }
 
     public function brand()
     {
