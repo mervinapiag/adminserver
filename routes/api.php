@@ -17,6 +17,7 @@ use App\Http\Controllers\SiteSettings\HelpCenterController;
 use App\Http\Controllers\SiteSettings\SiteSettingsController;
 use App\Http\Controllers\User\CustomerController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,6 +91,26 @@ Route::apiResource('shoes', ShoeController::class)->only([
 ]);
 
 Route::get('mix-and-match', [ShoeController::class, 'mixAndMatch']);
+
+/* carts */
+
+Route::get('/carts', '\App\Http\Controllers\CartController@index');
+
+Route::post('/carts/store', [
+    'uses' => '\App\Http\Controllers\CartController@store',
+    'as' => 'carts.store'
+]);
+
+Route::post('/carts/{id}/update',
+    ['as' => 'carts.update',
+        'uses' => '\App\Http\Controllers\CartController@update']
+);
+
+Route::delete('/carts/{id}/delete',
+    ['as' => 'carts.delete',
+        'uses' => '\App\Http\Controllers\CartController@destroy']
+);
+
 
 Route::apiResource('couriers', CourierController::class)->only([
     'index', 'show'
