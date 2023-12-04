@@ -127,3 +127,9 @@ Route::apiResource('special-offers', SpecialOfferController::class)->only([
 Route::get('shoes/{shoe}/variants', [ShoeController::class, 'getVariants']);
 Route::get('shoes/{shoe}/images', [ShoeController::class, 'getImages']);
 Route::get('accessories/{accessory}/images', [AccessoryController::class, 'getImages']);
+
+/* OTP */
+Route::post('/otp/verify', [
+    'uses' => '\App\Http\Controllers\OTPController@verify',
+    'as' => 'api.otp.verify'
+]);
