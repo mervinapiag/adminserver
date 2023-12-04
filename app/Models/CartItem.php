@@ -6,17 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ProductColor extends Model
+class CartItem extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'name',
-    ];
-
-    protected $hidden = [
-        'created_at',
-        'updated_at',
-        'deleted_at'
+        'checkout_id',
+        'product_id',
+        'size',
+        'session_id',
+        'user_id',
+        'quantity',
+        'price',
+        'total',
     ];
 }

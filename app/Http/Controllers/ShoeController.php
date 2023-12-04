@@ -14,114 +14,111 @@ class ShoeController extends Controller
 {
     public function index(Request $request)
     {
-        $type = $request->Type ?? null;
-        $brand = $request->Brand ?? null;
-        $gender = $request->Gender ?? null;
-        $socks = $request->Socks ?? null;
-        $sizes = $request->sizes ?? null;
-    
+        $type = $request->input('Type');
+        $brand = $request->input('Brand');
+        $gender = $request->input('Gender');
+        $socks = $request->input('Socks');
+        $sizes = $request->input('sizes');
+
         $shoes = Product::whereNull('products.deleted_at');
-    
-        if ($type !== null) {
+
+        if ($type) {
             $typeArray = explode('-', $type);
-            if (count($typeArray) > 0) {
-                $shoes->join('product_has_types', 'products.id', '=', 'product_has_types.product_id')
-                    ->join('product_types', 'product_has_types.product_type_id', '=', 'product_types.id')
-                    ->whereNull('product_has_types.deleted_at')
-                    ->whereIn('product_types.name', $typeArray);
+            if (!empty($typeArray)) {
+                $shoes->whereHas('types.type', function ($query) use ($typeArray) {
+                    $query->whereIn('name', $typeArray);
+                });
             }
         }
-    
-        if ($brand !== null) {
+
+        if ($brand) {
             $brandArray = explode('-', $brand);
-            if (count($brandArray) > 0) {
-                $shoes->join('product_brands', 'products.brand_id', '=', 'product_brands.id')
-                    ->whereNull('product_brands.deleted_at')
-                    ->whereIn('product_brands.name', $brandArray);
+            if (!empty($brandArray)) {
+                $shoes->whereHas('brand', function ($query) use ($brandArray) {
+                    $query->whereIn('product_brands.name', $brandArray);
+                });
             }
         }
-    
-        if ($gender !== null) {
+        
+        if ($gender) {
             $genderArray = explode('-', $gender);
-            if (count($genderArray) > 0) {
+            if (!empty($genderArray)) {
                 $shoes->whereIn('products.gender', $genderArray);
             }
         }
-    
-        if ($socks !== null) {
+        
+        if ($socks) {
             $socksArray = explode('-', $socks);
-            if (count($socksArray) > 0) {
+            if (!empty($socksArray)) {
                 $shoes->whereIn('products.socks', $socksArray);
             }
         }
-    
-        if ($sizes !== null) {
+        
+        if ($sizes) {
             $sizesArray = explode('-', $sizes);
-            if (count($sizesArray) > 0) {
-                $shoes->join('product_has_sizes', 'products.id', '=', 'product_has_sizes.product_id')
-                    ->join('product_sizes', 'product_has_sizes.product_size_id', '=', 'product_sizes.id')
-                    ->whereNull('product_has_sizes.deleted_at')
-                    ->whereIn('product_sizes.name', $sizesArray);
+            if (!empty($sizesArray)) {
+                $shoes->whereHas('sizes.size', function ($query) use ($sizesArray) {
+                    $query->whereIn('name', $sizesArray);
+                });
             }
-        }
-    
+        }    
+
         $shoes = $shoes->get();
-    
+
         return response()->json($shoes);
     }
 
+
     public function mixAndMatch(Request $request)
     {
-        $type = $request->Type ?? null;
-        $brand = $request->Brand ?? null;
-        $gender = $request->Gender ?? null;
-        $socks = $request->Socks ?? null;
-        $sizes = $request->sizes ?? null;
-    
+        $type = $request->input('Type');
+        $brand = $request->input('Brand');
+        $gender = $request->input('Gender');
+        $socks = $request->input('Socks');
+        $sizes = $request->input('sizes');
+
         $shoes = Product::whereNull('products.deleted_at');
-    
-        if ($type !== null) {
+
+        if ($type) {
             $typeArray = explode('-', $type);
-            if (count($typeArray) > 0) {
-                $shoes->join('product_has_types', 'products.id', '=', 'product_has_types.product_id')
-                    ->join('product_types', 'product_has_types.product_type_id', '=', 'product_types.id')
-                    ->whereNull('product_has_types.deleted_at')
-                    ->whereIn('product_types.name', $typeArray);
+            if (!empty($typeArray)) {
+                $shoes->whereHas('types.type', function ($query) use ($typeArray) {
+                    $query->whereIn('name', $typeArray);
+                });
             }
         }
-    
-        if ($brand !== null) {
+
+        if ($brand) {
             $brandArray = explode('-', $brand);
-            if (count($brandArray) > 0) {
-                $shoes->join('product_brands', 'products.brand_id', '=', 'product_brands.id')
-                    ->whereNull('product_brands.deleted_at')
-                    ->whereIn('product_brands.name', $brandArray);
+            if (!empty($brandArray)) {
+                $shoes->whereHas('brand', function ($query) use ($brandArray) {
+                    $query->whereIn('product_brands.name', $brandArray);
+                });
             }
         }
-    
-        if ($gender !== null) {
+        
+        if ($gender) {
             $genderArray = explode('-', $gender);
-            if (count($genderArray) > 0) {
+            if (!empty($genderArray)) {
                 $shoes->whereIn('products.gender', $genderArray);
             }
         }
-    
-        if ($socks !== null) {
+        
+        if ($socks) {
             $socksArray = explode('-', $socks);
-            if (count($socksArray) > 0) {
+            if (!empty($socksArray)) {
                 $shoes->whereIn('products.socks', $socksArray);
             }
         }
-    
-        if ($sizes !== null) {
+        
+        if ($sizes) {
             $sizesArray = explode('-', $sizes);
-            if (count($sizesArray) > 0) {
-                $shoes->join('product_has_sizes', 'products.id', '=', 'product_has_sizes.product_id')
-                    ->join('product_sizes', 'product_has_sizes.product_size_id', '=', 'product_sizes.id')
-                    ->whereNull('product_has_sizes.deleted_at')
-                    ->whereIn('product_sizes.name', $sizesArray);
+            if (!empty($sizesArray)) {
+                $shoes->whereHas('sizes.size', function ($query) use ($sizesArray) {
+                    $query->whereIn('name', $sizesArray);
+                });
             }
-        }
+        }  
 
         $shoes = $shoes->get();
 

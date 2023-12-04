@@ -71,6 +71,12 @@ class AuthController extends Controller
         Auth::attempt(['email' => $request->email, 'password' => $request->password]);
         $user = auth()->user();
 
+        if ($user->otp != 'verified') {
+            $user->tokens()->delete();
+
+            return Helpers::returnJsonResponse(config('constants.ACCOUNT_NOT_VERIFIED'), Response::HTTP_FORBIDDEN);
+        }
+
         if ($user->suspended) {
             $user->tokens()->delete();
 
