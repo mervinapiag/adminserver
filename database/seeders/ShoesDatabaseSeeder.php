@@ -13,10 +13,21 @@ class ShoesDatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // Truncate tables
+        DB::table('product_has_types')->truncate();
+        DB::table('product_has_sizes')->truncate();
+        DB::table('product_has_colors')->truncate();
+        DB::table('products')->truncate();
+        DB::table('product_brands')->truncate();
+        DB::table('product_categories')->truncate();
+        DB::table('product_types')->truncate();
+        DB::table('product_sizes')->truncate();
+        DB::table('product_colors')->truncate();
+
         // initialize data
 
         // Seed product categories
-        $categories = ['Shoes', 'Socks', 'Accessories'];
+        $categories = ['Shoes', 'Socks', 'Accessories']; // add more
 
         foreach ($categories as $category) {
             DB::table('product_categories')->insert([
@@ -25,7 +36,7 @@ class ShoesDatabaseSeeder extends Seeder
         }
 
         // Seed product brands
-        $brands = ['Nike', 'Adidas', 'Jordan', 'Converse'];
+        $brands = ['Nike', 'Adidas', 'Jordan', 'Converse']; // add more
 
         foreach ($brands as $brand) {
             DB::table('product_brands')->insert([
@@ -34,7 +45,7 @@ class ShoesDatabaseSeeder extends Seeder
         }
 
         // Seed product types
-        $productTypes = ['Lifestyle', 'Running', 'Basketball', 'Training'];
+        $productTypes = ['Lifestyle', 'Running', 'Basketball', 'Training']; // add more
 
         foreach ($productTypes as $type) {
             DB::table('product_types')->insert([
@@ -43,7 +54,7 @@ class ShoesDatabaseSeeder extends Seeder
         }
 
         // Seed product sizes
-        $productSizes = ['US 7', 'US 7.5', 'US 8', 'US 8.5', 'US 9', 'US 9.5', 'US 10', 'US 10.5'];
+        $productSizes = ['US 7', 'US 7.5', 'US 8', 'US 8.5', 'US 9', 'US 9.5', 'US 10', 'US 10.5']; // add more
 
         foreach ($productSizes as $size) {
             DB::table('product_sizes')->insert([
@@ -52,7 +63,7 @@ class ShoesDatabaseSeeder extends Seeder
         }
 
         // Seed product colors
-        $productColors = ['Red', 'Blue', 'Green', 'Black', 'White'];
+        $productColors = ['Red', 'Blue', 'Green', 'Black', 'White']; // add more
 
         foreach ($productColors as $color) {
             DB::table('product_colors')->insert([
@@ -99,7 +110,7 @@ class ShoesDatabaseSeeder extends Seeder
                 'gender' => 'male',
                 'socks' => 'high',
                 'product_category_id' => 1,
-                'brand_id' => 3, // Puma
+                'brand_id' => 3, // Jordan
                 'status' => 'new',
                 'image' => ''
             ],
@@ -110,7 +121,7 @@ class ShoesDatabaseSeeder extends Seeder
                 'gender' => 'female',
                 'socks' => 'mid',
                 'product_category_id' => 1,
-                'brand_id' => 4, // Reebok
+                'brand_id' => 4, // Converse
                 'status' => 'new',
                 'image' => ''
             ],
@@ -143,7 +154,7 @@ class ShoesDatabaseSeeder extends Seeder
                 'gender' => 'female',
                 'socks' => 'mid',
                 'product_category_id' => 1,
-                'brand_id' => 3, // Puma
+                'brand_id' => 3, // Jordan
                 'status' => 'new',
                 'image' => ''
             ],
@@ -154,7 +165,7 @@ class ShoesDatabaseSeeder extends Seeder
                 'gender' => 'unisex',
                 'socks' => 'high',
                 'product_category_id' => 1,
-                'brand_id' => 4, // Reebok
+                'brand_id' => 4, // Converse
                 'status' => 'new',
                 'image' => ''
             ],
@@ -180,6 +191,7 @@ class ShoesDatabaseSeeder extends Seeder
                 'status' => 'new',
                 'image' => ''
             ],
+            // add more
         ];
 
         foreach ($shoesData as $shoe) {
@@ -248,6 +260,7 @@ class ShoesDatabaseSeeder extends Seeder
                 'status' => 'new',
                 'image' => ''
             ],
+            // add more
         ];
 
         foreach ($socksData as $sock) {
@@ -316,6 +329,7 @@ class ShoesDatabaseSeeder extends Seeder
                 'status' => 'new',
                 'image' => ''
             ],
+            // add more
         ];
 
         foreach ($accessoriesData as $accessory) {
