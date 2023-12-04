@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\ProductBrand;
+use App\Models\ProductCategory;
+use App\Models\ProductColor;
+use App\Models\ProductSize;
+use App\Models\ProductType;
+
 class ShoeController extends Controller
 {
     public function index(Request $request)
@@ -234,5 +240,40 @@ class ShoeController extends Controller
     public function getImages(Shoe $shoe)
     {
         return response()->json($shoe->images);
+    }
+
+    public function getTypes()
+    {
+        $data = ProductType::whereNull('deleted_at')->get();
+
+        return response()->json($data);
+    }
+
+    public function getCategories()
+    {
+        $data = ProductCategory::whereNull('deleted_at')->get();
+
+        return response()->json($data);
+    }
+
+    public function getBrands()
+    {
+        $data = ProductBrand::whereNull('deleted_at')->get();
+
+        return response()->json($data);
+    }
+
+    public function getSizes()
+    {
+        $data = ProductSize::whereNull('deleted_at')->get();
+
+        return response()->json($data);
+    }
+
+    public function getColors()
+    {
+        $data = ProductColor::whereNull('deleted_at')->get();
+
+        return response()->json($data);
     }
 }

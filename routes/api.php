@@ -142,3 +142,16 @@ Route::post('/checkout', [
     'uses' => '\App\Http\Controllers\CheckoutController@processCheckout',
     'as' => 'api.checkout.process'
 ]);
+
+/* ADMIN */
+/* will add auth / middlewares afterwards */
+
+// display products
+Route::get('admin/prdoucts', [ShoeController::class, 'index']);
+
+Route::get('admin/product/types', [ShoeController::class, 'getTypes']);
+Route::get('admin/product/categories', [ShoeController::class, 'getCategories']);
+Route::get('admin/product/brands', [ShoeController::class, 'getBrands']);
+Route::get('admin/product/sizes', [ShoeController::class, 'getSizes']);
+Route::get('admin/product/colors', [ShoeController::class, 'getColors']);
+/* ADMIN */
