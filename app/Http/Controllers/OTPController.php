@@ -14,6 +14,12 @@ class OTPController extends Controller
 
         $user = User::where('email', $email)->where('otp', $otp)->first();
         if ($user) {
+            if ($user->otp == 'verified') {
+                return response()->json([
+                    'Account already verified.'
+                ], 200);    
+            }
+
             $user->otp = 'verified';
             $user->save();
 

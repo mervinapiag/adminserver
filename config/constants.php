@@ -7,5 +7,6 @@ return [
     "RECORD_INFO" => "Record information",
     "RECORD_UPDATED" => "Record has been updated",
     "RECORD_DELETED" => "Record has been deleted",
-    "ACCOUNT_SUSPENDED" => "Account suspended"
+    "ACCOUNT_SUSPENDED" => "Account suspended",
+    "ACCOUNT_NOT_VERIFIED" => "Account not verified"
 ];

@@ -43,6 +43,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('user/me', [UserController::class, 'me']);
     Route::post('user/update', [UserController::class, 'updateInfo']);
 
+    Route::get('user/orders', [UserController::class, 'orders']);
+    Route::get('user/orders/{id}', [UserController::class, 'ordersDetail']);
+
     // For admin only
     Route::middleware(['admin'])->group(function () {
         // For custom controller functions
@@ -132,4 +135,10 @@ Route::get('accessories/{accessory}/images', [AccessoryController::class, 'getIm
 Route::post('/otp/verify', [
     'uses' => '\App\Http\Controllers\OTPController@verify',
     'as' => 'api.otp.verify'
+]);
+
+/* Checkout */
+Route::post('/checkout', [
+    'uses' => '\App\Http\Controllers\CheckoutController@processCheckout',
+    'as' => 'api.checkout.process'
 ]);
