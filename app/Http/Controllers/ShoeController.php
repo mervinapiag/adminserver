@@ -24,7 +24,7 @@ class ShoeController extends Controller
         $brand = $request->input('Brand');
         $gender = $request->input('Gender');
         $socks = $request->input('Socks');
-        $sizes = $request->input('sizes');
+        $sizes = $request->input('Sizes');
 
         $shoes = Product::whereNull('products.deleted_at');
 
@@ -81,7 +81,7 @@ class ShoeController extends Controller
         $brand = $request->input('Brand');
         $gender = $request->input('Gender');
         $socks = $request->input('Socks');
-        $sizes = $request->input('sizes');
+        $sizes = $request->input('Sizes');
 
         $shoes = Product::whereNull('products.deleted_at');
 

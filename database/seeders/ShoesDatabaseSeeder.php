@@ -13,6 +13,12 @@ class ShoesDatabaseSeeder extends Seeder
      */
     public function run()
     {
+        /* 
+            HOW TO RUN
+            open terminal, run
+            php artisan db:seed --clas="ShoesDatabaseSeeder"
+        */
+
         // Truncate tables
         DB::table('product_has_types')->truncate();
         DB::table('product_has_sizes')->truncate();
@@ -54,7 +60,7 @@ class ShoesDatabaseSeeder extends Seeder
         }
 
         // Seed product sizes
-        $productSizes = ['US 7', 'US 7.5', 'US 8', 'US 8.5', 'US 9', 'US 9.5', 'US 10', 'US 10.5']; // add more
+        $productSizes = ['7', '7.5', '8', '8.5', '9', '9.5', '10', '10.5']; // add more
 
         foreach ($productSizes as $size) {
             DB::table('product_sizes')->insert([
