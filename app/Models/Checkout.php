@@ -26,6 +26,10 @@ class Checkout extends Model
         'payment_method',
         'receipt_img',
         'grand_total',
+        'tracking_number',
+        'tracking_url',
+        'estimated_delivery_date',
+        'delivery_status',
         'status',
     ];
 

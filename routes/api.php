@@ -46,6 +46,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('user/orders', [UserController::class, 'orders']);
     Route::get('user/orders/{id}', [UserController::class, 'ordersDetail']);
 
+    // address
+    Route::get('user/address', [UserController::class, 'address']);
+    Route::post('user/address/store', [UserController::class, 'addressStore']);
+    Route::post('user/address/update', [UserController::class, 'addressUpdate']);
+    Route::post('user/address/delete', [UserController::class, 'addressDelete']);
+
+    Route::get('user/wishlist', [UserController::class, 'wishlist']);
+    Route::post('user/wishlist/store', [UserController::class, 'wishlistStore']);
+
     // For admin only
     Route::middleware(['admin'])->group(function () {
         // For custom controller functions
@@ -147,11 +156,13 @@ Route::post('/checkout', [
 /* will add auth / middlewares afterwards */
 
 // display products
-Route::get('admin/prdoucts', [ShoeController::class, 'index']);
+Route::get('admin/product', [ShoeController::class, 'index']);
 
 Route::get('admin/product/types', [ShoeController::class, 'getTypes']);
 Route::get('admin/product/categories', [ShoeController::class, 'getCategories']);
 Route::get('admin/product/brands', [ShoeController::class, 'getBrands']);
 Route::get('admin/product/sizes', [ShoeController::class, 'getSizes']);
 Route::get('admin/product/colors', [ShoeController::class, 'getColors']);
+
+Route::get('all-payments', [PaymentOptionController::class, 'getAllpayments']);
 /* ADMIN */

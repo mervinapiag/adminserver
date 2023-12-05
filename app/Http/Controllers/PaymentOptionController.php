@@ -84,4 +84,11 @@ class PaymentOptionController extends Controller
             return Helpers::returnJsonResponse(config('constants.RECORD_ERROR'), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function getAllpayments()
+    {
+        $data = PaymentOption::where('active', 1)->get();
+
+        return Helpers::returnJsonResponse("Payment Options", Response::HTTP_OK, $data);
+    }
 }
