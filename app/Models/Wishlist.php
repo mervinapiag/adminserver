@@ -20,4 +20,11 @@ class Wishlist extends Model
         'updated_at',
         'deleted_at'
     ];
+
+    protected $with = ['product'];
+
+    public function product()
+    {
+        return $this->belongsTo('App\Models\Product', 'product_id');
+    }
 }
