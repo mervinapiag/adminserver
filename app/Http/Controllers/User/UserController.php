@@ -23,7 +23,7 @@ class UserController extends Controller
 
     public function updateInfo(Request $request)
     {
-        $user = $request->user();
+        $user = new UserResource($request->user());
         $data = $request->all();
 
         try {
@@ -39,7 +39,7 @@ class UserController extends Controller
 
     public function orders(Request $request)
     {
-        $user = $request->user();
+        $user = new UserResource($request->user());
         $orders = Checkout::where('user_id', $user->id)->get();
 
         return Helpers::returnJsonResponse("User Orders", Response::HTTP_OK, $orders);
@@ -47,7 +47,7 @@ class UserController extends Controller
 
     public function ordersDetail($id)
     {
-        $user = $request->user();
+        $user = new UserResource($request->user());
         $order = Checkout::where('user_id', $user->id)->where('id', $id)->first();
 
         return Helpers::returnJsonResponse("Orders Details", Response::HTTP_OK, $order);
@@ -55,7 +55,7 @@ class UserController extends Controller
 
     public function address(Request $request)
     {
-        $user = $request->user();
+        $user = new UserResource($request->user());
         $data = UserShippingAddress::where('user_id', $user->id)->get();
 
         return Helpers::returnJsonResponse("User Address", Response::HTTP_OK, $data);
@@ -63,7 +63,7 @@ class UserController extends Controller
 
     public function addressStore(Request $request)
     {
-        $user = $request->user();
+        $user = new UserResource($request->user());
         $data = UserShippingAddress::where('user_id', $user->id)->get();
 
         if (count($data) <= 3) {
@@ -113,7 +113,7 @@ class UserController extends Controller
 
     public function wishlist(Request $request)
     {
-        $user = $request->user();
+        $user = new UserResource($request->user());
         $data = Wishlist::find($user->id)->get();
 
         return Helpers::returnJsonResponse("User's Wishlist", Response::HTTP_OK, $data);
@@ -122,7 +122,7 @@ class UserController extends Controller
     public function wishlistStore(Request $request)
     {
         try {
-            $user = $request->user();
+            $user = new UserResource($request->user());
             $data = Wishlist::create([
                 'user_id' => $user->id,
                 'product_id' => $request->product_id,
