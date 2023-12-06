@@ -114,7 +114,7 @@ class UserController extends Controller
     public function wishlist(Request $request)
     {
         $user = new UserResource($request->user());
-        $data = Wishlist::find($user->id)->get();
+        $data = Wishlist::where('user_id', $user->id)->get();
 
         return Helpers::returnJsonResponse("User's Wishlist", Response::HTTP_OK, $data);
     }
