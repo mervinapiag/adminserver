@@ -34,6 +34,8 @@ use App\Http\Controllers\User\CartController;
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
+Route::post('admin/login', [AuthController::class, 'adminLogin']);
+
 // Protected routes - Requires authentication
 Route::middleware(['auth:sanctum'])->group(function () {
     // For logout
@@ -159,10 +161,29 @@ Route::post('/checkout', [
 Route::get('admin/product', [ShoeController::class, 'index']);
 
 Route::get('admin/product/types', [ShoeController::class, 'getTypes']);
+Route::post('admin/product/types/store', [ShoeController::class, 'typesStore'])->name('admin.product_types.store');
+Route::post('admin/product/types/update/{id}', [ShoeController::class, 'typesUpdate'])->name('admin.product_types.update');
+Route::delete('admin/product/types/delete/{id}', [ShoeController::class, 'typesDelete'])->name('admin.product_types.delete');
+
 Route::get('admin/product/categories', [ShoeController::class, 'getCategories']);
+Route::post('admin/product/categories/store', [ShoeController::class, 'categoriesStore'])->name('admin.product_categories.store');
+Route::post('admin/product/categories/update/{id}', [ShoeController::class, 'categoriesUpdate'])->name('admin.product_categories.update');
+Route::delete('admin/product/categories/delete/{id}', [ShoeController::class, 'categoriesDelete'])->name('admin.product_categories.delete');
+
 Route::get('admin/product/brands', [ShoeController::class, 'getBrands']);
+Route::post('admin/product/brands/store', [ShoeController::class, 'brandsStore'])->name('admin.product_brands.store');
+Route::post('admin/product/brands/update/{id}', [ShoeController::class, 'brandsUpdate'])->name('admin.product_brands.update');
+Route::delete('admin/product/brands/delete/{id}', [ShoeController::class, 'brandsDelete'])->name('admin.product_brands.delete');
+
 Route::get('admin/product/sizes', [ShoeController::class, 'getSizes']);
+Route::post('admin/product/sizes/store', [ShoeController::class, 'sizesStore'])->name('admin.product_sizes.store');
+Route::post('admin/product/sizes/update/{id}', [ShoeController::class, 'sizesUpdate'])->name('admin.product_sizes.update');
+Route::delete('admin/product/sizes/delete/{id}', [ShoeController::class, 'sizesDelete'])->name('admin.product_sizes.delete');
+
 Route::get('admin/product/colors', [ShoeController::class, 'getColors']);
+Route::post('admin/product/colors/store', [ShoeController::class, 'colorsStore'])->name('admin.product_colors.store');
+Route::post('admin/product/colors/update/{id}', [ShoeController::class, 'colorsUpdate'])->name('admin.product_colors.update');
+Route::delete('admin/product/colors/delete/{id}', [ShoeController::class, 'colorsDelete'])->name('admin.product_colors.delete');
 
 Route::get('all-payments', [PaymentOptionController::class, 'getAllpayments']);
 /* ADMIN */

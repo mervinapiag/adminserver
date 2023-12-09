@@ -249,11 +249,57 @@ class ShoeController extends Controller
         return response()->json($data);
     }
 
+    public function typesStore(Request $request)
+    {
+        $input = $request->all();
+        $data = ProductType::create($input);
+
+        return response()->json($data, 201);
+    }
+
+    public function typesUpdate(Request $request, $id)
+    {
+        $input = $request->all();
+        $data = ProductType::find($id)->update($input);
+
+        return response()->json($data, 201);
+    }
+
+    public function typesDelete(Request $request, $id)
+    {
+        $data = ProductType::find($id)->delete();
+
+        return response()->json(null, 204);
+    }
+
     public function getCategories()
     {
         $data = ProductCategory::whereNull('deleted_at')->get();
 
         return response()->json($data);
+    }
+
+    public function categoriesStore(Request $request)
+    {
+        $input = $request->all();
+        $data = ProductCategory::create($input);
+
+        return response()->json($data, 201);
+    }
+
+    public function categoriesUpdate(Request $request, $id)
+    {
+        $input = $request->all();
+        $data = ProductCategory::find($id)->update($input);
+
+        return response()->json($data, 201);
+    }
+
+    public function categoriesDelete(Request $request, $id)
+    {
+        $data = ProductCategory::find($id)->delete();
+
+        return response()->json(null, 204);
     }
 
     public function getBrands()
@@ -263,6 +309,29 @@ class ShoeController extends Controller
         return response()->json($data);
     }
 
+    public function brandsStore(Request $request)
+    {
+        $input = $request->all();
+        $data = ProductBrand::create($input);
+
+        return response()->json($data, 201);
+    }
+
+    public function brandsUpdate(Request $request, $id)
+    {
+        $input = $request->all();
+        $data = ProductBrand::find($id)->update($input);
+
+        return response()->json($data, 201);
+    }
+
+    public function brandsDelete(Request $request, $id)
+    {
+        $data = ProductBrand::find($id)->delete();
+
+        return response()->json(null, 204);
+    }
+
     public function getSizes()
     {
         $data = ProductSize::whereNull('deleted_at')->get();
@@ -270,10 +339,56 @@ class ShoeController extends Controller
         return response()->json($data);
     }
 
+    public function sizesStore(Request $request)
+    {
+        $input = $request->all();
+        $data = ProductSize::create($input);
+
+        return response()->json($data, 201);
+    }
+
+    public function sizesUpdate(Request $request, $id)
+    {
+        $input = $request->all();
+        $data = ProductSize::find($id)->update($input);
+
+        return response()->json($data, 201);
+    }
+
+    public function sizesDelete(Request $request, $id)
+    {
+        $data = ProductSize::find($id)->delete();
+
+        return response()->json(null, 204);
+    }
+
     public function getColors()
     {
         $data = ProductColor::whereNull('deleted_at')->get();
 
         return response()->json($data);
+    }
+
+    public function colorsStore(Request $request)
+    {
+        $input = $request->all();
+        $data = ProductColor::create($input);
+
+        return response()->json($data, 201);
+    }
+
+    public function colorsUpdate(Request $request, $id)
+    {
+        $input = $request->all();
+        $data = ProductColor::find($id)->update($input);
+
+        return response()->json($data, 201);
+    }
+
+    public function colorsDelete(Request $request, $id)
+    {
+        $data = ProductColor::find($id)->delete();
+
+        return response()->json(null, 204);
     }
 }
