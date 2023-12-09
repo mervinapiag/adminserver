@@ -68,7 +68,7 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request)
     {
-        Auth::attempt(['email' => $request->email, 'password' => $request->password]);
+        Auth::attempt(['email' => $request->email, 'password' => $request->password, 'role_id' => 1]);
         $user = auth()->user();
 
         if ($user->otp != 'verified') {
@@ -129,5 +129,21 @@ class AuthController extends Controller
             \Log::error("Error sending email to $to: " . $e->getMessage());
             return false;
         }
+    }
+
+    public function adminLogin(LoginRequest $request)
+    {
+        Auth::attempt(['email' => $request->email, 'password' => $request->password, 'role_id' => 2]);
+        $user = auth()->user();
+
+        if ($user) {
+            $response = [
+                'token' => $user->createToken(config("app.key"))->plainTextToken,
+                'user_info' => new UserResource($user)
+            ];
+        } else {
+            return Helpers::returnJsonResponse("Credentials doesn't match our records.", Response::HTTP_OK);
+        }
+        return Helpers::returnJsonResponse("Login successfully", Response::HTTP_OK, $response);
     }
 }

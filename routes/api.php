@@ -34,6 +34,8 @@ use App\Http\Controllers\User\CartController;
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
+Route::post('admin/login', [AuthController::class, 'adminLogin']);
+
 // Protected routes - Requires authentication
 Route::middleware(['auth:sanctum'])->group(function () {
     // For logout
