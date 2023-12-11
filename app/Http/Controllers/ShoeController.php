@@ -158,7 +158,7 @@ class ShoeController extends Controller
                 $data['image'] = $imageName;
             }
 
-            $shoe = Shoe::create([
+            $shoe = Product::create([
                 'name' => $data['name'],
                 'description' => $data['description'],
                 'price' => $data['price'],
@@ -169,23 +169,26 @@ class ShoeController extends Controller
                 'status' => $data['status'],
                 'image' => $data['image'],
             ]);
-
-            foreach ($data['types'] as $type) {
+            
+            foreach ($data['types'] as $t) {
+                $type = ProductType::whereName($t)->first();
                 DB::table('product_has_types')->insert([
                     'product_id' => $shoe->id,
                     'product_type_id' => $type->id,
                 ]);
             }
-
-            foreach ($data['sizes'] as $size) {
+            
+            foreach ($data['sizes'] as $s) {
+                $size = ProductSize::whereName($s)->first();
                 DB::table('product_has_sizes')->insert([
                     'product_id' => $shoe->id,
                     'product_size_id' => $size->id,
                 ]);
             }
 
-            foreach ($data['colors'] as $color) {
-                DB::table('product_has_sizes')->insert([
+            foreach ($data['colors'] as $c) {
+                $color = ProductColor::whereName($c)->first();
+                DB::table('product_has_colors')->insert([
                     'product_id' => $shoe->id,
                     'product_color_id' => $color->id,
                 ]);
