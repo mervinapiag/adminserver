@@ -149,7 +149,7 @@ class ShoeController extends Controller
     {
 
         try {
-            $data = $request->validated();
+            $data = $request->all();
             DB::beginTransaction();
             // Check if an image is uploaded
             if ($request->hasFile('image')) {
@@ -219,7 +219,7 @@ class ShoeController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $data = $request->validated();
+            $data = $request->all();
             $shoe = Product::find($id);
             // Check if a new image is uploaded
             if ($request->hasFile('image')) {
