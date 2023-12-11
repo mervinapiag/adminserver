@@ -22,4 +22,18 @@ class Helpers
                 ], $httpStatus);
         }
     }
+
+    public static function permission_check($value)
+    {
+        if (auth()->check()) {
+            $permission = json_decode(auth()->user()->userRole->permissions);
+            if (in_array($value, $permission)) {
+                return true;            
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }

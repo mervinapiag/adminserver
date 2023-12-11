@@ -145,7 +145,7 @@ class ShoeController extends Controller
         return response()->json($output);
     }
 
-    public function store(ShoeRequest $request)
+    public function store(Request $request)
     {
 
         try {
@@ -158,22 +158,53 @@ class ShoeController extends Controller
                 $data['image'] = $imageName;
             }
 
-            $shoe = Shoe::create($data);
+            $shoe = Shoe::create([
+                'name' => $data['name'],
+                'description' => $data['description'],
+                'price' => $data['price'],
+                'gender' => $data['gender'],
+                'socks' => $data['socks'],
+                'product_category_id' => $data['product_category_id'],
+                'brand_id' => $data['brand_id'],
+                'status' => $data['status'],
+                'image' => $data['image'],
+            ]);
+
+            foreach ($data['types'] as $type) {
+                DB::table('product_has_types')->insert([
+                    'product_id' => $shoe->id,
+                    'product_type_id' => $type->id,
+                ]);
+            }
+
+            foreach ($data['sizes'] as $size) {
+                DB::table('product_has_sizes')->insert([
+                    'product_id' => $shoe->id,
+                    'product_size_id' => $size->id,
+                ]);
+            }
+
+            foreach ($data['colors'] as $color) {
+                DB::table('product_has_sizes')->insert([
+                    'product_id' => $shoe->id,
+                    'product_color_id' => $color->id,
+                ]);
+            }
 
             DB::commit();
             // Check if there are recommended accessories tied with the shoes (colored lace or socks)
-            DB::beginTransaction();
-            if ($request->has('recommended_accessories')) {
-                foreach ($request->recommended_accessories as $index => $value) {
-                    $accessory = Accessory::find($value);
-                    $shoe->recommended_accessories()->save($accessory);
-                }
-            }
-            DB::commit();
+            // DB::beginTransaction();
+            // if ($request->has('recommended_accessories')) {
+            //     foreach ($request->recommended_accessories as $index => $value) {
+            //         $accessory = Accessory::find($value);
+            //         $shoe->recommended_accessories()->save($accessory);
+            //     }
+            // }
+            // DB::commit();
             return response()->json($shoe, 201);
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['error' => 'Failed to create shoe', 'message' => $e->getMessage()], 500);
+            return response()->json(['error' => 'Failed to create product', 'message' => $e->getMessage()], 500);
         }
     }
 
@@ -185,11 +216,11 @@ class ShoeController extends Controller
 
 
 
-    public function update(ShoeRequest $request, Shoe $shoe)
+    public function update(Request $request, $id)
     {
         try {
             $data = $request->validated();
-
+            $shoe = Product::find($id);
             // Check if a new image is uploaded
             if ($request->hasFile('image')) {
                 // Delete old image
@@ -203,20 +234,62 @@ class ShoeController extends Controller
                 $data['image'] = $imageName;
             }
 
-            $shoe->update($data);
+            $shoe->update(
+                ['name' => $data['name'],
+                'description' => $data['description'],
+                'price' => $data['price'],
+                'gender' => $data['gender'],
+                'socks' => $data['socks'],
+                'product_category_id' => $data['product_category_id'],
+                'brand_id' => $data['brand_id'],
+                'status' => $data['status'],
+                'image' => $data['image'],
+            ]);
+            
+            $shoe->types()->delete();
+            $shoe->sizes()->delete();
+            $shoe->colors()->delete();
+
+            foreach ($data['types'] as $type) {
+                DB::table('product_has_types')->insert([
+                    'product_id' => $shoe->id,
+                    'product_type_id' => $type->id,
+                ]);
+            }
+
+            foreach ($data['sizes'] as $size) {
+                DB::table('product_has_sizes')->insert([
+                    'product_id' => $shoe->id,
+                    'product_size_id' => $size->id,
+                ]);
+            }
+
+            foreach ($data['colors'] as $color) {
+                DB::table('product_has_sizes')->insert([
+                    'product_id' => $shoe->id,
+                    'product_color_id' => $color->id,
+                ]);
+            }
+
             return response()->json($shoe, 200);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to update shoe', 'message' => $e->getMessage()], 500);
+            return response()->json(['error' => 'Failed to update product', 'message' => $e->getMessage()], 500);
         }
     }
 
-    public function destroy(Shoe $shoe)
+    public function destroy(Request $request, $id)
     {
         try {
+            $shoe = Product::find($id);
+
+            $shoe->types()->delete();
+            $shoe->sizes()->delete();
+            $shoe->colors()->delete();
+
             $shoe->delete();
             return response()->json(null, 204);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to delete shoe', 'message' => $e->getMessage()], 500);
+            return response()->json(['error' => 'Failed to delete product', 'message' => $e->getMessage()], 500);
         }
     }
 
