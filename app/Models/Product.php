@@ -53,4 +53,9 @@ class Product extends Model
     {
         return $this->hasMany('App\Models\ProductHasColor', 'product_id');
     }
+
+    public function images()
+    {
+        return $this->hasMany('App\Models\ProductHasImage', 'product_id');
+    }
 }

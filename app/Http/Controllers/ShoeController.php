@@ -194,6 +194,19 @@ class ShoeController extends Controller
                 ]);
             }
 
+            if ($request->hasFile('images')) {
+                foreach ($data['images'] as $image) {
+                    $file_name = time().rand(1,99).'.'.$file->extension();
+                    $file->move(public_path('uploads'), $file_name);
+                    
+                    DB::table('product_has_images')->insert([
+                        'product_id' => $shoe->id,
+                        'imae_url' => $file_name,
+                    ]);
+                }
+            }
+
+
             DB::commit();
             // Check if there are recommended accessories tied with the shoes (colored lace or socks)
             // DB::beginTransaction();
