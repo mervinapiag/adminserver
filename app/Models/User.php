@@ -48,6 +48,8 @@ class User extends Authenticatable
         'otp'
     ];
 
+    protected $with = ['userRole'];
+
     /**
      * The attributes that should be cast.
      *
@@ -78,5 +80,10 @@ class User extends Authenticatable
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
+    }
+
+    public function userRole()
+    {
+        return $this->hasOne('App\Models\Role', 'id', 'role_id');
     }
 }

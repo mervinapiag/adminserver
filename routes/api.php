@@ -158,7 +158,11 @@ Route::post('/checkout', [
 /* will add auth / middlewares afterwards */
 
 // display products
-Route::get('admin/product', [ShoeController::class, 'index']);
+Route::get('admin/products', [ShoeController::class, 'index']);
+Route::post('admin/products/store', [ShoeController::class, 'store']);
+Route::get('admin/products/view/{id}', [ShoeController::class, 'show']);
+Route::post('admin/products/update/{id}', [ShoeController::class, 'store']);
+Route::delete('admin/products/delete/{id}', [ShoeController::class, 'store']);
 
 Route::get('admin/product/types', [ShoeController::class, 'getTypes']);
 Route::post('admin/product/types/store', [ShoeController::class, 'typesStore'])->name('admin.product_types.store');
@@ -186,4 +190,10 @@ Route::post('admin/product/colors/update/{id}', [ShoeController::class, 'colorsU
 Route::delete('admin/product/colors/delete/{id}', [ShoeController::class, 'colorsDelete'])->name('admin.product_colors.delete');
 
 Route::get('all-payments', [PaymentOptionController::class, 'getAllpayments']);
+
+Route::get('admin/role-permissions', [RoleController::class, 'index']);
+Route::post('admin/role-permissions/store', [RoleController::class, 'store']);
+Route::get('admin/role-permissions/view/{id}', [RoleController::class, 'show']);
+Route::post('admin/role-permissions/update/{id}', [RoleController::class, 'store']);
+Route::delete('admin/role-permissions/delete/{id}', [RoleController::class, 'store']);
 /* ADMIN */
