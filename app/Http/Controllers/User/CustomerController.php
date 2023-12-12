@@ -35,7 +35,8 @@ class CustomerController extends Controller
                 "lastname" => $request->lastname,
                 "name" => $request->firstname . " " . $request->lastname,
                 "email" => $request->email,
-                "password" => $request->password
+                "password" => $request->password,
+                "role_id" => 2
             ]);
             DB::commit();
 
@@ -66,7 +67,19 @@ class CustomerController extends Controller
      */
     public function update(RegisterRequest $request, string $id)
     {
-        //
+        $data = $request->all();
+        $customer = User::find($id);
+
+        try {
+            DB::beginTransaction();
+            $customer->update($data);
+            DB::commit();
+
+            return Helpers::returnJsonResponse(config('constants.RECORD_UPDATED'), Response::HTTP_ACCEPTED, new UserResource($customer));
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return Helpers::returnJsonResponse(config('constants.RECORD_ERROR'), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
