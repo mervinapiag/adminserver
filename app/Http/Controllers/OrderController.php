@@ -10,6 +10,7 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use App\Models\Checkout;
 
 class OrderController extends Controller
 {
@@ -18,7 +19,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return new OrderCollection(Order::paginate());
+        return Checkout::all();
+        //return new OrderCollection(Order::paginate());
     }
 
     /**
@@ -32,8 +34,9 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Order $order)
+    public function show($id)
     {
+        return $data = Checkout::find($id);
         return Helpers::returnJsonResponse(config('constants.RECORD_INFO'), Response::HTTP_OK, new OrderResource($order));
     }
 
