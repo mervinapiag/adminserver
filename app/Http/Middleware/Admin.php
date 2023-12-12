@@ -18,7 +18,7 @@ class Admin
         // Get current logged in user
         $user = $request->user();
         
-        if ($user->user_type != "admin") {
+        if ($user->role_id != 2) {
             $request->user()->tokens()->delete();
             $response = [
                 "message" => "Forbidden Access"

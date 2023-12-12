@@ -48,7 +48,7 @@ class User extends Authenticatable
         'otp'
     ];
 
-    protected $with = ['userRole'];
+    protected $with = ['userRole', 'addresses'];
 
     /**
      * The attributes that should be cast.
@@ -85,5 +85,10 @@ class User extends Authenticatable
     public function userRole()
     {
         return $this->hasOne('App\Models\Role', 'id', 'role_id');
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany('App\Models\UserShippingAddress', 'user_id');
     }
 }
