@@ -161,8 +161,8 @@ Route::post('/checkout', [
 Route::get('admin/products', [ShoeController::class, 'index']);
 Route::post('admin/products/store', [ShoeController::class, 'store']);
 Route::get('admin/products/view/{id}', [ShoeController::class, 'show']);
-Route::post('admin/products/update/{id}', [ShoeController::class, 'store']);
-Route::delete('admin/products/delete/{id}', [ShoeController::class, 'store']);
+Route::post('admin/products/update/{id}', [ShoeController::class, 'update']);
+Route::delete('admin/products/delete/{id}', [ShoeController::class, 'destroy']);
 
 Route::get('admin/product/types', [ShoeController::class, 'getTypes']);
 Route::post('admin/product/types/store', [ShoeController::class, 'typesStore'])->name('admin.product_types.store');
