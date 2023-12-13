@@ -63,6 +63,7 @@ class UserController extends Controller
 
     public function addressStore(Request $request)
     {
+        return $request;
         $user = new UserResource($request->user());
         $data = UserShippingAddress::where('user_id', $user->id)->get();
 
