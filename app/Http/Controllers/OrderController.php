@@ -113,9 +113,7 @@ class OrderController extends Controller
         $order = Checkout::find($id);
         try {
             DB::beginTransaction();
-            $order->tracking_number = $request->tracking_number;
-            $order->tracking_url = $request->tracking_url;
-            $order->estimated_delivery_date = $request->estimated_delivery_date;
+            $order->payment_status = $request->payment_status;
             $order->save();
             DB::commit();
 
