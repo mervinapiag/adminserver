@@ -168,6 +168,7 @@ class ShoeController extends Controller
                 'brand_id' => $data['brand_id'],
                 'status' => $data['status'],
                 'image' => $data['image'],
+                'stocks' => $data['stocks'],
             ]);
             
             foreach ($data['types'] as $t) {
@@ -260,6 +261,7 @@ class ShoeController extends Controller
                 'brand_id' => $data['brand_id'],
                 'status' => $data['status'],
                 'image' => $data['image'],
+                'stocks' => $data['stocks'],
             ]);
             
             $shoe->types()->delete();
