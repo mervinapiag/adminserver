@@ -20,6 +20,7 @@ class Product extends Model
         'product_category_id',
         'brand_id',
         'image',
+        'stocks'
     ];
 
     protected $with = ['category', 'brand', 'types', 'sizes', 'colors'];
