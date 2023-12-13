@@ -70,15 +70,15 @@ class UserController extends Controller
             $address = UserShippingAddress::create([
                 'user_id' => $user->id,
                 'first_name' => $request->finalAddress['first_name'],
-                'last_name' => $request->finalAddress->last_name,
-                'street_address' => $request->finalAddress->street_address,
-                'building_address' => $request->finalAddress->building_address,
-                'province' => $request->finalAddress->province,
-                'city_municipality' => $request->finalAddress->city_municipality,
-                'barangay' => $request->finalAddress->barangay,
-                'postal_code' => $request->finalAddress->postal_code,
-                'email' => $request->finalAddress->email,
-                'phone_number' => $request->finalAddress->phone_number,
+                'last_name' => $request->finalAddress['last_name'],
+                'street_address' => $request->finalAddress['street_address'],
+                'building_address' => $request->finalAddress['building_address'],
+                'province' => $request->finalAddress['province'],
+                'city_municipality' => $request->finalAddress['city_municipality'],
+                'barangay' => $request->finalAddress['barangay'],
+                'postal_code' => $request->finalAddress['postal_code'],
+                'email' => $request->finalAddress['email'],
+                'phone_number' => $request->finalAddress['phone_number'],
             ]);
 
             return Helpers::returnJsonResponse("User Address", Response::HTTP_OK, $address);
