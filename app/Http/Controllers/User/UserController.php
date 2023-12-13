@@ -79,6 +79,7 @@ class UserController extends Controller
                 'postal_code' => $request->finalAddress['postal_code'],
                 'email' => $request->finalAddress['email'],
                 'phone_number' => $request->finalAddress['phone_number'],
+                'label' => $request->finalAddress['label'],
             ]);
 
             return Helpers::returnJsonResponse("User Address", Response::HTTP_OK, $address);
