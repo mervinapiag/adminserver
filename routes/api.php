@@ -18,6 +18,8 @@ use App\Http\Controllers\SiteSettings\SiteSettingsController;
 use App\Http\Controllers\User\CustomerController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\RoleController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +35,8 @@ use App\Http\Controllers\User\CartController;
 // For login - No authentication required
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
+Route::post('reset-password', [AuthController::class, 'resetPassword']);
+Route::get('reset-password/{token}', [AuthController::class, 'showResetPasswordForm'])->name('reset.password.get');
 
 Route::post('admin/login', [AuthController::class, 'adminLogin']);
 

@@ -266,22 +266,25 @@ class ShoeController extends Controller
             $shoe->sizes()->delete();
             $shoe->colors()->delete();
 
-            foreach ($data['types'] as $type) {
+            foreach ($data['types'] as $t) {
+                $type = ProductType::whereName($t)->first();
                 DB::table('product_has_types')->insert([
                     'product_id' => $shoe->id,
                     'product_type_id' => $type->id,
                 ]);
             }
-
-            foreach ($data['sizes'] as $size) {
+            
+            foreach ($data['sizes'] as $s) {
+                $size = ProductSize::whereName($s)->first();
                 DB::table('product_has_sizes')->insert([
                     'product_id' => $shoe->id,
                     'product_size_id' => $size->id,
                 ]);
             }
 
-            foreach ($data['colors'] as $color) {
-                DB::table('product_has_sizes')->insert([
+            foreach ($data['colors'] as $c) {
+                $color = ProductColor::whereName($c)->first();
+                DB::table('product_has_colors')->insert([
                     'product_id' => $shoe->id,
                     'product_color_id' => $color->id,
                 ]);
@@ -304,6 +307,7 @@ class ShoeController extends Controller
                 $shoe->colors()->delete();
 
                 $shoe->delete();
+                
                 return response()->json(['message' => 'Product deleted successfully'], 204);
             } else {
                 return response()->json(['message' => 'Product not found'], 404);
