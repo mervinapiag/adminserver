@@ -307,8 +307,8 @@ class ShoeController extends Controller
                 $shoe->colors()->delete();
 
                 $shoe->delete();
-                
-                return response()->json(['message' => 'Product deleted successfully'], 204);
+
+                return response()->json(['message' => 'Product deleted successfully'], 200);
             } else {
                 return response()->json(['message' => 'Product not found'], 404);
             }
