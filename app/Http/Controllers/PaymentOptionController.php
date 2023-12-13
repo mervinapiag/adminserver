@@ -18,13 +18,14 @@ class PaymentOptionController extends Controller
      */
     public function index()
     {
+        return PaymentOption::all();
         return new PaymentOptionCollection(PaymentOption::paginate());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PaymentOptionRequest $request)
+    public function store(Request $request)
     {
         $data = $request->all();
         try {
@@ -50,7 +51,7 @@ class PaymentOptionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PaymentOptionRequest $request, string $id)
+    public function update(Request $request, string $id)
     {
         $data = $request->all();
         $discount = PaymentOption::find($id);

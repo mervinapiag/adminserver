@@ -80,7 +80,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
             'customers' => CustomerController::class,
             'special-offers' => SpecialOfferController::class,
             'orders' => OrderController::class,
-            'payment-options' => PaymentOptionController::class
+            //'payment-options' => PaymentOptionController::class
         ]);
 
         Route::post('customers/{id}/suspend', [CustomerController::class, 'suspend']);
@@ -211,4 +211,9 @@ Route::get('admin/couriers', [CourierController::class, 'index']);
 Route::post('admin/couriers/create', [CourierController::class, 'store'])->name('admin.couriers.store');
 Route::post('admin/couriers/edit/{id}', [CourierController::class, 'update'])->name('admin.couriers.update');
 Route::delete('admin/couriers/destroy/{id}', [CourierController::class, 'destroy'])->name('admin.couriers.delete');
+
+Route::get('admin/payment-options', [PaymentOptionController::class, 'index']);
+Route::post('admin/payment-options/create', [PaymentOptionController::class, 'store'])->name('admin.payment_options.store');
+Route::post('admin/payment-options/edit/{id}', [PaymentOptionController::class, 'update'])->name('admin.payment_options.update');
+Route::delete('admin/payment-options/destroy/{id}', [PaymentOptionController::class, 'destroy'])->name('admin.payment_options.delete');
 /* ADMIN */
