@@ -63,23 +63,22 @@ class UserController extends Controller
 
     public function addressStore(Request $request)
     {
-        return $request;
         $user = new UserResource($request->user());
         $data = UserShippingAddress::where('user_id', $user->id)->get();
 
         if (count($data) <= 3) {
             $address = UserShippingAddress::create([
                 'user_id' => $user->id,
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'street_address' => $request->street_address,
-                'building_address' => $request->building_address,
-                'province' => $request->province,
-                'city_municipality' => $request->city_municipality,
-                'barangay' => $request->barangay,
-                'postal_code' => $request->postal_code,
-                'email' => $request->email,
-                'phone_number' => $request->phone_number,
+                'first_name' => $request->finalAddress->first_name,
+                'last_name' => $request->finalAddress->last_name,
+                'street_address' => $request->finalAddress->street_address,
+                'building_address' => $request->finalAddress->building_address,
+                'province' => $request->finalAddress->province,
+                'city_municipality' => $request->finalAddress->city_municipality,
+                'barangay' => $request->finalAddress->barangay,
+                'postal_code' => $request->finalAddress->postal_code,
+                'email' => $request->finalAddress->email,
+                'phone_number' => $request->finalAddress->phone_number,
             ]);
 
             return Helpers::returnJsonResponse("User Address", Response::HTTP_OK, $address);
