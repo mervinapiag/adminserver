@@ -60,6 +60,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('user/wishlist', [UserController::class, 'wishlist']);
     Route::post('user/wishlist/store', [UserController::class, 'wishlistStore']);
+    Route::delete('user/wishlist/delete/{id}', [UserController::class, 'wishlistDestroy']);
 
     // For admin only
     Route::middleware(['admin'])->group(function () {

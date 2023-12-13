@@ -140,4 +140,15 @@ class UserController extends Controller
             return response()->json(['error' => 'Failed to create wishlist', 'message' => $e->getMessage()], 500);
         }
     }
+
+    public function wishlistDestroy($id)
+    {
+        try {
+            $data = Wishlist::find($id)->delete();
+
+            return response()->json($data, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to delete address', 'message' => $e->getMessage()], 500);
+        }
+    }
 }
