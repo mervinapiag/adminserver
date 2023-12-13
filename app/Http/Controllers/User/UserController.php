@@ -69,7 +69,7 @@ class UserController extends Controller
         if (count($data) <= 3) {
             $address = UserShippingAddress::create([
                 'user_id' => $user->id,
-                'first_name' => $request->finalAddress->first_name,
+                'first_name' => $request->finalAddress['first_name'],
                 'last_name' => $request->finalAddress->last_name,
                 'street_address' => $request->finalAddress->street_address,
                 'building_address' => $request->finalAddress->building_address,
