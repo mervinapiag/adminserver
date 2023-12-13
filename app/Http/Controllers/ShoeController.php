@@ -225,8 +225,9 @@ class ShoeController extends Controller
         }
     }
 
-    public function show(Product $shoe)
+    public function show($id)
     {
+        $shoe = Product::find($id);
         //return response()->json($shoe->load(['variants', 'images', 'recommended_accessories']), 200);
         return response()->json($shoe, 200);
     }
