@@ -298,12 +298,16 @@ class ShoeController extends Controller
         try {
             $shoe = Product::find($id);
 
-            $shoe->types()->delete();
-            $shoe->sizes()->delete();
-            $shoe->colors()->delete();
+            if ($shoe) {
+                $shoe->types()->delete();
+                $shoe->sizes()->delete();
+                $shoe->colors()->delete();
 
-            $shoe->delete();
-            return response()->json(null, 204);
+                $shoe->delete();
+                return response()->json(['message' => 'Product deleted successfully'], 204);
+            } else {
+                return response()->json(['message' => 'Product not found'], 404);
+            }
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to delete product', 'message' => $e->getMessage()], 500);
         }
