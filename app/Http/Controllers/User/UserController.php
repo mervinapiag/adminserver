@@ -34,6 +34,7 @@ class UserController extends Controller
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
+            return Helpers::returnJsonResponse($th->getMessage(), Response::HTTP_BAD_REQUEST);
             return Helpers::returnJsonResponse(config('constants.RECORD_ERROR'), Response::HTTP_BAD_REQUEST);
         }
         return Helpers::returnJsonResponse(config('constants.RECORD_UPDATED'), Response::HTTP_OK, $user);
