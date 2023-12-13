@@ -67,7 +67,7 @@ class UserController extends Controller
         $data = UserShippingAddress::where('user_id', $user->id)->get();
 
         if (count($data) <= 3) {
-            $data = UserShippingAddress::create([
+            $address = UserShippingAddress::create([
                 'user_id' => $user->id,
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
@@ -81,7 +81,9 @@ class UserController extends Controller
                 'phone_number' => $request->phone_number,
             ]);
 
-            return Helpers::returnJsonResponse("User Address", Response::HTTP_OK, $data);
+            return $address;
+
+            return Helpers::returnJsonResponse("User Address", Response::HTTP_OK, $address);
         } else {
             return Helpers::returnJsonResponse('Limit for address is 3, please delete old records before adding new record', Response::HTTP_BAD_REQUEST);
         }
