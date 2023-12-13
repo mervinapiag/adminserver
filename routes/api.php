@@ -206,6 +206,7 @@ Route::get('admin/orders', [OrderController::class, 'index']);
 Route::get('admin/orders/{id}', [OrderController::class, 'show']);
 Route::post('admin/orders/{id}/status', [OrderController::class, 'updateStatus']);
 Route::post('admin/orders/{id}/tracking', [OrderController::class, 'updateTracking']);
+Route::post('admin/orders/{id}/payment', [OrderController::class, 'updatePayment']);
 
 Route::get('admin/couriers', [CourierController::class, 'index']);
 Route::post('admin/couriers/create', [CourierController::class, 'store'])->name('admin.couriers.store');

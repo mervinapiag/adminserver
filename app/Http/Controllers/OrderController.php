@@ -107,4 +107,22 @@ class OrderController extends Controller
             return Helpers::returnJsonResponse(config('constants.RECORD_ERROR'), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function updatePayment(Request $request, $id)
+    {
+        $order = Checkout::find($id);
+        try {
+            DB::beginTransaction();
+            $order->tracking_number = $request->tracking_number;
+            $order->tracking_url = $request->tracking_url;
+            $order->estimated_delivery_date = $request->estimated_delivery_date;
+            $order->save();
+            DB::commit();
+
+            return Helpers::returnJsonResponse('Order tracking updated', Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return Helpers::returnJsonResponse(config('constants.RECORD_ERROR'), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }

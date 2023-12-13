@@ -31,6 +31,7 @@ class Checkout extends Model
         'estimated_delivery_date',
         'delivery_status',
         'status',
+        'payment_status'
     ];
 
     protected $with = ['items'];
