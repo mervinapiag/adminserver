@@ -81,8 +81,6 @@ class UserController extends Controller
                 'phone_number' => $request->phone_number,
             ]);
 
-            return $address;
-
             return Helpers::returnJsonResponse("User Address", Response::HTTP_OK, $address);
         } else {
             return Helpers::returnJsonResponse('Limit for address is 3, please delete old records before adding new record', Response::HTTP_BAD_REQUEST);
