@@ -69,7 +69,7 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         Auth::attempt(['email' => $request->email, 'password' => $request->password, 'role_id' => 1]);
-        $user = auth()->user();
+        return $user = auth()->user();
 
         if ($user->otp != 'verified') {
             $user->tokens()->delete();

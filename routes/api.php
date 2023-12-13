@@ -43,6 +43,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // For profile stuff
     Route::get('user/me', [UserController::class, 'me']);
+    Route::post('user/update', [UserController::class, 'updateInfo']);
 
     Route::get('user/orders', [UserController::class, 'orders']);
     Route::get('user/orders/{id}', [UserController::class, 'ordersDetail']);
@@ -81,7 +82,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('customers/{id}/suspend', [CustomerController::class, 'suspend']);
     });
 });
-Route::post('user/update', [UserController::class, 'updateInfo']);
 
 // Your existing protected routes
 Route::apiResources([
