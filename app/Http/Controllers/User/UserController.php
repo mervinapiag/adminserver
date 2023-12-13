@@ -25,12 +25,14 @@ class UserController extends Controller
     {
         $user = new UserResource($request->user());
         $data = $request->all();
+        $data['phonenumber'] = $data['phone_number'];
         try {
             DB::beginTransaction();
             $user->update($data);
 
-            $user->phonenumber = $data['phone_number'];
-            $user->save();
+            // $user->phonenumber = $data['phone_number'];
+            // $user->save();
+
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
