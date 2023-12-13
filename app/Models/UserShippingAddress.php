@@ -11,8 +11,9 @@ class UserShippingAddress extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'user_shipping_addresses';
-    
+
     protected $fillable = [
+        'label',
         'user_id',
         'first_name',
         'last_name',
