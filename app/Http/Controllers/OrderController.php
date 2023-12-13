@@ -76,7 +76,7 @@ class OrderController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
-        $order = Order::find($id);
+        $order = Checkout::find($id);
         try {
             DB::beginTransaction();
             $order->status = $request->status;
@@ -86,13 +86,13 @@ class OrderController extends Controller
             return Helpers::returnJsonResponse('Order status updated', Response::HTTP_OK);
         } catch (\Throwable $th) {
             DB::rollBack();
-            return Helpers::returnJsonResponse(config('constants.RECORD_ERROR'), Response::HTTP_INTERNAL_SERVER_ERROR);
+            return Helpers::returnJsonResponse($th->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
     public function updateTracking(Request $request, $id)
     {
-        $order = Order::find($id);
+        $order = Checkout::find($id);
         try {
             DB::beginTransaction();
             $order->tracking_number = $request->tracking_number;
