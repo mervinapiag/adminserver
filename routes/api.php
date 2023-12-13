@@ -203,4 +203,6 @@ Route::delete('admin/role-permissions/delete/{id}', [RoleController::class, 'sto
 
 Route::get('admin/orders', [OrderController::class, 'index']);
 Route::get('admin/orders/{id}', [OrderController::class, 'show']);
+Route::post('admin/orders/{id}/status', [OrderController::class, 'updateStatus']);
+Route::post('admin/orders/{id}/tracking', [OrderController::class, 'updateTracking']);
 /* ADMIN */
