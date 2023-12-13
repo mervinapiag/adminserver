@@ -9,6 +9,7 @@ use App\Http\Resources\CourierResource;
 use App\Models\Courier;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class CourierController extends Controller
 {
@@ -17,13 +18,14 @@ class CourierController extends Controller
      */
     public function index()
     {
+        return Courier::all();
         return new CourierCollection(Courier::paginate());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CourierRequest $request)
+    public function store(Request $request)
     {
         $data = $request->all();
 
@@ -50,7 +52,7 @@ class CourierController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CourierRequest $request, string $id)
+    public function update(Request $request, string $id)
     {
         $data = $request->all();
         $courier = Courier::find($id);

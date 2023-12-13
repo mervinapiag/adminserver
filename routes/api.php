@@ -76,7 +76,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
             'discounts' => DiscountController::class,
             'promotions' => PromotionController::class,
             'shoes' => ShoeController::class,
-            'couriers' => CourierController::class,
+            //'couriers' => CourierController::class,
             'customers' => CustomerController::class,
             'special-offers' => SpecialOfferController::class,
             'orders' => OrderController::class,
@@ -85,6 +85,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         Route::post('customers/{id}/suspend', [CustomerController::class, 'suspend']);
     });
+
 });
 
 // Your existing protected routes
@@ -205,4 +206,9 @@ Route::get('admin/orders', [OrderController::class, 'index']);
 Route::get('admin/orders/{id}', [OrderController::class, 'show']);
 Route::post('admin/orders/{id}/status', [OrderController::class, 'updateStatus']);
 Route::post('admin/orders/{id}/tracking', [OrderController::class, 'updateTracking']);
+
+Route::get('admin/couriers', [CourierController::class, 'index']);
+Route::post('admin/couriers/create', [CourierController::class, 'store'])->name('admin.couriers.store');
+Route::post('admin/couriers/edit/{id}', [CourierController::class, 'update'])->name('admin.couriers.update');
+Route::delete('admin/couriers/destroy/{id}', [CourierController::class, 'destroy'])->name('admin.couriers.delete');
 /* ADMIN */
