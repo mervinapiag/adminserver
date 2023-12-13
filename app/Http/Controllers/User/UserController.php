@@ -25,7 +25,7 @@ class UserController extends Controller
     {
         $user = new UserResource($request->user());
         $data = $request->all();
-        return $data;
+        $data['phonenumber'] = $data['phone_number'];
         try {
             DB::beginTransaction();
             $user->update($data);
