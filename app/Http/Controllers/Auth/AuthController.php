@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use App\Models\PasswordResetToken;
+use Hash;
 
 class AuthController extends Controller
 {
@@ -70,7 +72,12 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request)
     {
-        Auth::attempt(['email' => $request->email, 'password' => $request->password, 'role_id' => 1]);
+        $check = Auth::attempt(['email' => $request->email, 'password' => $request->password, 'role_id' => 1]);
+        
+        if (!$check) {
+            return Helpers::returnJsonResponse("Credentials doesn't match our records.", Response::HTTP_OK);
+        }
+
         $user = auth()->user();
 
         if ($user->otp != 'verified') {
@@ -129,7 +136,39 @@ class AuthController extends Controller
         } else {
             return Helpers::returnJsonResponse("Email not found", Response::HTTP_OK);
         }
-        
+    }
+
+    public function verifyToken($token) 
+    { 
+        $check = PasswordResetToken::where('token', $token)->first();
+        if ($check) {
+            return Helpers::returnJsonResponse("Valid Token", Response::HTTP_OK);
+        } else {
+            return Helpers::returnJsonResponse("Invalid Token", Response::HTTP_OK);
+        }
+    }
+
+    public function submitResetPassword(Request $request)
+    {
+        if ($request->password == $request->password_confirmation) {
+            $updatePassword = DB::table('password_reset_tokens')->where([
+                'email' => $request->email,
+                'token' => $request->token
+            ])->first();
+
+            if (!$updatePassword) {
+                return Helpers::returnJsonResponse("Invalid Token", Response::HTTP_OK);
+            }
+
+            $user = User::where('email', $request->email)
+                ->update(['password' => Hash::make($request->password)]);
+
+            DB::table('password_reset_tokens')->where(['email'=> $request->email])->delete();
+
+            return Helpers::returnJsonResponse("Your password has been changed!", Response::HTTP_OK);
+        } else {
+            return Helpers::returnJsonResponse("Password does not match", Response::HTTP_OK);
+        }
     }
 
     private function generateOTP($otpLength) 

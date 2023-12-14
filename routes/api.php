@@ -36,6 +36,8 @@ use App\Http\Controllers\RoleController;
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 Route::post('reset-pass', [AuthController::class, 'resetMyPassword']);
+Route::get('verify-token/{token}', [AuthController::class, 'verifyToken'])->name('reset.password.get');
+Route::post('reset-pass-submit', [AuthController::class, 'submitResetPassword'])->name('reset.password.post');
 
 Route::post('admin/login', [AuthController::class, 'adminLogin']);
 
