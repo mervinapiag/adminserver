@@ -165,6 +165,8 @@ Route::post('/checkout', [
 
 Route::post('products/review', [ShoeController::class, 'addReview']);
 
+Route::post('checkout/use_coupon', [CheckoutController::class, 'useCoupon']);
+
 /* ADMIN */
 /* will add auth / middlewares afterwards */
 

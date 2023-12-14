@@ -7,6 +7,7 @@ use App\Models\CartItem;
 use App\Models\Checkout;
 use App\Models\Product;
 use Carbon\Carbon;
+use App\Models\DiscountCoupon;
 
 class CheckoutController extends Controller
 {
@@ -119,5 +120,19 @@ class CheckoutController extends Controller
             'todays_sales' => number_format(Checkout::whereDate('created_at', Carbon::today())->sum('grand_total'), 2),
             'total_inventory' => number_format(Product::all()->count())
         ];
+    }
+
+    public function useCoupon(Request $request)
+    {
+        $coupon = DiscountCoupon::where('discount_code', $request->discount_code)->where('is_active', 1)->first();
+        
+        if ($coupon) {
+            return response()->json([
+                'message' => 'Valid',
+                'discount_amount' => $coupon->total_amount
+            ], 200);
+        } else {
+            return response()->json(['error' => 'Coupon code not found'], 404);
+        }
     }
 }

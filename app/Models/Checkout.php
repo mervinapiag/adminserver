@@ -25,6 +25,7 @@ class Checkout extends Model
         'courier',
         'payment_method',
         'receipt_img',
+        'discount_code',
         'grand_total',
         'tracking_number',
         'tracking_url',
