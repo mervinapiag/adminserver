@@ -40,11 +40,6 @@ Route::get('reset-password/{token}', [AuthController::class, 'showResetPasswordF
 
 Route::post('admin/login', [AuthController::class, 'adminLogin']);
 
-
-Route::get('user/wishlist', [UserController::class, 'wishlist']);
-Route::post('user/wishlist/store', [UserController::class, 'wishlistStore']);
-Route::delete('user/wishlist/delete/{id}', [UserController::class, 'wishlistDestroy']);
-
 // Protected routes - Requires authentication
 Route::middleware(['auth:sanctum'])->group(function () {
     // For logout
@@ -63,6 +58,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('user/address/update', [UserController::class, 'addressUpdate']);
     Route::post('user/address/delete', [UserController::class, 'addressDelete']);
 
+    Route::get('user/wishlist', [UserController::class, 'wishlist']);
+    Route::post('user/wishlist/store', [UserController::class, 'wishlistStore']);
+    Route::delete('user/wishlist/delete/{id}', [UserController::class, 'wishlistDestroy']);
 
     // For admin only
     Route::middleware(['admin'])->group(function () {
