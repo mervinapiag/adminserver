@@ -22,6 +22,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\GeneralSettings;
 use App\Http\Controllers\DiscountController as DiscountControllerCoupon;
+use App\Http\Controllers\HomeSliderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -167,6 +168,8 @@ Route::post('products/review', [ShoeController::class, 'addReview']);
 
 Route::post('checkout/use_coupon', [CheckoutController::class, 'useCoupon']);
 
+Route::get('homesliders', [HomeSliderController::class, 'fetchSlides']);
+
 /* ADMIN */
 /* will add auth / middlewares afterwards */
 
@@ -237,4 +240,9 @@ Route::get('admin/discount_coupons', [DiscountControllerCoupon::class, 'index'])
 Route::post('admin/discount_coupons/create', [DiscountControllerCoupon::class, 'store'])->name('admin.discount_coupons.store');
 Route::post('admin/discount_coupons/edit/{id}', [DiscountControllerCoupon::class, 'update'])->name('admin.discount_coupons.update');
 Route::delete('admin/discount_coupons/destroy/{id}', [DiscountControllerCoupon::class, 'destroy'])->name('admin.discount_coupons.delete');
+
+Route::get('admin/home_slider', [HomeSliderController::class, 'index']);
+Route::post('admin/home_slider/create', [HomeSliderController::class, 'store'])->name('admin.home_slider.store');
+Route::post('admin/home_slider/edit/{id}', [HomeSliderController::class, 'update'])->name('admin.home_slider.update');
+Route::delete('admin/home_slider/destroy/{id}', [HomeSliderController::class, 'destroy'])->name('admin.home_slider.delete');
 /* ADMIN */
