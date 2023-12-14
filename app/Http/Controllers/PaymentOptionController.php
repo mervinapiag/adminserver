@@ -64,7 +64,7 @@ class PaymentOptionController extends Controller
             return Helpers::returnJsonResponse(config('constants.RECORD_UPDATED'), Response::HTTP_ACCEPTED, new PaymentOptionResource($discount));
         } catch (\Throwable $th) {
             DB::rollBack();
-            return Helpers::returnJsonResponse(config('constants.RECORD_ERROR'), Response::HTTP_INTERNAL_SERVER_ERROR);
+            return Helpers::returnJsonResponse($th->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
