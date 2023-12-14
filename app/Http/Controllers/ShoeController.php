@@ -15,6 +15,7 @@ use App\Models\ProductCategory;
 use App\Models\ProductColor;
 use App\Models\ProductSize;
 use App\Models\ProductType;
+use App\Models\ProductReview;
 
 class ShoeController extends Controller
 {
@@ -490,5 +491,17 @@ class ShoeController extends Controller
         $data = ProductColor::find($id)->delete();
 
         return response()->json(null, 204);
+    }
+
+    public function addReview(Request $request)
+    {
+        $input = $request->all();
+        $data = ProductReview::create([
+            'user_id' => $request->user_id,
+            'product_id' => $request->product_id,
+            'review_content' => $request->review_content
+        ]);
+
+        return response()->json($data, 201);
     }
 }

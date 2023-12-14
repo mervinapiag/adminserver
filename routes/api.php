@@ -162,6 +162,8 @@ Route::post('/checkout', [
     'as' => 'api.checkout.process'
 ]);
 
+Route::post('products/review', [ShoeController::class, 'addReview']);
+
 /* ADMIN */
 /* will add auth / middlewares afterwards */
 

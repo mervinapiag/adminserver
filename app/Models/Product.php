@@ -23,7 +23,7 @@ class Product extends Model
         'stocks'
     ];
 
-    protected $with = ['category', 'brand', 'types', 'sizes', 'colors'];
+    protected $with = ['category', 'brand', 'types', 'sizes', 'colors', 'reviews'];
 
     public function getTypesAttribute()
     {
@@ -58,5 +58,10 @@ class Product extends Model
     public function images()
     {
         return $this->hasMany('App\Models\ProductHasImage', 'product_id');
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany('App\Models\ProductReview', 'product_id');
     }
 }
