@@ -35,8 +35,7 @@ use App\Http\Controllers\RoleController;
 // For login - No authentication required
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
-Route::post('reset-password', [AuthController::class, 'resetPassword']);
-Route::get('reset-password/{token}', [AuthController::class, 'showResetPasswordForm'])->name('reset.password.get');
+Route::post('reset-pass', [AuthController::class, 'resetMyPassword']);
 
 Route::post('admin/login', [AuthController::class, 'adminLogin']);
 

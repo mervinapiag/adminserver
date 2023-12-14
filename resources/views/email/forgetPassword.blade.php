@@ -13,7 +13,7 @@
     <td align="center" bgcolor="#f9f9f9"
         style="padding: 20px 20px 0 20px; color: #555555; font-family: Arial, sans-serif; font-size: 20px; line-height: 30px;">
         You can reset password from bellow link:
-        <a href="{{ $token }}">Reset Password</a>
+        <a href="http://www.calciumandjoyjoy.store/reset/{{ $token }}">Reset Password</a>
     </td>
 </tr>
 

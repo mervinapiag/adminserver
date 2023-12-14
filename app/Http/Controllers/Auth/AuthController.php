@@ -13,7 +13,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use Carbon;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -101,26 +102,34 @@ class AuthController extends Controller
         return Helpers::returnJsonResponse("Logout successfully", Response::HTTP_OK);
     }
 
-    public function resetPassword(Request $request)
+    public function resetMyPassword(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email|exists:users',
-        ]);
+        $user = User::where('email', $request->email)->first();
 
-        $token = Str::random(64);
+        if ($user) {
+            $token = Str::random(64);
 
-        DB::table('password_reset_tokens')->insert([
-            'email' => $request->email, 
-            'token' => $token, 
-            'created_at' => Carbon::now()
-          ]);
+            $insert = DB::table('password_reset_tokens')->insert([
+                'email' => $request->email, 
+                'token' => $token, 
+                'created_at' => Carbon::now()
+            ]);
 
-        Mail::send('email.forgetPassword', ['token' => $token], function($message) use($request){
-            $message->to($request->email);
-            $message->subject('Reset Password');
-        });
-
-        return back()->with('message', 'We have e-mailed your password reset link!');
+            if ($insert) {
+                Mail::send('email.forgetPassword', ['token' => $token, 'user' => $user], function($message) use($request, $user) {
+                    $message->from('spicyburns90+reset@gmail.com', 'Calcium and Joyjoy');
+                    $message->to($request->email, $user->name);
+                    $message->subject('Reset Password');
+                });
+            } else {
+                return Helpers::returnJsonResponse("Operation failed", Response::HTTP_OK);
+            }
+    
+            return Helpers::returnJsonResponse("We have e-mailed your password reset link!", Response::HTTP_OK);
+        } else {
+            return Helpers::returnJsonResponse("Email not found", Response::HTTP_OK);
+        }
+        
     }
 
     private function generateOTP($otpLength) 
