@@ -21,6 +21,7 @@ use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\GeneralSettings;
+use App\Http\Controllers\DiscountController as DiscountControllerCoupon;
 
 /*
 |--------------------------------------------------------------------------
@@ -229,4 +230,9 @@ Route::get('admin/statistics', [CheckoutController::class, 'statistics']);
 Route::get('admin/general-settings', [GeneralSettings::class, 'generalSettings']);
 Route::post('admin/general-settings/update/web-config', [GeneralSettings::class, 'updateWebConfig']);
 Route::post('admin/general-settings/update/basic-info', [GeneralSettings::class, 'updateBasicInfo']);
+
+Route::get('admin/discount_coupons', [DiscountControllerCoupon::class, 'index']);
+Route::post('admin/discount_coupons/create', [DiscountControllerCoupon::class, 'store'])->name('admin.discount_coupons.store');
+Route::post('admin/discount_coupons/edit/{id}', [DiscountControllerCoupon::class, 'update'])->name('admin.discount_coupons.update');
+Route::delete('admin/discount_coupons/destroy/{id}', [DiscountControllerCoupon::class, 'destroy'])->name('admin.discount_coupons.delete');
 /* ADMIN */
