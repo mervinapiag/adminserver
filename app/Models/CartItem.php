@@ -20,4 +20,11 @@ class CartItem extends Model
         'price',
         'total',
     ];
+
+    protected $with = ['product'];
+
+    public function product()
+    {
+        return $this->belongsTo('App\Models\Product', 'product_id');
+    }
 }
