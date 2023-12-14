@@ -19,6 +19,7 @@ use App\Http\Controllers\User\CustomerController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\CheckoutController;
 
 
 /*
@@ -219,4 +220,6 @@ Route::get('admin/payment-options', [PaymentOptionController::class, 'index']);
 Route::post('admin/payment-options/create', [PaymentOptionController::class, 'store'])->name('admin.payment_options.store');
 Route::post('admin/payment-options/edit/{id}', [PaymentOptionController::class, 'update'])->name('admin.payment_options.update');
 Route::delete('admin/payment-options/destroy/{id}', [PaymentOptionController::class, 'destroy'])->name('admin.payment_options.delete');
+
+Route::get('admin/sales', [CheckoutController::class, 'salesOrder']);
 /* ADMIN */

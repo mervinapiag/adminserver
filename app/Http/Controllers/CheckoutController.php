@@ -67,4 +67,45 @@ class CheckoutController extends Controller
         }
         return $max_code;
     }
+
+    public function salesOrder()
+    {
+        $salesData = Checkout::all();
+
+        $groupedData = [];
+        foreach ($salesData as $sale) {
+            $date = date('F j, Y', strtotime($sale['created_at']));
+            $groupedData[$date][] = $sale['grand_total'];
+        }
+
+        $chartLabels = array_keys($groupedData);
+        $chartData = array_map(function ($totals) {
+            return number_format(array_sum($totals), 2);
+        }, $groupedData);
+
+        $chartConfig = [
+            'type' => 'line',
+            'data' => [
+                'labels' => $chartLabels,
+                'datasets' => [
+                    [
+                        'label' => 'Sales',
+                        'data' => array_values($chartData),
+                        'backgroundColor' => 'rgba(255, 99, 132, 0.2)',
+                        'borderColor' => 'rgba(255, 99, 132, 1)',
+                        'borderWidth' => 1,
+                    ],
+                ],
+            ],
+            'options' => [
+                'responsive' => true,
+                'title' => [
+                    'display' => true,
+                    'text' => 'Sales Statistics',
+                ],
+            ],
+        ];
+
+        return $chartConfig;
+    }
 }
