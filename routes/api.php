@@ -20,7 +20,7 @@ use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\CheckoutController;
-
+use App\Http\Controllers\GeneralSettings;
 
 /*
 |--------------------------------------------------------------------------
@@ -223,4 +223,8 @@ Route::delete('admin/payment-options/destroy/{id}', [PaymentOptionController::cl
 
 Route::get('admin/sales', [CheckoutController::class, 'salesOrder']);
 Route::get('admin/statistics', [CheckoutController::class, 'statistics']);
+
+Route::get('admin/general-settings', [GeneralSettings::class, 'generalSettings']);
+Route::post('admin/general-settings/update/web-config', [GeneralSettings::class, 'updateWebConfig']);
+Route::post('admin/general-settings/update/basic-info', [GeneralSettings::class, 'updateBasicInfo']);
 /* ADMIN */
