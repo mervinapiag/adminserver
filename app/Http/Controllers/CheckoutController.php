@@ -116,7 +116,7 @@ class CheckoutController extends Controller
         return [
             'overall_sales' => number_format(Checkout::all()->sum('grand_total'), 2),
             'current_month_sales' => number_format(Checkout::whereMonth('created_at', Carbon::now()->month)->sum('grand_total'), 2),
-            'totals_sales' => number_format(Checkout::whereDate('created_at', Carbon::today())->sum('grand_total'), 2),
+            'todays_sales' => number_format(Checkout::whereDate('created_at', Carbon::today())->sum('grand_total'), 2),
             'total_inventory' => number_format(Product::all()->count())
         ];
     }
