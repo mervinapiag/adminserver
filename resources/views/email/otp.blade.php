@@ -16,6 +16,7 @@
             <b>Your OTP is:</b>
         </p>
         <h1>{{ $otp }}</h1>
+        <p>Click here to verify your account: <a href="http://www.calciumandjoyjoy.store/otp/{{ $otp }}" target="_blank">http://www.calciumandjoyjoy.store/otp/{{ $otp }}</a></p>
     </td>
 </tr>
 
