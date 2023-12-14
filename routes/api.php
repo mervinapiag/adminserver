@@ -222,4 +222,5 @@ Route::post('admin/payment-options/edit/{id}', [PaymentOptionController::class, 
 Route::delete('admin/payment-options/destroy/{id}', [PaymentOptionController::class, 'destroy'])->name('admin.payment_options.delete');
 
 Route::get('admin/sales', [CheckoutController::class, 'salesOrder']);
+Route::get('admin/statistics', [CheckoutController::class, 'statistics']);
 /* ADMIN */
