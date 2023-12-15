@@ -25,6 +25,7 @@ use App\Http\Controllers\DiscountController as DiscountControllerCoupon;
 use App\Http\Controllers\HomeSliderController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\FAQAnswerController;
+use App\Http\Controllers\LiveChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -172,6 +173,13 @@ Route::post('checkout/use_coupon', [CheckoutController::class, 'useCoupon']);
 
 Route::get('homesliders', [HomeSliderController::class, 'fetchSlides']);
 
+/* LIVE CHAT */
+Route::get('chat/check/{user_id}', [LiveChatController::class, 'customerCheck']);
+Route::post('chat/start_chat/{user_id}', [LiveChatController::class, 'customerStartChat']);
+Route::get('chat/open_chat/{user_id}', [LiveChatController::class, 'customerOpenChat']);
+Route::post('chat/send_chat/{user_id}', [LiveChatController::class, 'customerSendChat']);
+/* LIVE CHAT */
+
 /* ADMIN */
 /* will add auth / middlewares afterwards */
 
@@ -257,4 +265,8 @@ Route::get('admin/faq_answers', [FAQAnswerController::class, 'index']);
 Route::post('admin/faq_answers/create', [FAQAnswerController::class, 'store'])->name('admin.faq_answers.store');
 Route::post('admin/faq_answers/edit/{id}', [FAQAnswerController::class, 'update'])->name('admin.faq_answers.update');
 Route::delete('admin/faq_answers/destroy/{id}', [FAQAnswerController::class, 'destroy'])->name('admin.faq_answers.delete');
+
+Route::get('admin/chat/list', [LiveChatController::class, 'adminListChats']);
+Route::get('admin/chat/open/{id}', [LiveChatController::class, 'adminOpenChat']);
+Route::post('admin/chat/send/{id}', [LiveChatController::class, 'adminSendChat']);
 /* ADMIN */
