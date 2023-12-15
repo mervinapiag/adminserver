@@ -26,6 +26,7 @@ use App\Http\Controllers\HomeSliderController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\FAQAnswerController;
 use App\Http\Controllers\LiveChatController;
+use App\Http\Controllers\ActivityLogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -175,6 +176,9 @@ Route::get('homesliders', [HomeSliderController::class, 'fetchSlides']);
 
 Route::get('recommended_products', [ShoeController::class, 'getMostSoldProducts']);
 
+Route::post('log-activity', [ActivityLogController::class, 'logActivity']);
+Route::get('get-activity', [ActivityLogController::class, 'getActivity']);
+
 /* LIVE CHAT */
 Route::get('chat/check/{user_id}', [LiveChatController::class, 'customerCheck']);
 Route::post('chat/start_chat/{user_id}', [LiveChatController::class, 'customerStartChat']);
@@ -246,6 +250,7 @@ Route::get('admin/statistics', [CheckoutController::class, 'statistics']);
 Route::get('admin/get_sales_report', [CheckoutController::class, 'getSalesReport']);
 Route::get('admin/product_performance_report', [CheckoutController::class, 'getProductPerformanceReport']);
 Route::get('admin/get_most_sold_products_chart', [CheckoutController::class, 'getMostSoldProductsChart']);
+Route::get('admin/customer_behavior', [ActivityLogController::class, 'generateCustomerBehaviorReport']);
 
 Route::get('admin/general-settings', [GeneralSettings::class, 'generalSettings']);
 Route::post('admin/general-settings/update/web-config', [GeneralSettings::class, 'updateWebConfig']);
