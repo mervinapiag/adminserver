@@ -20,7 +20,8 @@ class Product extends Model
         'product_category_id',
         'brand_id',
         'image',
-        'stocks'
+        'stocks',
+        'product_view'
     ];
 
     protected $with = ['category', 'brand', 'types', 'sizes', 'colors', 'reviews', 'images'];
@@ -63,5 +64,10 @@ class Product extends Model
     public function reviews()
     {
         return $this->hasMany('App\Models\ProductReview', 'product_id');
+    }
+
+    public function purchases()
+    {
+        return $this->hasMany('App\Models\CartItem', 'product_id');
     }
 }

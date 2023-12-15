@@ -8,6 +8,7 @@ use App\Models\Checkout;
 use App\Models\Product;
 use Carbon\Carbon;
 use App\Models\DiscountCoupon;
+use DB;
 
 class CheckoutController extends Controller
 {
@@ -191,5 +192,28 @@ class CheckoutController extends Controller
     protected function getYearlySales($year)
     {
         return Checkout::whereYear('created_at', $year)->sum('grand_total');
+    }
+
+    public function getProductPerformanceReport()
+    {
+        $products = Product::leftJoin('cart_items', function ($join) {
+                $join->on('products.id', '=', 'cart_items.product_id')
+                    ->whereNull('cart_items.deleted_at');
+            })
+            ->select('products.*')
+            ->selectRaw('COUNT(cart_items.id) as purchases_count')
+            ->selectRaw('SUM(products.product_view) as total_views')
+            ->groupBy('products.id', 'products.name', 'products.description', 'products.price', 'products.status', 'products.gender', 'products.socks', 'products.product_category_id', 'products.brand_id', 'products.image', 'products.stocks', 'products.product_view', 'products.created_at', 'products.updated_at', 'products.deleted_at')
+            ->get();
+
+        $report = $products->map(function ($product) {
+            return [
+                'product_name' => $product->name,
+                'purchases' => $product->purchases_count,
+                'total_views' => $product->total_views,
+            ];
+        });
+
+        return response()->json(['report' => $report]);
     }
 }
