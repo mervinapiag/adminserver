@@ -124,7 +124,7 @@ class CheckoutController extends Controller
 
     public function useCoupon(Request $request)
     {
-        $coupon = DiscountCoupon::where('discount_code', $request->discount_code)->where('is_active', 1)->first();
+        $coupon = DiscountCoupon::where('discount_code', $request->discount_code)->where('is_active', 1)->whereDate('date_limit', '>=', now())->first();
         
         if ($coupon) {
             return response()->json([
