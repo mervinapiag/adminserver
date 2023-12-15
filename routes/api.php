@@ -245,6 +245,7 @@ Route::get('admin/sales', [CheckoutController::class, 'salesOrder']);
 Route::get('admin/statistics', [CheckoutController::class, 'statistics']);
 Route::get('admin/get_sales_report', [CheckoutController::class, 'getSalesReport']);
 Route::get('admin/product_performance_report', [CheckoutController::class, 'getProductPerformanceReport']);
+Route::get('admin/get_most_sold_products_chart', [CheckoutController::class, 'getMostSoldProductsChart']);
 
 Route::get('admin/general-settings', [GeneralSettings::class, 'generalSettings']);
 Route::post('admin/general-settings/update/web-config', [GeneralSettings::class, 'updateWebConfig']);

@@ -216,4 +216,47 @@ class CheckoutController extends Controller
 
         return response()->json(['report' => $report]);
     }
+
+    public function getMostSoldProductsChart()
+    {
+        $mostSoldProducts = Product::leftJoin('cart_items', function ($join) {
+            $join->on('products.id', '=', 'cart_items.product_id')
+                ->whereNull('cart_items.deleted_at');
+        })
+        ->select('products.name', 'products.description', 'products.price', 'products.status', 'products.gender', 'products.socks', 'products.product_category_id', 'products.brand_id', 'products.image', 'products.stocks', 'products.product_view', 'products.created_at', 'products.updated_at', 'products.deleted_at')
+        ->selectRaw('COALESCE(COUNT(cart_items.id), 0) as purchases_count')
+        ->groupBy('products.id', 'products.name', 'products.description', 'products.price', 'products.status', 'products.gender', 'products.socks', 'products.product_category_id', 'products.brand_id', 'products.image', 'products.stocks', 'products.product_view', 'products.created_at', 'products.updated_at', 'products.deleted_at')
+        ->orderByDesc('purchases_count')
+        ->get();
+
+        // Extract labels and data
+        $chartLabels = $mostSoldProducts->pluck('name')->toArray();
+        $chartData = $mostSoldProducts->pluck('purchases_count')->toArray();
+
+        // Create Chart.js configuration
+        $chartConfig = [
+            'type' => 'line',
+            'data' => [
+                'labels' => $chartLabels,
+                'datasets' => [
+                    [
+                        'label' => 'Most Purchased',
+                        'data' => $chartData,
+                        'backgroundColor' => 'rgba(255, 99, 132, 0.2)',
+                        'borderColor' => 'rgba(255, 99, 132, 1)',
+                        'borderWidth' => 1
+                    ]
+                ]
+            ],
+            'options' => [
+                'responsive' => true,
+                'title' => [
+                    'display' => true,
+                    'text' => 'Product Purchase Statistics'
+                ]
+            ]
+        ];
+
+        return response()->json(['chart_config' => $chartConfig]);
+    }
 }
