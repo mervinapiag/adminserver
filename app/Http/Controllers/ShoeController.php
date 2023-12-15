@@ -523,4 +523,27 @@ class ShoeController extends Controller
 
         return response()->json($data, 201);
     }
+
+    public function getMostSoldProducts()
+    {
+        $mostSoldProducts = Product::leftJoin('cart_items', function ($join) {
+                $join->on('products.id', '=', 'cart_items.product_id')
+                    ->whereNull('cart_items.deleted_at');
+            })
+            ->select('products.*')
+            ->selectRaw('COALESCE(COUNT(cart_items.id), 0) as purchases_count')
+            ->groupBy('products.id', 'products.name', 'products.description', 'products.price', 'products.status', 'products.gender', 'products.socks', 'products.product_category_id', 'products.brand_id', 'products.image', 'products.stocks', 'products.product_view', 'products.created_at', 'products.updated_at', 'products.deleted_at')
+            ->orderByDesc('purchases_count')
+            ->get();
+
+        $report = $mostSoldProducts->map(function ($product) {
+            return [
+                'product_name' => $product->name,
+                'purchases' => $product->purchases_count,
+                'data' => $product
+            ];
+        });
+
+        return response()->json(['most_sold_products' => $report]);
+    }
 }

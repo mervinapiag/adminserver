@@ -173,6 +173,8 @@ Route::post('checkout/use_coupon', [CheckoutController::class, 'useCoupon']);
 
 Route::get('homesliders', [HomeSliderController::class, 'fetchSlides']);
 
+Route::get('recommended_products', [ShoeController::class, 'getMostSoldProducts']);
+
 /* LIVE CHAT */
 Route::get('chat/check/{user_id}', [LiveChatController::class, 'customerCheck']);
 Route::post('chat/start_chat/{user_id}', [LiveChatController::class, 'customerStartChat']);
