@@ -23,6 +23,8 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\GeneralSettings;
 use App\Http\Controllers\DiscountController as DiscountControllerCoupon;
 use App\Http\Controllers\HomeSliderController;
+use App\Http\Controllers\FAQController;
+use App\Http\Controllers\FAQAnswerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -245,4 +247,14 @@ Route::get('admin/home_slider', [HomeSliderController::class, 'index']);
 Route::post('admin/home_slider/create', [HomeSliderController::class, 'store'])->name('admin.home_slider.store');
 Route::post('admin/home_slider/edit/{id}', [HomeSliderController::class, 'update'])->name('admin.home_slider.update');
 Route::delete('admin/home_slider/destroy/{id}', [HomeSliderController::class, 'destroy'])->name('admin.home_slider.delete');
+
+Route::get('admin/faqs', [FAQController::class, 'index']);
+Route::post('admin/faqs/create', [FAQController::class, 'store'])->name('admin.faqs.store');
+Route::post('admin/faqs/edit/{id}', [FAQController::class, 'update'])->name('admin.faqs.update');
+Route::delete('admin/faqs/destroy/{id}', [FAQController::class, 'destroy'])->name('admin.faqs.delete');
+
+Route::get('admin/faq_answers', [FAQAnswerController::class, 'index']);
+Route::post('admin/faq_answers/create', [FAQAnswerController::class, 'store'])->name('admin.faq_answers.store');
+Route::post('admin/faq_answers/edit/{id}', [FAQAnswerController::class, 'update'])->name('admin.faq_answers.update');
+Route::delete('admin/faq_answers/destroy/{id}', [FAQAnswerController::class, 'destroy'])->name('admin.faq_answers.delete');
 /* ADMIN */
