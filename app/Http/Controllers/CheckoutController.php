@@ -135,4 +135,61 @@ class CheckoutController extends Controller
             return response()->json(['error' => 'Coupon code not found'], 404);
         }
     }
+
+    public function getSalesReport()
+    {
+        $currentYear = Carbon::now()->year;
+
+        $salesReport = [
+            'current_year' => [
+                'daily' => $this->getDailySales($currentYear),
+                'monthly' => $this->getMonthlySales($currentYear),
+                'weekly' => $this->getWeeklySales($currentYear),
+                'yearly' => number_format($this->getYearlySales($currentYear), 2),
+            ],
+        ];
+
+        return response()->json($salesReport);
+    }
+
+    protected function getDailySales($year)
+    {
+        return Checkout::whereYear('created_at', $year)
+            ->get()
+            ->groupBy(function ($date) {
+                return Carbon::parse($date->created_at)->format('Y-m-d');
+            })
+            ->map(function ($day) {
+                return number_format($day->sum('grand_total'), 2);
+            });
+    }
+
+    protected function getMonthlySales($year)
+    {
+        return Checkout::whereYear('created_at', $year)
+            ->get()
+            ->groupBy(function ($date) {
+                return Carbon::parse($date->created_at)->format('Y-m');
+            })
+            ->map(function ($month) {
+                return number_format($month->sum('grand_total'), 2);
+            });
+    }
+
+    protected function getWeeklySales($year)
+    {
+        return Checkout::whereYear('created_at', $year)
+            ->get()
+            ->groupBy(function ($date) {
+                return Carbon::parse($date->created_at)->format('W');
+            })
+            ->map(function ($week) {
+                return number_format($week->sum('grand_total'), 2);
+            });
+    }
+
+    protected function getYearlySales($year)
+    {
+        return Checkout::whereYear('created_at', $year)->sum('grand_total');
+    }
 }
