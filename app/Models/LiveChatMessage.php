@@ -15,4 +15,11 @@ class LiveChatMessage extends Model
         'user_id',
         'message',
     ];
+
+    protected $with = ['author'];
+
+    public function author()
+    {
+        return $this->belongsTo('App\Models\User', 'user_id')->select(['id', 'name']);
+    }
 }

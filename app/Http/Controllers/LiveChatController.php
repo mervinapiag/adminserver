@@ -13,9 +13,7 @@ class LiveChatController extends Controller
         $check = LiveChat::where('user_id', $id)->first();
 
         if ($check) {
-            return response()->json([
-                'With chat history'
-            ], 200);
+            return $this->customerOpenChat($id);
         } else {
             return response()->json([
                 'Chat not found'

@@ -16,6 +16,8 @@ use App\Models\ProductColor;
 use App\Models\ProductSize;
 use App\Models\ProductType;
 use App\Models\ProductReview;
+use App\Models\ProductGallery;
+use App\Models\ProductHasImage;
 
 class ShoeController extends Controller
 {
@@ -196,6 +198,13 @@ class ShoeController extends Controller
                 ]);
             }
 
+            foreach ($data['images'] as $image) {
+                DB::table('product_has_images')->insert([
+                    'product_id' => $shoe->id,
+                    'image_url' => $image,
+                ]);
+            }
+
             if ($request->hasFile('images')) {
                 foreach ($data['images'] as $image) {
                     $file_name = time().rand(1,99).'.'.$file->extension();
@@ -269,6 +278,7 @@ class ShoeController extends Controller
             $shoe->types()->delete();
             $shoe->sizes()->delete();
             $shoe->colors()->delete();
+            $shoe->images()->delete();
 
             foreach ($data['types'] as $t) {
                 $type = ProductType::whereName($t)->first();
@@ -291,6 +301,13 @@ class ShoeController extends Controller
                 DB::table('product_has_colors')->insert([
                     'product_id' => $shoe->id,
                     'product_color_id' => $color->id,
+                ]);
+            }
+
+            foreach ($data['images'] as $image) {
+                DB::table('product_has_images')->insert([
+                    'product_id' => $shoe->id,
+                    'image_url' => $image,
                 ]);
             }
 

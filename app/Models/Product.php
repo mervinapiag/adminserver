@@ -23,7 +23,7 @@ class Product extends Model
         'stocks'
     ];
 
-    protected $with = ['category', 'brand', 'types', 'sizes', 'colors', 'reviews'];
+    protected $with = ['category', 'brand', 'types', 'sizes', 'colors', 'reviews', 'images'];
 
     public function getTypesAttribute()
     {

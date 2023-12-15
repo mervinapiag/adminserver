@@ -16,10 +16,28 @@ class LiveChat extends Model
         'staff_id',
     ];
 
-    protected $with = ['messages'];
+    protected $with = ['messages', 'author'];
+
+    protected $hidden = ['messages', 'author'];
 
     public function messages()
     {
         return $this->hasMany('App\Models\LiveChatMessage', 'live_chat_id');
+    }
+
+    public function author()
+    {
+        return $this->belongsTo('App\Models\User', 'user_id')->select(['id', 'name']);
+    }
+
+    public function toArray()
+    {
+        $this->makeVisible('messages', 'author');
+
+        $array = parent::toArray();
+
+        $this->makeHidden('messages', 'author');
+
+        return $array;
     }
 }
