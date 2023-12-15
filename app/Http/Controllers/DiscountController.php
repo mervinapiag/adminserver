@@ -18,6 +18,7 @@ class DiscountController extends Controller
             'name' => $request->name,
             'discount_code' => $request->discount_code,
             'total_amount' => $request->total_amount,
+            'date_limit' => $request->date_limit,
             'is_active' => $request->is_active
         ]);
     }
@@ -29,6 +30,7 @@ class DiscountController extends Controller
                 'name' => $request->name,
                 'discount_code' => $request->discount_code,
                 'total_amount' => $request->total_amount,
+                'date_limit' => $request->date_limit,
                 'is_active' => $request->is_active
             ]);
 

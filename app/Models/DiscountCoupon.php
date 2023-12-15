@@ -14,6 +14,7 @@ class DiscountCoupon extends Model
         'name',
         'discount_code',
         'total_amount',
+        'date_limit',
         'is_active',
     ];
 }
