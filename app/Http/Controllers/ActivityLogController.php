@@ -25,38 +25,40 @@ class ActivityLogController extends Controller
     }
 
     public function generateCustomerBehaviorReport()
-{
-    // Get unique users from the activity log
-    $uniqueUsers = ActivityLog::select('user_id')
-        ->distinct()
-        ->get();
+    {
+        // Get unique users from the activity log
+        $uniqueUsers = ActivityLog::select('user_id')
+            ->distinct()
+            ->get();
 
-    $report = [];
+        $report = [];
 
-    foreach ($uniqueUsers as $user) {
-        if ($user) {
-            $userName = $user->user->name;
+        foreach ($uniqueUsers as $user) {
+            $existingUser = User::find($user->user_id);
+            if ($existingUser) {
 
-            $userActivityLogs = ActivityLog::where('user_id', $user->user_id)
-                ->orderBy('created_at')
-                ->get();
-    
-            $userReport = [
-                'user_name' => $userName,
-                'activity_logs' => []
-            ];
-    
-            foreach ($userActivityLogs as $activityLog) {
-                $userReport['activity_logs'][] = [
-                    'page_name' => $activityLog->page_name,
-                    'visited_at' => $activityLog->created_at->format('F j, Y, g:i a'),
+                $userName = $user->user->name;
+
+                $userActivityLogs = ActivityLog::where('user_id', $user->user_id)
+                    ->orderBy('created_at')
+                    ->get();
+        
+                $userReport = [
+                    'user_name' => $userName,
+                    'activity_logs' => []
                 ];
+        
+                foreach ($userActivityLogs as $activityLog) {
+                    $userReport['activity_logs'][] = [
+                        'page_name' => $activityLog->page_name,
+                        'visited_at' => $activityLog->created_at->format('F j, Y, g:i a'),
+                    ];
+                }
+        
+                $report[] = $userReport;
             }
-    
-            $report[] = $userReport;
         }
-    }
 
-    return $report;
-}
+        return $report;
+    }
 }
