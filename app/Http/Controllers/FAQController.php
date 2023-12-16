@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\FAQ;
+use App\Models\FAQAnswer;
 
 class FAQController extends Controller
 {
@@ -39,6 +40,11 @@ class FAQController extends Controller
         try {
             $data = FAQ::find($id);
             $data->delete();
+
+            $data2 = FAQAnswer::where('faq_id', $id)->get();
+            foreach ($data2 as $d) {
+                $d->delete();
+            }
             
             return response()->json([
                 'FAQ deleted'
