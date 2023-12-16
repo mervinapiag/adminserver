@@ -16,7 +16,7 @@ class CheckoutController extends Controller
     {
         $cartsData = $request->cartsData;
         $checkoutData = $request->checkoutData;
-
+        
         $order = $this->createOrder($checkoutData);
         $items = $this->createCartItems($order, $cartsData);
 

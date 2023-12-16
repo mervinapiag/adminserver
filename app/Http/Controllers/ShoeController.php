@@ -24,9 +24,10 @@ class ShoeController extends Controller
     public function index(Request $request)
     {
         $type = $request->input('Type');
-        $brand = $request->input('Brand');
-        $gender = $request->input('Gender');
+        $brand = $request->input('Brands');
+        $gender = $request->input('Genders');
         $socks = $request->input('Socks');
+        $categories = $request->input('Categories');
         $sizes = $request->input('Sizes');
 
         $shoes = Product::whereNull('products.deleted_at');
@@ -72,6 +73,15 @@ class ShoeController extends Controller
             }
         }    
 
+        if ($categories) {
+            $categoryArray = explode('-', $categories);
+            if (!empty($categoryArray)) {
+                $shoes->whereHas('category', function ($query) use ($categoryArray) {
+                    $query->whereIn('product_categories.name', $categoryArray);
+                });
+            }
+        }
+
         $shoes = $shoes->get();
 
         return response()->json($shoes);
@@ -81,9 +91,10 @@ class ShoeController extends Controller
     public function mixAndMatch(Request $request)
     {
         $type = $request->input('Type');
-        $brand = $request->input('Brand');
-        $gender = $request->input('Gender');
+        $brand = $request->input('Brands');
+        $gender = $request->input('Genders');
         $socks = $request->input('Socks');
+        $categories = $request->input('Categories');
         $sizes = $request->input('Sizes');
 
         $shoes = Product::whereNull('products.deleted_at');
@@ -127,7 +138,16 @@ class ShoeController extends Controller
                     $query->whereIn('name', $sizesArray);
                 });
             }
-        }  
+        }    
+
+        if ($categories) {
+            $categoryArray = explode('-', $categories);
+            if (!empty($categoryArray)) {
+                $shoes->whereHas('category', function ($query) use ($categoryArray) {
+                    $query->whereIn('product_categories.name', $categoryArray);
+                });
+            }
+        }
 
         $shoes = $shoes->get();
 
