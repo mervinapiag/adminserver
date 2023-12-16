@@ -34,25 +34,27 @@ class ActivityLogController extends Controller
     $report = [];
 
     foreach ($uniqueUsers as $user) {
-        $userName = $user->user->name;
+        if ($user) {
+            $userName = $user->user->name;
 
-        $userActivityLogs = ActivityLog::where('user_id', $user->user_id)
-            ->orderBy('created_at')
-            ->get();
-
-        $userReport = [
-            'user_name' => $userName,
-            'activity_logs' => []
-        ];
-
-        foreach ($userActivityLogs as $activityLog) {
-            $userReport['activity_logs'][] = [
-                'page_name' => $activityLog->page_name,
-                'visited_at' => $activityLog->created_at->format('F j, Y, g:i a'),
+            $userActivityLogs = ActivityLog::where('user_id', $user->user_id)
+                ->orderBy('created_at')
+                ->get();
+    
+            $userReport = [
+                'user_name' => $userName,
+                'activity_logs' => []
             ];
+    
+            foreach ($userActivityLogs as $activityLog) {
+                $userReport['activity_logs'][] = [
+                    'page_name' => $activityLog->page_name,
+                    'visited_at' => $activityLog->created_at->format('F j, Y, g:i a'),
+                ];
+            }
+    
+            $report[] = $userReport;
         }
-
-        $report[] = $userReport;
     }
 
     return $report;

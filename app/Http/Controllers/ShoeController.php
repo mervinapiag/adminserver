@@ -29,6 +29,7 @@ class ShoeController extends Controller
         $socks = $request->input('Socks');
         $categories = $request->input('Categories');
         $sizes = $request->input('Sizes');
+        $price = $request->input('Price');
 
         $shoes = Product::whereNull('products.deleted_at');
 
