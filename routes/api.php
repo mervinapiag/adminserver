@@ -248,6 +248,7 @@ Route::delete('admin/payment-options/destroy/{id}', [PaymentOptionController::cl
 Route::get('admin/sales', [CheckoutController::class, 'salesOrder']);
 Route::get('admin/statistics', [CheckoutController::class, 'statistics']);
 Route::get('admin/get_sales_report', [CheckoutController::class, 'getSalesReport']);
+Route::get('admin/get_sales_report_v2', [CheckoutController::class, 'getSalesReportV2']);
 Route::get('admin/product_performance_report', [CheckoutController::class, 'getProductPerformanceReport']);
 Route::get('admin/get_most_sold_products_chart', [CheckoutController::class, 'getMostSoldProductsChart']);
 Route::get('admin/customer_behavior', [ActivityLogController::class, 'generateCustomerBehaviorReport']);

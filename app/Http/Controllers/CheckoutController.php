@@ -259,4 +259,9 @@ class CheckoutController extends Controller
 
         return response()->json(['chart_config' => $chartConfig]);
     }
+
+    public function getSalesReportV2()
+    {
+        
+    }
 }
