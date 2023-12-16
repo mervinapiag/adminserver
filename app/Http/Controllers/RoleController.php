@@ -11,7 +11,7 @@ class RoleController extends Controller
     //
     public function index(Request $request) 
     {
-        return User::all();
+        return Role::all();
     }
 
     public function store(Request $request) 
