@@ -27,7 +27,6 @@ class ActivityLogController extends Controller
 
     public function generateCustomerBehaviorReport()
     {
-        // Get unique users from the activity log
         $uniqueUsers = ActivityLog::select('user_id')
             ->distinct()
             ->get();
@@ -38,28 +37,41 @@ class ActivityLogController extends Controller
             $existingUser = User::find($user->user_id);
             if ($existingUser) {
 
-                $userName = $user->user->name;
+                $userName = $existingUser->name;
 
                 $userActivityLogs = ActivityLog::where('user_id', $user->user_id)
                     ->orderBy('created_at')
                     ->get();
-        
+
                 $userReport = [
                     'user_name' => $userName,
                     'activity_logs' => []
                 ];
-        
+
+                $pageCount = [];
+
                 foreach ($userActivityLogs as $activityLog) {
+                    $pageName = $activityLog->page_name;
+
+                    if (!isset($pageCount[$pageName])) {
+                        $pageCount[$pageName] = 1;
+                    } else {
+                        $pageCount[$pageName]++;
+                    }
+                }
+
+                foreach ($pageCount as $pageName => $count) {
                     $userReport['activity_logs'][] = [
-                        'page_name' => $activityLog->page_name,
-                        'visited_at' => $activityLog->created_at->format('F j, Y, g:i a'),
+                        'page_name' => $pageName,
+                        'count' => $count,
                     ];
                 }
-        
+
                 $report[] = $userReport;
             }
         }
 
         return $report;
     }
+
 }
