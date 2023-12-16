@@ -27,6 +27,7 @@ use App\Http\Controllers\FAQController;
 use App\Http\Controllers\FAQAnswerController;
 use App\Http\Controllers\LiveChatController;
 use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\Customer2Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -189,6 +190,8 @@ Route::post('chat/send_chat/{user_id}', [LiveChatController::class, 'customerSen
 /* ADMIN */
 /* will add auth / middlewares afterwards */
 
+Route::get('admin/me/{id}', [RoleController::class, 'me']);
+
 // display products
 Route::get('admin/products', [ShoeController::class, 'index']);
 Route::post('admin/products/store', [ShoeController::class, 'store']);
@@ -280,4 +283,14 @@ Route::delete('admin/faq_answers/destroy/{id}', [FAQAnswerController::class, 'de
 Route::get('admin/chat/list', [LiveChatController::class, 'adminListChats']);
 Route::get('admin/chat/open/{id}', [LiveChatController::class, 'adminOpenChat']);
 Route::post('admin/chat/send/{id}', [LiveChatController::class, 'adminSendChat']);
+
+Route::get('admin/customer', [Customer2Controller::class, 'index']);
+Route::post('admin/customer/create', [Customer2Controller::class, 'store'])->name('admin.customer.store');
+Route::post('admin/customer/edit/{id}', [Customer2Controller::class, 'update'])->name('admin.customer.update');
+Route::delete('admin/customer/destroy/{id}', [Customer2Controller::class, 'destroy'])->name('admin.customer.delete');
+
+Route::get('admin/admin_account', [Customer2Controller::class, 'indexAdmin']);
+Route::post('admin/admin_account/create', [Customer2Controller::class, 'storeAdmin'])->name('admin.admin_account.store');
+Route::post('admin/admin_account/edit/{id}', [Customer2Controller::class, 'updateAdmin'])->name('admin.admin_account.update');
+Route::delete('admin/admin_account/destroy/{id}', [Customer2Controller::class, 'destroyAdmin'])->name('admin.admin_account.delete');
 /* ADMIN */

@@ -59,4 +59,9 @@ class RoleController extends Controller
             return response()->json(['error' => 'Failed to delete role', 'message' => $e->getMessage()], 500);
         }
     }
+
+    public function me($id)
+    {
+        return User::find($id);
+    }
 }
