@@ -25,7 +25,7 @@ class ShoeController extends Controller
     {
         $type = $request->input('Type');
         $brand = $request->input('Brands');
-        $gender = $request->input('Genders');
+        $gender = strtolower($request->input('Genders'));
         $socks = $request->input('Socks');
         $categories = $request->input('Categories');
         $sizes = $request->input('Sizes');
@@ -92,7 +92,7 @@ class ShoeController extends Controller
     {
         $type = $request->input('Type');
         $brand = $request->input('Brands');
-        $gender = $request->input('Genders');
+        $gender = strtolower($request->input('Genders'));
         $socks = $request->input('Socks');
         $categories = $request->input('Categories');
         $sizes = $request->input('Sizes');
