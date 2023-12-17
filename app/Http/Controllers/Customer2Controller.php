@@ -100,4 +100,15 @@ class Customer2Controller extends Controller
 
         return response()->json(['message' => 'Admin deleted'], 200);
     }
+
+    public function suspendAdmin($id)
+    {
+        $user = User::find($id);
+        $user->suspended = 1;
+        $user->save();
+
+        $user->tokens()->delete();
+        
+        return response()->json(['message' => 'Admin suspended'], 200);
+    }
 }

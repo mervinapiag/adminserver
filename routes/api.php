@@ -294,4 +294,5 @@ Route::get('admin/admin_account', [Customer2Controller::class, 'indexAdmin']);
 Route::post('admin/admin_account/create', [Customer2Controller::class, 'storeAdmin'])->name('admin.admin_account.store');
 Route::post('admin/admin_account/edit/{id}', [Customer2Controller::class, 'updateAdmin'])->name('admin.admin_account.update');
 Route::delete('admin/admin_account/destroy/{id}', [Customer2Controller::class, 'destroyAdmin'])->name('admin.admin_account.delete');
+Route::post('admin/admin_account/{id}/suspend', [Customer2Controller::class, 'suspendAdmin']);
 /* ADMIN */
