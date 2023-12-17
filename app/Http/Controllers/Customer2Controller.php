@@ -64,7 +64,7 @@ class Customer2Controller extends Controller
             "name" => $request->firstname . " " . $request->lastname,
             "email" => $request->email,
             "password" => $request->password,
-            "role_id" => 2,
+            "role_id" => $request->role_id,
             "otp" => "verified"
         ]);
     }
@@ -77,7 +77,7 @@ class Customer2Controller extends Controller
             "name" => $request->firstname . " " . $request->lastname,
             "email" => $request->email,
             "password" => $request->password,
-            "role_id" => 2
+            "role_id" => $request->role_id
         ]);
 
         return response()->json(['message' => 'Admin updated'], 200);

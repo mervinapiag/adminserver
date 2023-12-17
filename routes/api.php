@@ -229,7 +229,7 @@ Route::get('all-payments', [PaymentOptionController::class, 'getAllpayments']);
 Route::get('admin/role-permissions', [RoleController::class, 'index']);
 Route::post('admin/role-permissions/store', [RoleController::class, 'store']);
 Route::get('admin/role-permissions/view/{id}', [RoleController::class, 'show']);
-Route::post('admin/role-permissions/update/{id}', [RoleController::class, 'store']);
+Route::post('admin/role-permissions/update/{id}', [RoleController::class, 'update']);
 Route::delete('admin/role-permissions/delete/{id}', [RoleController::class, 'destroy']);
 
 Route::get('admin/orders', [OrderController::class, 'index']);
