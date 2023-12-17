@@ -57,7 +57,7 @@ class Customer2Controller extends Controller
 
         $user->tokens()->delete();
         
-        return response()->json(['message' => 'Customer deleted'], 200);
+        return response()->json(['message' => 'Customer suspended'], 200);
     }
 
     // Admins
