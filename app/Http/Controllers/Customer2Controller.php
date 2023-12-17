@@ -52,12 +52,15 @@ class Customer2Controller extends Controller
     public function suspend($id)
     {
         $user = User::find($id);
-        $user->suspended = 1;
+        if ($user->suspended == 1) {
+            $user->suspended = 0;
+        } else {
+            $user->suspended = 1;
+            $user->tokens()->delete();
+        }
         $user->save();
-
-        $user->tokens()->delete();
         
-        return response()->json(['message' => 'Customer suspended'], 200);
+        return response()->json(['message' => 'Customer ' . ($user->suspended == 1) ? 'suspended' : 'unsuspended'], 200);
     }
 
     // Admins
