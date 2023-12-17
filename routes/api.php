@@ -288,6 +288,7 @@ Route::get('admin/customer', [Customer2Controller::class, 'index']);
 Route::post('admin/customer/create', [Customer2Controller::class, 'store'])->name('admin.customer.store');
 Route::post('admin/customer/edit/{id}', [Customer2Controller::class, 'update'])->name('admin.customer.update');
 Route::delete('admin/customer/destroy/{id}', [Customer2Controller::class, 'destroy'])->name('admin.customer.delete');
+Route::post('customer/{id}/suspend', [Customer2Controller::class, 'suspend']);
 
 Route::get('admin/admin_account', [Customer2Controller::class, 'indexAdmin']);
 Route::post('admin/admin_account/create', [Customer2Controller::class, 'storeAdmin'])->name('admin.admin_account.store');
