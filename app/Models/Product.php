@@ -24,7 +24,7 @@ class Product extends Model
         'product_view'
     ];
 
-    protected $with = ['category', 'brand', 'types', 'sizes', 'colors', 'reviews', 'images'];
+    protected $with = ['category', 'brand', 'types', 'sizes', 'colors', 'reviews', 'average_rating', 'images'];
 
     public function getTypesAttribute()
     {
