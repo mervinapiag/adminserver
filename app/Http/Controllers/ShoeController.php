@@ -261,6 +261,8 @@ class ShoeController extends Controller
         $shoe = Product::find($id);
         $shoe->product_view = $shoe->product_view + 1;
         $shoe->save();
+
+        $shoe['rating'] = $show->average_rating;
         //return response()->json($shoe->load(['variants', 'images', 'recommended_accessories']), 200);
         return response()->json($shoe, 200);
     }
