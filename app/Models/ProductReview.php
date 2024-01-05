@@ -13,7 +13,8 @@ class ProductReview extends Model
     protected $fillable = [
         'user_id',
         'product_id',
-        'review_content'
+        'review_content',
+        'stars_value'
     ];
 
     protected $with = ['user'];

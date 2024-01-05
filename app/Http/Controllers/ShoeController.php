@@ -539,7 +539,8 @@ class ShoeController extends Controller
         $data = ProductReview::create([
             'user_id' => $request->user_id,
             'product_id' => $request->product_id,
-            'review_content' => $request->review_content
+            'review_content' => $request->review_content,
+            'stars_value' => $request->stars_value
         ]);
 
         return response()->json($data, 201);

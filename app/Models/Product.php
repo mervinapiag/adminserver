@@ -66,6 +66,11 @@ class Product extends Model
         return $this->hasMany('App\Models\ProductReview', 'product_id');
     }
 
+    public function getAverageRatingAttribute()
+    {
+        return $this->reviews->avg('stars_value');
+    }
+
     public function purchases()
     {
         return $this->hasMany('App\Models\CartItem', 'product_id');
