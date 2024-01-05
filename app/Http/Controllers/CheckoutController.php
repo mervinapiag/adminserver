@@ -49,13 +49,13 @@ class CheckoutController extends Controller
         $items = [];
         foreach ($carts as $cart) {
             $items[] = $order->items()->create([
-                'product_id' => $cart['product_id'],
-                'size' => $cart['size'],
-                'session_id' => $cart['session_id'],
-                'user_id' => $cart['user_id'],
-                'quantity' => $cart['quantity'],
-                'price' => $cart['price'],
-                'total' => $cart['total'],
+                'product_id' => $cart->product_id,
+                'size' => $cart->size,
+                'session_id' => $cart->session_id,
+                'user_id' => $cart->user_id,
+                'quantity' => $cart->quantity,
+                'price' => $cart->price,
+                'total' => $cart->total,
             ]);
         }
 
