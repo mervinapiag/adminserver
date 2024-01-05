@@ -137,21 +137,105 @@ class CheckoutController extends Controller
         }
     }
 
-    public function getSalesReport()
+    public function getSalesReport(Request $request)
     {
-        $currentYear = Carbon::now()->year;
+        $from = $request->from ?? null;
+        $to = $request->to ?? null;
 
-        $salesReport = [
-            'current_year' => [
-                'daily' => $this->getDailySales($currentYear),
-                'monthly' => $this->getMonthlySales($currentYear),
-                'weekly' => $this->getWeeklySales($currentYear),
-                'yearly' => number_format($this->getYearlySales($currentYear), 2),
-            ],
-        ];
+        if ($from && $to) {
+            $salesReport = $this->getSalesReportByRange($from, $to);
+        } else {
+            return $currentYear = Carbon::now()->year;
+            $salesReport = $this->getSalesReportByYear($currentYear);
+        }
 
         return response()->json($salesReport);
     }
+
+    protected function getSalesReportByRange($from, $to)
+    {
+        $salesReport = [
+            'custom_range' => [
+                'daily' => $this->getDailySalesByRange($from, $to),
+                'monthly' => $this->getMonthlySalesByRange($from, $to),
+                'weekly' => $this->getWeeklySalesByRange($from, $to),
+                'yearly' => number_format($this->getYearlySalesByRange($from, $to), 2),
+            ],
+        ];
+
+        return $salesReport;
+    }
+
+    protected function getSalesReportByYear($year)
+    {
+        $salesReport = [
+            'current_year' => [
+                'daily' => $this->getDailySales($year),
+                'monthly' => $this->getMonthlySales($year),
+                'weekly' => $this->getWeeklySales($year),
+                'yearly' => number_format($this->getYearlySales($year), 2),
+            ],
+        ];
+
+        return $salesReport;
+    }
+
+    protected function getDailySalesByRange($from, $to)
+    {
+        return Checkout::whereBetween('created_at', [$from, $to])
+            ->get()
+            ->groupBy(function ($date) {
+                return Carbon::parse($date->created_at)->format('Y-m-d');
+            })
+            ->map(function ($day) {
+                return number_format($day->sum('grand_total'), 2);
+            });
+    }
+
+    protected function getMonthlySalesByRange($from, $to)
+    {
+        return Checkout::whereBetween('created_at', [$from, $to])
+            ->get()
+            ->groupBy(function ($date) {
+                return Carbon::parse($date->created_at)->format('Y-m');
+            })
+            ->map(function ($month) {
+                return number_format($month->sum('grand_total'), 2);
+            });
+    }
+
+    protected function getWeeklySalesByRange($from, $to)
+    {
+        return Checkout::whereBetween('created_at', [$from, $to])
+            ->get()
+            ->groupBy(function ($date) {
+                return Carbon::parse($date->created_at)->format('W');
+            })
+            ->map(function ($week) {
+                return number_format($week->sum('grand_total'), 2);
+            });
+    }
+
+    protected function getYearlySalesByRange($from, $to)
+    {
+        return Checkout::whereBetween('created_at', [$from, $to])->sum('grand_total');
+    }
+
+    // public function getSalesReport(Request $request)
+    // {
+    //     $currentYear = Carbon::now()->year;
+
+    //     $salesReport = [
+    //         'current_year' => [
+    //             'daily' => $this->getDailySales($currentYear),
+    //             'monthly' => $this->getMonthlySales($currentYear),
+    //             'weekly' => $this->getWeeklySales($currentYear),
+    //             'yearly' => number_format($this->getYearlySales($currentYear), 2),
+    //         ],
+    //     ];
+
+    //     return response()->json($salesReport);
+    // }
 
     protected function getDailySales($year)
     {
