@@ -260,6 +260,8 @@ Route::get('admin/general-settings', [GeneralSettings::class, 'generalSettings']
 Route::post('admin/general-settings/update/web-config', [GeneralSettings::class, 'updateWebConfig']);
 Route::post('admin/general-settings/update/basic-info', [GeneralSettings::class, 'updateBasicInfo']);
 
+Route::post('admin/general-settings/update/settings', [GeneralSettings::class, 'updateSettings']);
+
 Route::get('admin/discount_coupons', [DiscountControllerCoupon::class, 'index']);
 Route::post('admin/discount_coupons/create', [DiscountControllerCoupon::class, 'store'])->name('admin.discount_coupons.store');
 Route::post('admin/discount_coupons/edit/{id}', [DiscountControllerCoupon::class, 'update'])->name('admin.discount_coupons.update');

@@ -46,4 +46,25 @@ class GeneralSettings extends Controller
             'Basic information details has been updated'
         ], 200);
     }
+
+    public function updateSettings(Request $request)
+    {
+        $data = GeneralSetting::find(1);
+
+        $data->logo = $request->logo;
+        $data->shipping_rate = $request->shipping_rate;
+        $data->mission = $request->mission;
+        $data->vision = $request->vision;
+        $data->about_us = $request->about_us;
+        $data->history_text = $request->history_text;
+        $data->facebook = $request->facebook;
+        $data->twitter = $request->twitter;
+        $data->instagram = $request->instagram;
+
+        $data->save();
+
+        return response()->json([
+            'General Settings details has been updated'
+        ], 200);
+    }
 }

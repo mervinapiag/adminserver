@@ -11,17 +11,16 @@ class GeneralSetting extends Model
 
     protected $fillable = [
         'logo',
-        'favicon',
-        'header_title',
-        'footer_text',
-        'contact_info',
-        'social_media',
         'shipping_rate',
-        'about_us_image',
-        'history_image',
-        'about_us_text',
+
+        'mission',
+        'vision',
+        'about_us',
+
         'history_text',
-        'privacy_policy',
-        'terms_and_condition'
+
+        'facebook',
+        'twitter',
+        'instagram',
     ];
 }
