@@ -147,7 +147,7 @@ class CheckoutController extends Controller
         if ($from && $to) {
             $salesReport = $this->getSalesReportByRange($from, $to);
         } else {
-            return $currentYear = Carbon::now()->year;
+            $currentYear = Carbon::now()->year;
             $salesReport = $this->getSalesReportByYear($currentYear);
         }
 
