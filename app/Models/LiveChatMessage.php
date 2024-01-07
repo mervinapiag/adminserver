@@ -13,6 +13,7 @@ class LiveChatMessage extends Model
     protected $fillable = [
         'live_chat_id',
         'user_id',
+        'guest_username',
         'message',
     ];
 

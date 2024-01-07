@@ -188,6 +188,11 @@ Route::get('chat/check/{user_id}', [LiveChatController::class, 'customerCheck'])
 Route::post('chat/start_chat/{user_id}', [LiveChatController::class, 'customerStartChat']);
 Route::get('chat/open_chat/{user_id}', [LiveChatController::class, 'customerOpenChat']);
 Route::post('chat/send_chat/{user_id}', [LiveChatController::class, 'customerSendChat']);
+
+Route::get('chat-guest/check/{user_id}', [LiveChatController::class, 'guestCustomerCheck']);
+Route::post('chat-guest/start_chat/{user_id}', [LiveChatController::class, 'guestCustomerStartChat']);
+Route::get('chat-guest/open_chat/{user_id}', [LiveChatController::class, 'guestCustomerOpenChat']);
+Route::post('chat-guest/send_chat/{user_id}', [LiveChatController::class, 'guestCustomerSendChat']);
 /* LIVE CHAT */
 
 /* ADMIN */
@@ -291,6 +296,10 @@ Route::delete('admin/faq_answers/destroy/{id}', [FAQAnswerController::class, 'de
 Route::get('admin/chat/list', [LiveChatController::class, 'adminListChats']);
 Route::get('admin/chat/open/{id}', [LiveChatController::class, 'adminOpenChat']);
 Route::post('admin/chat/send/{id}', [LiveChatController::class, 'adminSendChat']);
+
+Route::get('admin/chat-guest/list', [LiveChatController::class, 'adminListChats_guest']);
+Route::get('admin/chat-guest/open/{id}', [LiveChatController::class, 'adminOpenChat_guest']);
+Route::post('admin/chat-guest/send/{id}', [LiveChatController::class, 'adminSendChat_guest']);
 
 Route::get('admin/customer', [Customer2Controller::class, 'index']);
 Route::post('admin/customer/create', [Customer2Controller::class, 'store'])->name('admin.customer.store');

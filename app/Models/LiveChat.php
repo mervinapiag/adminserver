@@ -14,6 +14,7 @@ class LiveChat extends Model
         'reference_no',
         'user_id',
         'staff_id',
+        'guest_username'
     ];
 
     protected $with = ['messages', 'author'];

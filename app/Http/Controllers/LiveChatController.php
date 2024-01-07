@@ -84,4 +84,77 @@ class LiveChatController extends Controller
 
         return $this->adminOpenChat($id);
     }
+
+    // guest
+
+    public function guestCustomerCheck($id) 
+    {
+        $check = LiveChat::where('guest_username', $id)->first();
+
+        if ($check) {
+            return $this->guestCustomerOpenChat($id);
+        } else {
+            return response()->json([
+                'Chat not found'
+            ], 404);
+        }
+    }
+
+    public function guestCustomerStartChat($id)
+    {
+        LiveChat::create([
+            'reference_no' => $this->generateReferenceNo(),
+            'user_id' => 0,
+            'staff_id' => 0,
+            'guest_username' => $id
+        ]);
+
+        return response()->json([
+            'chat started'
+        ], 200);
+    }
+
+    public function guestCustomerSendChat(Request $request, $id)
+    {
+        $chat = LiveChat::where('guest_username', $id)->first();
+
+        LiveChatMessage::create([
+            'live_chat_id' => $chat->id,
+            'user_id' => 0,
+            'guest_username' => $id,
+            'message' => $request->message
+        ]);
+
+        return $this->guestCustomerOpenChat($id);
+    }
+
+    public function guestCustomerOpenChat($id)
+    {
+        return LiveChat::where('guest_username', $id)->first();
+    }
+
+    //
+
+    public function adminListChats_guest()
+    {
+        return LiveChat::all();
+    }
+
+    public function adminOpenChat_guest($id)
+    {
+        return LiveChat::where('id', $id)->first();
+    }
+
+    public function adminSendChat_guest(Request $request, $id)
+    {
+        $chat = LiveChat::where('id', $id)->first();
+
+        LiveChatMessage::create([
+            'live_chat_id' => $chat->id,
+            'user_id' => $request->user_id,
+            'message' => $request->message
+        ]);
+
+        return $this->adminOpenChat($id);
+    }
 }
