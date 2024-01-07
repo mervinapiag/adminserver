@@ -196,7 +196,7 @@ Route::post('chat/send_chat/{user_id}', [LiveChatController::class, 'customerSen
 Route::get('admin/me/{id}', [RoleController::class, 'me']);
 
 Route::get('admin/contact', [ContactController::class, 'index']);
-Route::post('admin/reply', [ContactController::class, 'reply']);
+Route::post('admin/contact/reply', [ContactController::class, 'reply']);
 
 // display products
 Route::get('admin/products', [ShoeController::class, 'index']);
