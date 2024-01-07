@@ -22,5 +22,7 @@ class GeneralSetting extends Model
         'facebook',
         'twitter',
         'instagram',
+
+        'return_and_refund'
     ];
 }

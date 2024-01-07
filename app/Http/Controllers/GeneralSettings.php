@@ -60,6 +60,7 @@ class GeneralSettings extends Controller
         $data->facebook = $request->facebook;
         $data->twitter = $request->twitter;
         $data->instagram = $request->instagram;
+        $data->return_and_refund = $request->return_and_refund;
 
         $data->save();
 

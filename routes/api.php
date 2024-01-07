@@ -28,6 +28,7 @@ use App\Http\Controllers\FAQAnswerController;
 use App\Http\Controllers\LiveChatController;
 use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\Customer2Controller;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -180,6 +181,8 @@ Route::get('recommended_products', [ShoeController::class, 'getMostSoldProducts'
 Route::post('log-activity', [ActivityLogController::class, 'logActivity']);
 Route::get('get-activity', [ActivityLogController::class, 'getActivity']);
 
+Route::post('contact', [ContactController::class, 'store']);
+
 /* LIVE CHAT */
 Route::get('chat/check/{user_id}', [LiveChatController::class, 'customerCheck']);
 Route::post('chat/start_chat/{user_id}', [LiveChatController::class, 'customerStartChat']);
@@ -191,6 +194,9 @@ Route::post('chat/send_chat/{user_id}', [LiveChatController::class, 'customerSen
 /* will add auth / middlewares afterwards */
 
 Route::get('admin/me/{id}', [RoleController::class, 'me']);
+
+Route::get('admin/contact', [ContactController::class, 'index']);
+Route::post('admin/reply', [ContactController::class, 'reply']);
 
 // display products
 Route::get('admin/products', [ShoeController::class, 'index']);
