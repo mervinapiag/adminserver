@@ -18,10 +18,6 @@ return new class extends Migration
             $table->index('shoe_id');
             $table->foreign('shoe_id')->references('id')->on('shoes')->onDelete('cascade');
 
-            $table->unsignedBigInteger('payment_id');
-            $table->index('payment_id');
-            $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
-
             $table->unsignedBigInteger('user_id');
             $table->index('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

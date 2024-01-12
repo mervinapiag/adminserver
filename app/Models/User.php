@@ -32,7 +32,9 @@ class User extends Authenticatable
         'contact',
         'birthday',
         'address',
-        'phonenumber'
+        'phonenumber',
+        'otp',
+        'role_id'
     ];
 
     /**
@@ -44,6 +46,8 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    protected $with = ['userRole', 'addresses'];
 
     /**
      * The attributes that should be cast.
@@ -75,5 +79,15 @@ class User extends Authenticatable
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
+    }
+
+    public function userRole()
+    {
+        return $this->hasOne('App\Models\Role', 'id', 'role_id');
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany('App\Models\UserShippingAddress', 'user_id');
     }
 }

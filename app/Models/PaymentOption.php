@@ -13,6 +13,7 @@ class PaymentOption extends Model
         'name',
         'account_number',
         'account_name',
+        'payment_instructions',
         'active',
     ];
 }

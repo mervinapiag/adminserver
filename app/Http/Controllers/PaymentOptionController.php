@@ -18,13 +18,14 @@ class PaymentOptionController extends Controller
      */
     public function index()
     {
+        return PaymentOption::all();
         return new PaymentOptionCollection(PaymentOption::paginate());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PaymentOptionRequest $request)
+    public function store(Request $request)
     {
         $data = $request->all();
         try {
@@ -50,7 +51,7 @@ class PaymentOptionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PaymentOptionRequest $request, string $id)
+    public function update(Request $request, string $id)
     {
         $data = $request->all();
         $discount = PaymentOption::find($id);
@@ -63,7 +64,7 @@ class PaymentOptionController extends Controller
             return Helpers::returnJsonResponse(config('constants.RECORD_UPDATED'), Response::HTTP_ACCEPTED, new PaymentOptionResource($discount));
         } catch (\Throwable $th) {
             DB::rollBack();
-            return Helpers::returnJsonResponse(config('constants.RECORD_ERROR'), Response::HTTP_INTERNAL_SERVER_ERROR);
+            return Helpers::returnJsonResponse($th->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -83,5 +84,12 @@ class PaymentOptionController extends Controller
             DB::rollBack();
             return Helpers::returnJsonResponse(config('constants.RECORD_ERROR'), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    public function getAllpayments()
+    {
+        $data = PaymentOption::where('active', 1)->get();
+
+        return Helpers::returnJsonResponse("Payment Options", Response::HTTP_OK, $data);
     }
 }

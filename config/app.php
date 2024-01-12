@@ -184,7 +184,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
 
-        'Helpers' => \App\Helpers\Helper::class
+        'Helpers' => \App\Helpers::class
     ])->toArray(),
 
     'admin_name' => env("ADMIN_NAME"),
